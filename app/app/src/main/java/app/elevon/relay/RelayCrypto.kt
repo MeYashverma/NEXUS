@@ -142,9 +142,12 @@ object RelayCrypto {
     }
 
     private fun leftPad(src: ByteArray, size: Int): ByteArray {
-        require(src.size <= size)
+        // BigInteger.toByteArray() prepends a sign byte for positives whose
+        // high bit is set (33 bytes for a 256-bit coordinate) - drop it.
+        val s = if (src.size == size + 1 && src[0] == 0.toByte()) src.copyOfRange(1, src.size) else src
+        require(s.size <= size)
         val out = ByteArray(size)
-        src.copyInto(out, size - src.size)
+        s.copyInto(out, size - s.size)
         return out
     }
 

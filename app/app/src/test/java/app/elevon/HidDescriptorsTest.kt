@@ -29,7 +29,7 @@ class HidDescriptorsTest {
             val dataStart = i + 1
             if (dataStart + size > descriptor.size) error("truncated item at $i")
             when (tag) {
-                0xA4 -> reportIds.add(signed(descriptor, dataStart, size)) // REPORT_ID
+                0x84 -> reportIds.add(signed(descriptor, dataStart, size)) // REPORT_ID (tag 0x8, global, size 1 => b0 0x85; masked tag 0x84)
                 0xA0 -> collections++
                 0xC0 -> endCollections++
             }

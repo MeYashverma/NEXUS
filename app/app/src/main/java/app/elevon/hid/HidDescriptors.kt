@@ -27,7 +27,7 @@ object HidDescriptors {
     const val REPORT_ID_SYSTEM = 4
     const val REPORT_ID_GAMEPAD = 5
 
-    val keyboardPayloadSize = 7
+    val keyboardPayloadSize = 8
     val mousePayloadSize = 5
     val consumerPayloadSize = 2
     val systemPayloadSize = 1

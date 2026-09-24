@@ -24,7 +24,7 @@ class KeyboardReportTest {
         val r = KeyboardReport()
         assertTrue(r.press(Keycodes.KEY_A))
         val pressed = r.payload()!!
-        assertEquals(7, pressed.size)
+        assertEquals(8, pressed.size) // modifiers + reserved + six key slots
         assertEquals(Keycodes.KEY_A.toByte(), pressed[2])
         r.release(Keycodes.KEY_A)
         assertNull(r.payload())
