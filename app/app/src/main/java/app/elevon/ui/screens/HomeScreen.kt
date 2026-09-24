@@ -1,12 +1,7 @@
 package app.elevon.ui.screens
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.provider.Settings
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -58,7 +53,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
 import app.elevon.data.ControlMode
@@ -67,6 +61,14 @@ import app.elevon.ui.components.ConnectionPill
 import app.elevon.ui.components.Honesty
 import app.elevon.ui.components.HonestyChip
 import app.elevon.ui.components.StateCard
+
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 /**
  * The home screen: brand, live connection state, the seven control modes,
@@ -358,6 +360,7 @@ private fun ConnectSheet(nav: NavHostController) {
     }
 }
 
+
 @Composable
 private fun BluetoothPermissionGate() {
     val context = LocalContext.current
@@ -382,13 +385,13 @@ private fun BluetoothPermissionGate() {
                 .padding(16.dp),
         ) {
             Text(
-                \"Nearby devices permission needed\",
+                "Nearby devices permission needed",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer,
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                \"Elevon needs Nearby devices permission to act as a Bluetooth keyboard, mouse and gamepad. Without it, pairing and all controls fail on Android 12+ — especially Android 16 (API 36) where enforcement is strict. Grant it once and Elevon will work.\",
+                "Elevon needs Nearby devices permission to act as a Bluetooth keyboard, mouse and gamepad. Without it, pairing and all controls fail on Android 12+ — especially Android 16 (API 36) where enforcement is strict. Grant it once and Elevon will work.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer,
             )
@@ -397,16 +400,16 @@ private fun BluetoothPermissionGate() {
                 Button(
                     onClick = { launcher.launch(requiredBluetoothPermissions()) },
                     shape = RoundedCornerShape(12.dp),
-                ) { Text(\"Grant permission\") }
+                ) { Text("Grant permission") }
                 OutlinedButton(
                     onClick = {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                            data = android.net.Uri.parse(\"package:${context.packageName}\")
+                            data = Uri.parse("package:${context.packageName}")
                         }
                         context.startActivity(intent)
                     },
                     shape = RoundedCornerShape(12.dp),
-                ) { Text(\"Open settings\") }
+                ) { Text("Open settings") }
             }
         }
     }
