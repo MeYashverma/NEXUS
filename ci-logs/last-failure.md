@@ -9,35 +9,14 @@ Caused by: org.gradle.api.internal.exceptions.MarkedVerificationException: There
 # Test failure details
 ## app.elevon.CharMapTest: failures=0 errors=0
 ## app.elevon.GamepadReportTest: failures=0 errors=0
-## app.elevon.HidDescriptorsTest: failures=2 errors=0
+## app.elevon.HidDescriptorsTest: failures=1 errors=0
 - app.elevon.HidDescriptorsTest.composite descriptor parses cleanly [failure]
-  java.lang.AssertionError: expected:<[1, 2, 3, 4, 5]> but was:<[]>
-  at app.elevon.HidDescriptorsTest.composite descriptor parses cleanly(HidDescriptorsTest.kt:58)
-- app.elevon.HidDescriptorsTest.basic descriptor has only keyboard and mouse [failure]
-  java.lang.AssertionError: expected:<[1, 2]> but was:<[]>
-  at app.elevon.HidDescriptorsTest.basic descriptor has only keyboard and mouse(HidDescriptorsTest.kt:65)
-## app.elevon.KeyboardReportTest: failures=2 errors=0
-- app.elevon.KeyboardReportTest.six key rollover saturates at six [failure]
-  java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 7
-  at app.elevon.hid.KeyboardReport.payload(KeyboardReport.kt:54)
-  at app.elevon.KeyboardReportTest.modifiers combine and clear(ReportsTest.kt:49)
-- app.elevon.KeyboardReportTest.led output tracks caps lock [failure]
-  java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 7
-  at app.elevon.hid.KeyboardReport.payload(KeyboardReport.kt:54)
-  at app.elevon.KeyboardReportTest.press and release cycles slots(ReportsTest.kt:26)
+  java.lang.AssertionError: expected:<7> but was:<8>
+  at app.elevon.HidDescriptorsTest.payload sizes match documented report layouts(HidDescriptorsTest.kt:70)
+## app.elevon.KeyboardReportTest: failures=0 errors=0
 ## app.elevon.ModelJsonTest: failures=0 errors=0
 ## app.elevon.MouseReportTest: failures=0 errors=0
-## app.elevon.RelayCryptoTest: failures=2 errors=0
-- app.elevon.RelayCryptoTest.base64url round trip [failure]
-  java.lang.IllegalArgumentException: Failed requirement.
-  at app.elevon.relay.RelayCrypto.leftPad(RelayCrypto.kt:145)
-  at app.elevon.relay.RelayCrypto.encodePublicKey(RelayCrypto.kt:47)
-  at app.elevon.RelayCryptoTest.public keys round trip through raw encoding(RelayCryptoTest.kt:17)
-- app.elevon.RelayCryptoTest.different pairings produce different codes [failure]
-  java.lang.IllegalArgumentException: Failed requirement.
-  at app.elevon.relay.RelayCrypto.leftPad(RelayCrypto.kt:145)
-  at app.elevon.relay.RelayCrypto.encodePublicKey(RelayCrypto.kt:47)
-  at app.elevon.RelayCryptoTest.both sides derive the same session key(RelayCryptoTest.kt:28)
+## app.elevon.RelayCryptoTest: failures=0 errors=0
 
 # Log tails
 ## app/build-debug.log
@@ -79,12 +58,12 @@ Daemon will be stopped at the end of the build
 > Task :app:checkDebugDuplicateClasses
 > Task :app:mergeDebugNativeLibs
 > Task :app:mergeLibDexDebug
+> Task :app:mergeDebugJavaResource
 
 > Task :app:stripDebugDebugSymbols
 Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
 
 > Task :app:mergeProjectDexDebug
-> Task :app:mergeDebugJavaResource
 > Task :app:validateSigningDebug
 > Task :app:writeDebugAppMetadata
 > Task :app:writeDebugSigningConfigVersions
@@ -92,9 +71,9 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :app:packageDebug
 > Task :app:createDebugApkListingFileRedirect
 > Task :app:assembleDebug
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1790268586700.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1790268925466.json
 
-BUILD SUCCESSFUL in 1m 37s
+BUILD SUCCESSFUL in 1m 36s
 39 actionable tasks: 19 executed, 20 up-to-date
 ## app/build-test.log
 	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
@@ -196,4 +175,4 @@ BUILD SUCCESSFUL in 1m 37s
 
 
 BUILD FAILED in 2m 14s
-26 actionable tasks: 26 executed
+26 actionable tasks: 25 executed, 1 from cache
