@@ -110,9 +110,11 @@ class HidController(private val context: Context) {
             super.onGetReport(device, type, id, bufferSize)
             if (type != BluetoothHidDevice.REPORT_TYPE_INPUT) return
             val payload = when (id.toInt()) {
-                HidDescriptors.REPORT_ID_KEYBOARD -> ByteArray(7)
-                HidDescriptors.REPORT_ID_MOUSE -> ByteArray(5)
-                HidDescriptors.REPORT_ID_GAMEPAD -> gamepad.current().let { ByteArray(9) }
+                HidDescriptors.REPORT_ID_KEYBOARD -> ByteArray(HidDescriptors.keyboardPayloadSize)
+                HidDescriptors.REPORT_ID_MOUSE -> ByteArray(HidDescriptors.mousePayloadSize)
+                HidDescriptors.REPORT_ID_CONSUMER -> ByteArray(HidDescriptors.consumerPayloadSize)
+                HidDescriptors.REPORT_ID_SYSTEM -> ByteArray(HidDescriptors.systemPayloadSize)
+                HidDescriptors.REPORT_ID_GAMEPAD -> ByteArray(HidDescriptors.gamepadPayloadSize)
                 else -> null
             } ?: return
             runCatching { hidProxy?.replyReport(device, type, id, payload) }
@@ -163,6 +165,20 @@ class HidController(private val context: Context) {
     }
 
     fun start() {
+        // On Android 12+ BLUETOOTH_CONNECT is runtime. If not granted, we cannot
+        // even call getProfileProxy or bondedDevices without SecurityException.
+        // Surface as OFFLINE and let the UI permission gate handle it; retry works
+        // when permission is granted (MainActivity + HomeScreen call start() again).
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            val hasConnect = androidx.core.content.ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.BLUETOOTH_CONNECT,
+            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+            if (!hasConnect) {
+                machine.onAppUnregistered(); publish(); return
+            }
+        }
+
         val manager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
         adapter = manager?.adapter
         val a = adapter
@@ -176,6 +192,12 @@ class HidController(private val context: Context) {
         }
         runCatching {
             a.getProfileProxy(context, serviceListener, BluetoothProfile.HID_DEVICE)
+        }.onFailure {
+            // SecurityException on Android 16 if permission revoked after check, or
+            // other OEM issues — surface honestly.
+            if (it is SecurityException) {
+                machine.onAppUnregistered(); publish()
+            }
         }
         // Some OEMs never deliver the HID_DEVICE profile. If the proxy hasn't
         // come up within 6 seconds of start(), call it unsupported honestly.
@@ -245,29 +267,34 @@ class HidController(private val context: Context) {
 
     fun sendRawKeyboard(mods: Int, keys: List<Int>) {
         val d = currentDevice ?: return
-        val payload = ByteArray(7)
+        val payload = ByteArray(HidDescriptors.keyboardPayloadSize)
         payload[0] = mods.toByte()
+        payload[1] = 0 // reserved
         keys.take(6).forEachIndexed { i, k -> payload[2 + i] = k.toByte() }
         btExecutor.execute { runCatching { hidProxy?.sendReport(d, HidDescriptors.REPORT_ID_KEYBOARD, payload) } }
     }
 
     fun sendMouseState() {
         val d = currentDevice ?: return
-        val payload = mouse.payload() ?: return
+        val payload = mouse.payload()
         btExecutor.execute { runCatching { hidProxy?.sendReport(d, HidDescriptors.REPORT_ID_MOUSE, payload) } }
     }
 
     fun sendMouseButtons(buttons: Int) {
         val d = currentDevice ?: return
-        val payload = ByteArray(5)
+        val payload = ByteArray(HidDescriptors.mousePayloadSize)
         payload[0] = buttons.toByte()
         btExecutor.execute { runCatching { hidProxy?.sendReport(d, HidDescriptors.REPORT_ID_MOUSE, payload) } }
     }
 
     fun sendConsumer(usage: Int) {
         val d = currentDevice ?: return
-        val press = byteArrayOf((usage and 0xFF).toByte(), ((usage shr 8) and 0xFF).toByte())
-        val release = byteArrayOf(0, 0)
+        // Consumer report is usage (16-bit) + 16-bit padding per descriptor (total 4 bytes)
+        val press = ByteArray(HidDescriptors.consumerPayloadSize)
+        press[0] = (usage and 0xFF).toByte()
+        press[1] = ((usage shr 8) and 0xFF).toByte()
+        // padding bytes 2,3 remain 0
+        val release = ByteArray(HidDescriptors.consumerPayloadSize)
         btExecutor.execute {
             runCatching {
                 hidProxy?.sendReport(d, HidDescriptors.REPORT_ID_CONSUMER, press)

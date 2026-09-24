@@ -74,8 +74,13 @@ class KeyboardReportTest {
 class MouseReportTest {
 
     @Test
-    fun `idle report is null`() {
-        assertNull(MouseReport().payload())
+    fun `idle report is zeroed but sent to allow button release`() {
+        val p = MouseReport().payload()
+        assertEquals(0, p[0].toInt())
+        assertEquals(0, p[1].toInt())
+        assertEquals(0, p[2].toInt())
+        // old helper still returns null when idle to avoid spamming
+        assertNull(MouseReport().payloadOrNullIfIdle())
     }
 
     @Test
@@ -83,17 +88,20 @@ class MouseReportTest {
         val m = MouseReport()
         m.move(10, -5)
         m.move(3, 3)
-        val p = m.payload()!!
+        val p = m.payload()
         assertEquals(13, p[1].toInt())
         assertEquals(-2, p[2].toInt())
-        assertNull(m.payload())
+        val p2 = m.payload()
+        assertEquals(0, p2[1].toInt())
+        assertEquals(0, p2[2].toInt())
+        assertNull(m.payloadOrNullIfIdle())
     }
 
     @Test
     fun `deltas clamp to int8 range`() {
         val m = MouseReport()
         m.move(500, -500)
-        val p = m.payload()!!
+        val p = m.payload()
         assertEquals(127, p[1].toInt())
         assertEquals(-127, p[2].toInt())
     }
@@ -103,16 +111,19 @@ class MouseReportTest {
         val m = MouseReport()
         m.setButton(MouseReport.BUTTON_LEFT, true)
         m.setButton(MouseReport.BUTTON_RIGHT, true)
-        assertEquals(0x03, m.payload()!![0].toInt())
+        assertEquals(0x03, m.payload()[0].toInt())
         m.setButton(MouseReport.BUTTON_LEFT, false)
-        assertEquals(0x02, m.payload()!![0].toInt())
+        assertEquals(0x02, m.payload()[0].toInt())
+        m.setButton(MouseReport.BUTTON_RIGHT, false)
+        // release must still send a report with 0 buttons
+        assertEquals(0x00, m.payload()[0].toInt())
     }
 
     @Test
     fun `wheel accumulates`() {
         val m = MouseReport()
         m.scroll(3)
-        assertEquals(3, m.payload()!![3].toInt())
+        assertEquals(3, m.payload()[3].toInt())
     }
 }
 

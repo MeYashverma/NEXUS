@@ -62,6 +62,14 @@ import app.elevon.ui.components.Honesty
 import app.elevon.ui.components.HonestyChip
 import app.elevon.ui.components.StateCard
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+
 /**
  * The home screen: brand, live connection state, the seven control modes,
  * profiles, quick actions and a Labs teaser. Design per docs/design.md §22.
@@ -104,6 +112,11 @@ fun HomeScreen(nav: NavHostController) {
         }
 
         Spacer(Modifier.height(20.dp))
+
+        // ---- permission gate (Android 12+ needs runtime Nearby devices) ----
+        BluetoothPermissionGate()
+
+        Spacer(Modifier.height(12.dp))
 
         // ---- connection card ----
         ConnectionCard(
@@ -345,6 +358,82 @@ private fun ConnectSheet(nav: NavHostController) {
             Text("Pair a new computer")
         }
     }
+}
+
+
+@Composable
+private fun BluetoothPermissionGate() {
+    val context = LocalContext.current
+    val session = LocalSession.current
+    var hasPermission by remember { mutableStateOf(hasBluetoothConnectPermission(context)) }
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { results ->
+        hasPermission = results.values.all { it }
+        if (hasPermission) {
+            session.hid.start()
+        }
+    }
+
+    if (!hasPermission) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .border(1.dp, MaterialTheme.colorScheme.error, RoundedCornerShape(20.dp))
+                .background(MaterialTheme.colorScheme.errorContainer, RoundedCornerShape(20.dp))
+                .padding(16.dp),
+        ) {
+            Text(
+                "Nearby devices permission needed",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Elevon needs Nearby devices permission to act as a Bluetooth keyboard, mouse and gamepad. Without it, pairing and all controls fail on Android 12+ — especially Android 16 (API 36) where enforcement is strict. Grant it once and Elevon will work.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+            )
+            Spacer(Modifier.height(12.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Button(
+                    onClick = { launcher.launch(requiredBluetoothPermissions()) },
+                    shape = RoundedCornerShape(12.dp),
+                ) { Text("Grant permission") }
+                OutlinedButton(
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.parse("package:${context.packageName}")
+                        }
+                        context.startActivity(intent)
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                ) { Text("Open settings") }
+            }
+        }
+    }
+}
+
+private fun hasBluetoothConnectPermission(context: android.content.Context): Boolean {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+    return ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.BLUETOOTH_CONNECT,
+    ) == PackageManager.PERMISSION_GRANTED
+}
+
+private fun requiredBluetoothPermissions(): Array<String> {
+    val list = mutableListOf<String>()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        list.add(Manifest.permission.BLUETOOTH_CONNECT)
+        list.add(Manifest.permission.BLUETOOTH_SCAN)
+        list.add(Manifest.permission.BLUETOOTH_ADVERTISE)
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        list.add(Manifest.permission.POST_NOTIFICATIONS)
+    }
+    return list.toTypedArray()
 }
 
 @Composable

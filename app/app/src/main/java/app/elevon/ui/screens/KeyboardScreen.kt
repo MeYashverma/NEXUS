@@ -77,6 +77,7 @@ fun KeyboardScreen(nav: NavHostController) {
 
     var capsLock by remember { mutableStateOf(false) }
     var sticky by remember { mutableStateOf(mapOf<String, Boolean>()) } // id -> locked
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
 
     val connected = connection.connectionState == HidConnectionState.CONNECTED
 
@@ -116,10 +117,16 @@ fun KeyboardScreen(nav: NavHostController) {
                 haptic()
             }
             else -> {
-                session.hid.sendRawKeyboard(effectiveMods() and 0xFF, listOf(key.usage))
+                val mods = effectiveMods() and 0xFF
+                session.hid.sendRawKeyboard(mods, listOf(key.usage))
                 // Sticky (unlocked) modifiers clear after use, like mobile keyboards.
                 sticky = sticky.filterValues { it }
                 haptic()
+                // Send release after a short delay so host sees a proper press+release.
+                scope.launch {
+                    delay(12)
+                    session.hid.sendRawKeyboard(0, emptyList())
+                }
             }
         }
     }

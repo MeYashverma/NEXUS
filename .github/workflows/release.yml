@@ -43,14 +43,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SHA: ${{ github.sha }}
         run: |
-          if gh release view v0.1.0 --repo "${{ github.repository }}" > /dev/null 2>&1; then
-            echo "release exists; uploading assets"
-            gh release upload v0.1.0 --repo "${{ github.repository }}" dist/* --clobber
+          set -e
+          VERSION=$(grep -E 'versionName\s*=\s*"' app/app/build.gradle.kts | sed -E 's/.*\"([^\"]+)\".*/\1/' | head -1)
+          if [ -z "$VERSION" ]; then VERSION="0.1.1"; fi
+          TAG="v$VERSION"
+          NOTES=".github/RELEASE_NOTES_${TAG}.md"
+          if [ ! -f "$NOTES" ]; then NOTES=".github/RELEASE_NOTES_v0.1.0.md"; fi
+          if gh release view "$TAG" --repo "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "release $TAG exists; uploading assets"
+            gh release upload "$TAG" --repo "${{ github.repository }}" dist/* --clobber
           else
-            gh release create v0.1.0 \
+            gh release create "$TAG" \
               --repo "${{ github.repository }}" \
               --target "$SHA" \
-              --title "Elevon v0.1.0 — Your phone. Your controls." \
-              --notes-file .github/RELEASE_NOTES_v0.1.0.md \
+              --title "Elevon $TAG — Your phone. Your controls." \
+              --notes-file "$NOTES" \
               dist/*
           fi

@@ -652,7 +652,24 @@ CHANGELOG = hero(
 ) + f"""
 <section class="wrap block">
   <div class="card">
-    <h3>v{VERSION} — first public alpha <span class="chip experimental">Alpha</span></h3>
+    <h3>v0.1.1 — HID and permission fixes <span class="chip core">Patch</span></h3>
+    <p><em>Released: September 2026</em></p>
+    <h4>Fixed</h4>
+    <ul>
+      <li><strong>Keyboard payload size</strong>: was 7 bytes in onGetReport + sendRawKeyboard but descriptor requires 8 (mods + reserved + 6 keys). Fixed to 8 — typing, clipboard bridge, macro pad, gamepad keyboard mode now work on Windows 11.</li>
+      <li><strong>Mouse button release</strong>: MouseReport.payload() returned null when idle, so button release was never sent and buttons stuck. Now always sends report, with payloadOrNullIfIdle() helper for idle checks.</li>
+      <li><strong>Media keys (consumer)</strong>: descriptor declares 4 bytes (usage + padding) but code sent 2. Fixed to 4 bytes — media keys now reach Windows.</li>
+      <li><strong>KeyboardScreen</strong>: tap sent press without release, leaving keys stuck. Now sends press then release after 12ms via coroutine.</li>
+      <li><strong>Android 12+ runtime permissions</strong>: BLUETOOTH_CONNECT/SCAN/ADVERTISE + POST_NOTIFICATIONS were declared but never requested. On Android 16 (API 36, targetSdk 36) this throws SecurityException for all Bluetooth ops. Added MainActivity launcher requesting Nearby devices + notifications on create and retrying HidController.start(), plus HomeScreen permission gate with Grant + Open settings buttons and honest error card explaining why all controls fail without permission.</li>
+    </ul>
+    <h4>Added</h4>
+    <ul>
+      <li>Light-theme screenshots (Paper theme #FAFAF8) with prefers-color-scheme switching via &lt;picture&gt; — dark remains default Graphite.</li>
+      <li>GitHub Pages deployment via Actions (website/ folder, .nojekyll).</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>v0.1.0 — first public alpha <span class="chip experimental">Alpha</span></h3>
     <p><em>Released: September 2026</em></p>
     <h4>Added</h4>
     <ul>
