@@ -194,6 +194,8 @@ details p { margin: 0; }
   background: var(--bg-soft);
 }
 .shot img { display: block; width: 100%; height: auto; }
+.shot picture { display: block; }
+.shot picture img { display: block; width: 100%; height: auto; }
 .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; }
 
 /* Footer */
