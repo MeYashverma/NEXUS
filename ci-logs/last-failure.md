@@ -1,40 +1,36 @@
 # Kotlin compile errors
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/input/KeyDefs.kt:109:36 Initializer type mismatch: expected 'List<List<KeyDef>>', actual 'List<List<Any>>'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:19 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:58 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:58 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/DeckScreens.kt:325:22 Unresolved reference 'pointerInput'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/DeckScreens.kt:326:17 Unresolved reference 'detectTapGestures'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:350:38 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:317:17 Unresolved reference 'coroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:319:36 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:326:39 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:339:91 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:350:37 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:353:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:357:33 Suspension functions can only be called within coroutine body.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:174:21 None of the following candidates is applicable:
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:182:163 Syntax error: Expecting a when-condition.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:184:106 Syntax error: Expecting a when-condition.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:185:29 Syntax error: Expecting an expression, is-condition or in-condition.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:371:38 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:16 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:49 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:49 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:14 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:47 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:47 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/input/KeyDefs.kt:109:36 Initializer type mismatch: expected 'List<List<KeyDef>>', actual 'List<List<Any>>'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:19 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:58 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/ClipboardScreen.kt:46:58 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/DeckScreens.kt:325:22 Unresolved reference 'pointerInput'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/DeckScreens.kt:326:17 Unresolved reference 'detectTapGestures'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:350:38 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:364:21 Unresolved reference 'coroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:366:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:370:43 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:381:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:385:33 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:317:17 Unresolved reference 'coroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:319:36 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:326:39 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:339:91 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:350:37 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:353:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:357:33 Suspension functions can only be called within coroutine body.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:174:21 None of the following candidates is applicable:
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:182:163 Syntax error: Expecting a when-condition.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:184:106 Syntax error: Expecting a when-condition.
 e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RelayScreen.kt:185:29 Syntax error: Expecting an expression, is-condition or in-condition.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:371:38 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:16 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:49 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/SettingsScreen.kt:60:49 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:14 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:47 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/TouchpadScreen.kt:330:47 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:364:21 Unresolved reference 'coroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:366:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:370:43 'fun launch(context: CoroutineContext = ..., start: CoroutineStart = ..., block: suspend CoroutineScope.() -> Unit): Job' is deprecated. 'launch' can not be called without the corresponding coroutine scope. Consider wrapping 'launch' in 'coroutineScope { }', using 'runBlocking { }', or using some other 'CoroutineScope'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:381:29 Suspension functions can only be called within coroutine body.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/RemoteScreens.kt:385:33 Suspension functions can only be called within coroutine body.
 
 # Failure reason
 > Task :app:compileDebugKotlin FAILED
@@ -50,35 +46,6 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 
 # Log tails
 ## app/build-debug.log
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
-	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
-	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
-	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:107)
-	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:56)
-	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:64)
-	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:43)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:125)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:61)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
-	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
 	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
 	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
 	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
@@ -113,6 +80,35 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
 Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilation error. See log for more details
@@ -148,7 +144,7 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 1m 45s
+BUILD FAILED in 1m 38s
 26 actionable tasks: 9 executed, 17 up-to-date
 ## app/build-test.log
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
@@ -249,5 +245,5 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 1m 52s
-19 actionable tasks: 19 executed
+BUILD FAILED in 1m 42s
+19 actionable tasks: 18 executed, 1 from cache
