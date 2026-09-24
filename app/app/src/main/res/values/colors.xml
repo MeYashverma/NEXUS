@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Elevon design tokens (see docs/design.md). -->
+    <color name="elevon_background_dark">#101114</color>
+    <color name="elevon_background_light">#FAFAF8</color>
+    <color name="elevon_accent">#FF7A45</color>
+    <color name="ic_launcher_background">#101114</color>
+</resources>
