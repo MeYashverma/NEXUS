@@ -1,0 +1,14 @@
+name: Environment probe
+on:
+  push:
+    branches: ["arena/**"]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report tooling
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"; java -version 2>&1
+          echo "ANDROID_HOME=$ANDROID_HOME"; ls "$ANDROID_HOME/platforms" "$ANDROID_HOME/build-tools" 2>&1
+          ls /dev/kvm 2>&1 || true
+          echo "::notice title=probe::java=$(java -version 2>&1 | head -1) platforms=$(ls $ANDROID_HOME/platforms | tr '\n' ' ') build-tools=$(ls $ANDROID_HOME/build-tools | tr '\n' ' ')"
