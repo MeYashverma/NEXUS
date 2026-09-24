@@ -43,7 +43,7 @@ import app.elevon.ui.components.StateCard
 fun ClipboardScreen(nav: NavHostController) {
     val session = LocalSession.current
     val history by session.settings.clipboardHistory.collectAsState()
-    val retention by session.settings.clipboardRetention.collectAsState()
+    val retention by session.settings.clipboardRetention.value.collectAsState()
     val connection by session.connection.collectAsState()
     val clipboard = LocalClipboardManager.current
     val connected = connection.connectionState == app.elevon.hid.HidConnectionState.CONNECTED

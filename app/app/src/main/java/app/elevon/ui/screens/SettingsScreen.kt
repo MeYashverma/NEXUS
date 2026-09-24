@@ -57,7 +57,7 @@ fun SettingsScreen(nav: NavHostController) {
     val theme by session.settings.theme.collectAsState()
     val haptics by session.settings.haptics.collectAsState()
     val hostLayoutPref by session.settings.hostLayout.value.collectAsState()
-    val keepOn by session.settings.keepScreenOn.collectAsState()
+    val keepOn by session.settings.keepScreenOn.value.collectAsState()
     val pointerSpeed by session.settings.pointerSpeed.value.collectAsState()
     val scrollSpeed by session.settings.scrollSpeed.value.collectAsState()
     val natural by session.settings.naturalScrolling.value.collectAsState()

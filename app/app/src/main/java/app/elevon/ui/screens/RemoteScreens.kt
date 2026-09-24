@@ -361,29 +361,30 @@ object RemoteScreens {
                 .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp))
                 .background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(16.dp))
                 .pointerInput(label) {
-                    awaitEachGesture {
-                        awaitFirstDown(requireUnconsumed = false)
-                        onAction()
-                        // See KeyboardScreen: delay() must run outside the
-                        // restricted gesture scope, so a sibling coroutine
-                        // repeats while the watcher tracks release.
-                        var released = false
-                        val ticker = launch {
+                    coroutineScope {
+                        while (true) {
+                            awaitPointerEventScope { awaitFirstDown(requireUnconsumed = false) }
+                            onAction()
+                            // Release watcher; the repeat runs while it tracks the hold.
+                            var released = false
+                            val watcher = launch {
+                                awaitPointerEventScope {
+                                    while (true) {
+                                        val event = awaitPointerEvent()
+                                        if (event.changes.all { !it.pressed }) {
+                                            released = true
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                            delay(300) // initial repeat delay
                             val start = System.currentTimeMillis()
                             while (!released && System.currentTimeMillis() - start < 8000) {
-                                delay(200)
-                                if (released) break
                                 onAction()
+                                delay(200)
                             }
-                        }
-                        try {
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                if (event.changes.all { !it.pressed }) break
-                            }
-                        } finally {
-                            released = true
-                            ticker.cancel()
+                            watcher.cancel()
                         }
                     }
                 },

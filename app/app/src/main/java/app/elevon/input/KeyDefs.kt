@@ -181,8 +181,7 @@ object KeyLayouts {
             KeyDef.char("space", "space", Keycodes.KEY_SPACE, width = 6.25f),
             KeyDef.ALT.copy(id = "alt_r", width = 1.25f),
             KeyDef.CTRL.copy(id = "ctrl_r", mods = Keycodes.MOD_RCTRL, width = 1.25f),
-            navCluster(),
-        ),
+        ) + navCluster(),
     )
 
     private fun navCluster(): List<KeyDef> = listOf(

@@ -327,7 +327,7 @@ private fun MousePadButton(
 @Composable
 fun KeepScreenOnWhileVisible() {
     val session = LocalSession.current
-    val keep by session.settings.keepScreenOn.collectAsState()
+    val keep by session.settings.keepScreenOn.value.collectAsState()
     val context = LocalContext.current
     DisposableEffect(keep) {
         val window = (context as? android.app.Activity)?.window

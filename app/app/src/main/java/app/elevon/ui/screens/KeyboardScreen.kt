@@ -314,58 +314,52 @@ private fun KeyCapCell(
         modifier = modifier
             .fillMaxSize()
             .pointerInput(key.id, isModifier) {
-                awaitEachGesture {
-                    val down = awaitFirstDown(requireUnconsumed = false)
-                    down.consume()
-                    isPressed = true
-                    val holdStart = System.currentTimeMillis()
+                coroutineScope {
+                    while (true) {
+                        val down = awaitPointerEventScope { awaitFirstDown(requireUnconsumed = false) }
+                        down.consume()
+                        isPressed = true
+                        val holdStart = System.currentTimeMillis()
 
-                    // Long-press window: 420ms decides tap vs hold.
-                    var released = false
-                    while (System.currentTimeMillis() - holdStart < 420) {
-                        val event = awaitPointerEvent()
-                        if (event.changes.all { !it.pressed }) {
-                            released = true
-                            break
-                        }
-                    }
-                    if (released) {
-                        isPressed = false
-                        onTap(key)
-                        return@awaitEachGesture
-                    }
-
-                    if (isModifier) {
-                        onLock(key)
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            if (event.changes.all { !it.pressed }) break
-                        }
-                    } else {
-                        // Auto-repeat until release (bounded for safety). delay()
-                        // is illegal inside the restricted gesture scope, so the
-                        // ticker runs as a sibling coroutine of the pointer-input
-                        // scope while the watcher below tracks release.
+                        // Release watcher: the only event consumer while held.
                         var released = false
-                        val ticker = launch {
+                        val watcher = launch {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    if (event.changes.all { !it.pressed }) {
+                                        released = true
+                                        break
+                                    }
+                                }
+                            }
+                        }
+
+                        // Long-press window: 420ms decides tap vs hold.
+                        while (!released && System.currentTimeMillis() - holdStart < 420) delay(16)
+
+                        if (released) {
+                            isPressed = false
+                            onTap(key)
+                            watcher.cancel()
+                            continue
+                        }
+
+                        if (isModifier) {
+                            onLock(key)
+                            watcher.join() // stay held until release
+                        } else {
+                            // Auto-repeat until release (bounded for safety).
                             delay(400) // initial repeat delay
                             val start = System.currentTimeMillis()
                             while (!released && System.currentTimeMillis() - start < 6000) {
                                 onTap(key)
                                 delay(48)
                             }
+                            watcher.cancel()
                         }
-                        try {
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                if (event.changes.all { !it.pressed }) break
-                            }
-                        } finally {
-                            released = true
-                            ticker.cancel()
-                        }
+                        isPressed = false
                     }
-                    isPressed = false
                 }
             }
             .border(
