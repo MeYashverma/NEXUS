@@ -12,9 +12,11 @@
 <meta name="theme-color" content="#101114">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
 <header>
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="Elevon home">
@@ -28,7 +30,7 @@
 <main id="main">
 
 <section class="wrap hero">
-  <div class="kicker">Elevon Labs</div>
+  <div class="kicker-row"><div class="kicker">Elevon Labs</div><span class="badge"><span class="dot-mini"></span> v0.1.1 live</span></div>
   <h1>Experiments, clearly labeled</h1>
   <p class="lede">Labs is where Elevon tries things that don't belong in a stable product yet — and says so.</p>
   <div class="actions"></div>
@@ -43,7 +45,7 @@
     <p>Relay is honest about its boundaries: it sees keys only while its page is focused, it pauses when
     you switch apps, and it can never capture your system-wide keyboard. That's the browser's security
     model working as intended.</p>
-    <div class="actions"><a class="btn primary" href="relay/index.html">Open Relay</a></div>
+    <div class="actions"><a class="btn primary" href="relay/index.html">Open Relay <span aria-hidden="true">→</span></a></div>
   </div>
 </section>
 <section class="wrap block tight">
