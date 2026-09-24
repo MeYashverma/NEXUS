@@ -397,7 +397,7 @@ private fun StickControl(
                                     onMove(0f, 0f)
                                     onKeyboardDirs(emptySet())
                                     if (isDoubleTap) {
-                                        app.elevon.LocalSessionProxy.gamepadClick(clickBit2(element), false)
+                                        onStickClick(false)
                                     }
                                     break
                                 }

@@ -44,7 +44,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView? no
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
 import app.elevon.data.HapticsMode

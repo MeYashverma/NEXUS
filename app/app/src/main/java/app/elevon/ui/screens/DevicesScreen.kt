@@ -41,7 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
-import app.elevon.data.HostOs
+import app.elevon.input.HostOs
 import app.elevon.data.SavedDevice
 import app.elevon.hid.HidConnectionState
 import app.elevon.ui.components.StateCard

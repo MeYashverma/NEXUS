@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
 import app.elevon.data.ControlMode
-import app.elevon.data.HostOs
+import app.elevon.input.HostOs
 import app.elevon.hid.HidConnectionState
 import app.elevon.hid.Keycodes
 import app.elevon.input.Chord
