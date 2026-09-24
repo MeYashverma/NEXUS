@@ -118,7 +118,7 @@ jobs:
       # Publishes Release v0.1.0 once the branch builds green. Idempotent:
       # existing releases only get their assets refreshed.
       - name: Publish Release v0.1.0
-        if: success() && github.ref == 'refs/heads/arena/01a0d3d6-nexus'
+        if: success() && startsWith(github.ref, 'refs/heads/arena/')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
