@@ -52,6 +52,7 @@ import app.elevon.input.KeyLayouts
 import app.elevon.input.KeyboardLayoutId
 import app.elevon.ui.components.StateCard
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Keyboard mode: Compact, Full, Gaming and Custom layouts over one HID
@@ -341,13 +342,27 @@ private fun KeyCapCell(
                             if (event.changes.all { !it.pressed }) break
                         }
                     } else {
-                        // Auto-repeat until release (bounded for safety).
-                        val repeatStart = System.currentTimeMillis()
-                        while (System.currentTimeMillis() - repeatStart < 6000) {
-                            delay(48)
-                            val event = awaitPointerEvent()
-                            if (event.changes.all { !it.pressed }) break
-                            onTap(key)
+                        // Auto-repeat until release (bounded for safety). delay()
+                        // is illegal inside the restricted gesture scope, so the
+                        // ticker runs as a sibling coroutine of the pointer-input
+                        // scope while the watcher below tracks release.
+                        var released = false
+                        val ticker = launch {
+                            delay(400) // initial repeat delay
+                            val start = System.currentTimeMillis()
+                            while (!released && System.currentTimeMillis() - start < 6000) {
+                                onTap(key)
+                                delay(48)
+                            }
+                        }
+                        try {
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                if (event.changes.all { !it.pressed }) break
+                            }
+                        } finally {
+                            released = true
+                            ticker.cancel()
                         }
                     }
                     isPressed = false

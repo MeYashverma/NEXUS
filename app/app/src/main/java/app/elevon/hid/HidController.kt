@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.bluetooth.BluetoothHidDevice
+import android.bluetooth.BluetoothHidDeviceAppSdpSettings
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -127,7 +128,7 @@ class HidController(private val context: Context) {
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
             btExecutor.execute {
                 hidProxy = proxy as? BluetoothHidDevice
-                val sdp = BluetoothHidDevice.AppSdpSettings(
+                val sdp = BluetoothHidDeviceAppSdpSettings(
                     "Elevon",
                     "Elevon universal input device",
                     "Elevon",

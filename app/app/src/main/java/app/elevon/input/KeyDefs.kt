@@ -21,6 +21,10 @@ data class KeyDef(
         fun char(label: String, usage: Int, shiftLabel: String? = null, width: Float = 1f) =
             KeyDef(label, label, KeyKind.CHAR, usage, 0, shiftLabel, width)
 
+        /** Explicit id + label form used by layouts that show different text. */
+        fun char(id: String, label: String, usage: Int, shiftLabel: String? = null, width: Float = 1f) =
+            KeyDef(id, label, KeyKind.CHAR, usage, 0, shiftLabel, width)
+
         fun mod(id: String, label: String, mods: Int, width: Float = 1f) =
             KeyDef(id, label, KeyKind.MODIFIER, Keycodes.KEY_NONE, mods, null, width)
 

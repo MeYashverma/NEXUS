@@ -124,7 +124,6 @@ class SettingsRepository(context: Context) {
 
     private fun floatFlow(key: String, def: Float) =
         FloatPref(prefs.getFloat(key, def)) { put(key, it) }
-    }
 
     private companion object {
         const val K_THEME = "theme"

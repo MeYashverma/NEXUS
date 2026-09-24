@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -363,13 +364,26 @@ object RemoteScreens {
                     awaitEachGesture {
                         awaitFirstDown(requireUnconsumed = false)
                         onAction()
-                        val start = System.currentTimeMillis()
-                        while (true) {
-                            delay(200)
-                            val event = awaitPointerEvent()
-                            if (event.changes.all { !it.pressed }) break
-                            if (System.currentTimeMillis() - start > 8000) break
-                            onAction()
+                        // See KeyboardScreen: delay() must run outside the
+                        // restricted gesture scope, so a sibling coroutine
+                        // repeats while the watcher tracks release.
+                        var released = false
+                        val ticker = launch {
+                            val start = System.currentTimeMillis()
+                            while (!released && System.currentTimeMillis() - start < 8000) {
+                                delay(200)
+                                if (released) break
+                                onAction()
+                            }
+                        }
+                        try {
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                if (event.changes.all { !it.pressed }) break
+                            }
+                        } finally {
+                            released = true
+                            ticker.cancel()
                         }
                     }
                 },

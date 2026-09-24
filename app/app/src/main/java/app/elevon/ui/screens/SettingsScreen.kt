@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -93,9 +95,9 @@ fun SettingsScreen(nav: NavHostController) {
 
         Section("Controls") {
             Text("Pointer speed", style = MaterialTheme.typography.labelLarge)
-            Slider(pointerSpeed, { session.settings.pointerSpeed.set(it) }, 0.4f..2.6f)
+            Slider(pointerSpeed, { session.settings.pointerSpeed.set(it) }, valueRange = 0.4f..2.6f)
             Text("Scroll speed", style = MaterialTheme.typography.labelLarge)
-            Slider(scrollSpeed, { session.settings.scrollSpeed.set(it) }, 0.4f..3f)
+            Slider(scrollSpeed, { session.settings.scrollSpeed.set(it) }, valueRange = 0.4f..3f)
             ToggleRow("Natural scrolling", "Content follows your fingers.", natural) {
                 session.settings.naturalScrolling.set(it)
             }
@@ -201,7 +203,7 @@ fun SettingsScreen(nav: NavHostController) {
 }
 
 @Composable
-private fun Section(title: String, content: @Composable ColumnScopeAlias.() -> Unit) {
+private fun Section(title: String, content: @Composable ColumnScope.() -> Unit) {
     var open by remember { mutableStateOf(title in setOf("Connection", "Appearance")) }
     Column(
         Modifier
@@ -233,7 +235,7 @@ private fun Section(title: String, content: @Composable ColumnScopeAlias.() -> U
 }
 
 @Composable
-fun ToggleRow(label: String, description: String, value: Boolean, onChange: (Boolean) -> Unit) {
+private fun ToggleRow(label: String, description: String, value: Boolean, onChange: (Boolean) -> Unit) {
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -3,12 +3,14 @@ package app.elevon.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -16,8 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Play
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -114,7 +116,7 @@ fun ProfilesScreen(nav: NavHostController) {
                             session.applyProfile(profile)
                             session.setPreferredProfileForCurrentDevice(profile.id)
                         }) {
-                            Icon(Icons.Outlined.Play, contentDescription = "Apply ${profile.name}")
+                            Icon(Icons.Filled.PlayArrow, contentDescription = "Apply ${profile.name}")
                         }
                         IconButton(onClick = { session.repos.deleteProfile(profile.id) }) {
                             Icon(Icons.Outlined.Delete, contentDescription = "Delete ${profile.name}")
@@ -177,7 +179,7 @@ private fun ProfileEditorDialog(
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .androidx HorizontalScrollFix(),
+                        .horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     ControlMode.entries.forEach { m ->
