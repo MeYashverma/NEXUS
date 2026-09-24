@@ -88,9 +88,10 @@ jobs:
             done
           } > ci-logs/last-failure.md
           B64=$(base64 -w0 ci-logs/last-failure.md)
-          if gh api "repos/${{ github.repository }}/contents/ci-logs/last-failure.md" \
-              -X PUT -f message="ci(logs): record build failure" \
-              -f content="$B64" -f branch="${{ github.ref_name }}" > /dev/null 2>&1; then
+          SHA=$(gh api "repos/${{ github.repository }}/contents/ci-logs/last-failure.md?ref=${{ github.ref_name }}" -q .sha 2>/dev/null || true)
+          ARGS=(-f message="ci(logs): record build failure" -f content="$B64" -f branch="${{ github.ref_name }}")
+          [ -n "$SHA" ] && ARGS+=(-f sha="$SHA")
+          if gh api "repos/${{ github.repository }}/contents/ci-logs/last-failure.md" -X PUT "${ARGS[@]}" > /dev/null 2>&1; then
             echo "Failure log committed to branch ci-logs/last-failure.md"
           else
             echo "Contents-API commit failed"
