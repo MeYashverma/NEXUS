@@ -80,6 +80,9 @@ jobs:
             echo "# Failure reason"
             grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" app/*.log 2>/dev/null | head -40
             echo
+            echo "# Test failure details"
+            python3 tools/test_failures.py || true
+            echo
             echo "# Log tails"
             for f in app/*.log; do
               [ -e "$f" ] || continue

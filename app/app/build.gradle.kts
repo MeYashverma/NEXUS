@@ -79,6 +79,9 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    // Real org.json for JVM unit tests - android.jar ships stubs whose methods
+    // only return defaults, so JSON round-trip tests would silently fail.
+    testImplementation(libs.org.json)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
