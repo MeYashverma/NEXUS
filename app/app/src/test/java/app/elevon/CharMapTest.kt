@@ -58,6 +58,7 @@ class CharMapTest {
 
     @Test
     fun `unmapped control chars are not sent raw`() {
-        assertNull(CharMap.keystrokeFor(''))
+        assertNull(CharMap.keystrokeFor('\u20AC'))
+        assertNull(CharMap.keystrokeFor('\u00FC'))
     }
 }
