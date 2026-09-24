@@ -197,7 +197,7 @@ private fun NumpadGridPortrait(onTap: (Int) -> Unit) {
 }
 
 @Composable
-private fun ColumnScope.NumpadGridFullscreen(onTap: (Int) -> Unit) {
+private fun NumpadGridFullscreen(onTap: (Int) -> Unit) {
     Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             NumpadKeyFull("7", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_7) }
