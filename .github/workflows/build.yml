@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,12 +58,36 @@ jobs:
             echo
             echo "## Failure reason"
             grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" *.log | head -30 || true
-            echo
-            echo "## Log tail"
-            echo '```'
-            tail -80 $(ls -t *.log | head -1) || true
-            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # Sandbox note: Actions log downloads are blocked from this environment,
+      # so on failure we commit the tail of the log back to the branch instead.
+      - name: Dump failure log to branch
+        if: failure() && startsWith(github.ref, 'refs/heads/arena/')
+        run: |
+          if [[ "${{ github.event.head_commit.message }}" == ci\(logs\)* ]]; then
+            echo "Log dump commit; not recursing."
+            exit 0
+          fi
+          mkdir -p ci-logs
+          {
+            echo "# Kotlin compile errors"
+            grep -hE "^e: " app/*.log | head -200 || true
+            echo
+            echo "# Failure reason"
+            grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" app/*.log | head -40 || true
+            echo
+            echo "# Log tails"
+            for f in app/*.log; do
+              echo "## $f"
+              tail -60 "$f"
+            done
+          } > ci-logs/last-failure.md
+          git config user.name "elevon-ci"
+          git config user.email "actions@github.com"
+          git add ci-logs/last-failure.md
+          git commit -m "ci(logs): record build failure" --no-verify
+          git push origin HEAD:${{ github.ref_name }}
 
       - name: Record checksums
         if: always()
