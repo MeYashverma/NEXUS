@@ -37,6 +37,18 @@ def cta(label: str, href: str, primary: bool = False) -> str:
     return f'<a class="btn {"primary" if primary else "outline"}" href="{href}">{label}</a>'
 
 
+def shot(name: str, alt: str) -> str:
+    # name like "shot-hero" -> dark assets/shot-hero.png, light assets/shot-hero-light.png
+    # Returns a <picture> that serves light variant when user prefers light color scheme.
+    # Both dark and light exist for all 8 core screenshots; fallback to dark if light missing.
+    return (
+        f'<div class="shot"><picture>'
+        f'<source srcset="assets/{name}-light.png" media="(prefers-color-scheme: light)">'
+        f'<img src="assets/{name}.png" alt="{alt}" loading="lazy">'
+        f'</picture></div>'
+    )
+
+
 # ------------------------------------------------------------------ index ---
 
 INDEX = hero(
@@ -58,7 +70,7 @@ INDEX = hero(
     ],
 ) + f"""
 <section class="wrap block tight">
-  <div class="shot"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></div>
+  <div class="shot"><picture><source srcset="assets/shot-hero-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></picture></div>
 </section>
 <section class="wrap block">
   <h2>Seven controls. Zero software on your computer.</h2>
@@ -126,7 +138,7 @@ FEATURES = hero(
         <li>Host keyboard layout setting so text lands correctly on non-US computers</li>
       </ul>
     </div>
-    <div class="shot"><img src="assets/shot-keyboard.png" alt="Elevon keyboard mode with the full desktop layout" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-keyboard-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-keyboard.png" alt="Elevon keyboard mode with the full desktop layout" loading="lazy"></picture></div>
   </div>
   <div class="feature flip">
     <div>
@@ -141,7 +153,7 @@ FEATURES = hero(
         <li>Keep-screen-on while you're controlling</li>
       </ul>
     </div>
-    <div class="shot"><img src="assets/shot-touchpad.png" alt="Elevon touchpad mode, edge-to-edge gesture surface with tuning panel" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-touchpad-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-touchpad.png" alt="Elevon touchpad mode, edge-to-edge gesture surface with tuning panel" loading="lazy"></picture></div>
   </div>
   <div class="feature">
     <div>
@@ -157,7 +169,7 @@ FEATURES = hero(
       </ul>
       <p><a href="controller.html">Full gamepad story →</a></p>
     </div>
-    <div class="shot"><img src="assets/shot-gamepad.png" alt="Elevon gamepad mode with sticks, D-pad, face buttons and triggers" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-gamepad-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-gamepad.png" alt="Elevon gamepad mode with sticks, D-pad, face buttons and triggers" loading="lazy"></picture></div>
   </div>
   <div class="feature flip">
     <div>
@@ -172,7 +184,7 @@ FEATURES = hero(
         <li>Long-press any button to edit it</li>
       </ul>
     </div>
-    <div class="shot"><img src="assets/shot-macros.png" alt="Elevon macro pad with a grid of large action buttons" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-macros-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-macros.png" alt="Elevon macro pad with a grid of large action buttons" loading="lazy"></picture></div>
   </div>
   <div class="feature">
     <div>
@@ -182,7 +194,7 @@ FEATURES = hero(
       giant next/previous buttons, F5 start, Esc end, a B-key blackout, and a count-up timer —
       with a choice of arrow keys, Page keys, or N/P advance to match your software.</p>
     </div>
-    <div class="shot"><img src="assets/shot-media.png" alt="Elevon media remote with large transport and volume controls" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-media-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-media.png" alt="Elevon media remote with large transport and volume controls" loading="lazy"></picture></div>
   </div>
   <div class="feature flip">
     <div>
@@ -192,7 +204,7 @@ FEATURES = hero(
       touchpad with Mac shortcuts, Gaming PC opens the gamepad with your layout. Bind a profile to a
       computer and it applies automatically when you connect.</p>
     </div>
-    <div class="shot"><img src="assets/shot-profiles.png" alt="Elevon profiles list with per-computer defaults" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-profiles-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-profiles.png" alt="Elevon profiles list with per-computer defaults" loading="lazy"></picture></div>
   </div>
   <div class="feature">
     <div>
@@ -202,7 +214,7 @@ FEATURES = hero(
       end-to-end encrypted with a code you compare. Nothing installed on the laptop.</p>
       <p><a href="relay/index.html">Read about Relay →</a></p>
     </div>
-    <div class="shot"><img src="assets/shot-relay.png" alt="Elevon Relay page showing the pairing code and RELAY ACTIVE banner" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-relay-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-relay.png" alt="Elevon Relay page showing the pairing code and RELAY ACTIVE banner" loading="lazy"></picture></div>
   </div>
 </section>
 """.format(core=CHIPS["core"], exp=CHIPS["exp"], lim=CHIPS["lim"])
@@ -310,7 +322,7 @@ CONTROLLER = hero(
       movement. This is the honest answer for games with no controller support at all — Minecraft Java
       included — and it works in <em>every</em> game, because every game supports keyboards.</p>
     </div>
-    <div class="shot"><img src="assets/shot-gamepad.png" alt="Gamepad mode with editable control layout" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-gamepad-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-gamepad.png" alt="Gamepad mode with editable control layout" loading="lazy"></picture></div>
   </div>
 </section>
 <section class="wrap block">
@@ -356,7 +368,7 @@ KEYBOARD = hero(
       <strong>Gaming</strong> clusters WASD, Shift, Space and the keys games actually use.
       <strong>Custom</strong> lets you place any key in any slot — saved on your phone.</p>
     </div>
-    <div class="shot"><img src="assets/shot-keyboard.png" alt="Keyboard layouts" loading="lazy"></div>
+    <div class="shot"><picture><source srcset="assets/shot-keyboard-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-keyboard.png" alt="Keyboard layouts" loading="lazy"></picture></div>
   </div>
   <div class="grid three">
     <div class="card"><h3>Modifiers that behave {core}</h3><p>Tap Ctrl to make it sticky, tap a letter to send the combo, and it clears. Hold a modifier to lock it for a whole session of shortcuts. Caps Lock syncs with the host's LED state.</p></div>
