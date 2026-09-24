@@ -25,10 +25,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Laptop
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Calculate
 import androidx.compose.material.icons.outlined.Gamepad
 import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.Pause
+import androidx.compose.material.icons.outlined.Sensors
 import androidx.compose.material.icons.outlined.Slideshow
 import androidx.compose.material.icons.outlined.SportsEsports
 import androidx.compose.material.icons.outlined.TouchApp
@@ -71,7 +73,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
 /**
- * The home screen: brand, live connection state, the seven control modes,
+ * The home screen: brand, live connection state, the nine control modes (including numpad + gyro),
  * profiles, quick actions and a Labs teaser. Design per docs/design.md §22.
  */
 @Composable
@@ -168,10 +170,12 @@ fun HomeScreen(nav: NavHostController) {
             ModeEntry(ControlMode.KEYBOARD, Icons.Outlined.Keyboard, Honesty.CORE),
             ModeEntry(ControlMode.TOUCHPAD, Icons.Outlined.TouchApp, Honesty.CORE),
             ModeEntry(ControlMode.GAMEPAD, Icons.Outlined.SportsEsports, Honesty.CORE),
+            ModeEntry(ControlMode.NUMPAD, Icons.Outlined.Calculate, Honesty.CORE),
             ModeEntry(ControlMode.MACROS, Icons.Outlined.ViewModule, Honesty.CORE),
             ModeEntry(ControlMode.MEDIA, Icons.Outlined.Pause, Honesty.CORE),
             ModeEntry(ControlMode.PRESENTATION, Icons.Outlined.Slideshow, Honesty.CORE),
             ModeEntry(ControlMode.CUSTOM, Icons.Outlined.Gamepad, Honesty.CORE),
+            ModeEntry(ControlMode.GYRO, Icons.Outlined.Sensors, Honesty.EXPERIMENTAL),
         )
         modes.chunked(2).forEach { rowModes ->
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {

@@ -41,7 +41,11 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import app.elevon.LocalSession
+import app.elevon.data.AccelerationCurve
+import app.elevon.data.GyroMode
 import app.elevon.data.HostLayout
 import app.elevon.data.HapticsMode
 import app.elevon.data.ThemeMode
@@ -63,7 +67,12 @@ fun SettingsScreen(nav: NavHostController) {
     val natural by session.settings.naturalScrolling.value.collectAsState()
     val tapClick by session.settings.tapToClick.value.collectAsState()
     val dragLock by session.settings.dragLock.value.collectAsState()
+    val pointerCurvePref by session.settings.pointerCurve.value.collectAsState()
+    val gyroModePref by session.settings.gyroMode.value.collectAsState()
+    val gyroSens by session.settings.gyroSensitivity.value.collectAsState()
     val hostLayout = runCatching { HostLayout.valueOf(hostLayoutPref) }.getOrDefault(HostLayout.US)
+    val pointerCurve = runCatching { AccelerationCurve.valueOf(pointerCurvePref) }.getOrDefault(AccelerationCurve.LINEAR)
+    val gyroMode = runCatching { GyroMode.valueOf(gyroModePref) }.getOrDefault(GyroMode.OFF)
 
     Column(
         Modifier
@@ -98,6 +107,13 @@ fun SettingsScreen(nav: NavHostController) {
             Slider(pointerSpeed, { session.settings.pointerSpeed.set(it) }, valueRange = 0.4f..2.6f)
             Text("Scroll speed", style = MaterialTheme.typography.labelLarge)
             Slider(scrollSpeed, { session.settings.scrollSpeed.set(it) }, valueRange = 0.4f..3f)
+            Text("Acceleration curve — new in v0.2", style = MaterialTheme.typography.labelLarge)
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                AccelerationCurve.entries.forEach { c ->
+                    FilterChip(selected = pointerCurve == c, onClick = { session.settings.pointerCurve.set(c.name) }, label = { Text(c.label) })
+                }
+            }
+            Text(pointerCurve.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             ToggleRow("Natural scrolling", "Content follows your fingers.", natural) {
                 session.settings.naturalScrolling.set(it)
             }
@@ -107,6 +123,18 @@ fun SettingsScreen(nav: NavHostController) {
             ToggleRow("Drag lock", "Hold-to-drag keeps the button down between taps.", dragLock) {
                 session.settings.dragLock.set(it)
             }
+        }
+
+        Section("Gyro Mouse — Labs") {
+            Text("Air mouse via gyroscope — experimental. Tilt phone to move cursor.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                GyroMode.entries.forEach { m ->
+                    FilterChip(selected = gyroMode == m, onClick = { session.settings.gyroMode.set(m.name) }, label = { Text(m.label) })
+                }
+            }
+            Text("Sensitivity", style = MaterialTheme.typography.labelLarge)
+            Slider(gyroSens, { session.settings.gyroSensitivity.set(it) }, valueRange = 0.2f..3f)
+            Text("Fullscreen landscape supported — ideal for couch gaming.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         Section("Keyboard") {

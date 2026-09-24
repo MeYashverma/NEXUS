@@ -18,15 +18,16 @@ An *elevon* is a control surface that does the job of two. That idea — one sur
 
 ## Logo
 
-The mark is a **chevron wing**: a rounded-diamond shield whose lower edge is a swept wing trailing edge, with a horizontal stabiliser slot. One path, flat colour, no gradients. It reads as a wing and as an abstract "play/forward" cue for control.
+The mark is a **premium E-wing**: a slanted, geometric E that reads as a swept wing and as the letter E. One continuous path, sharp angular ends, instrument-grade precision. The E does the job of two — letter and wing — just like an elevon does the job of two control surfaces. Flat colour #FF7A45 on #101114, with subtle glow allowed on website for depth. The previous chevron-wing was replaced in v0.2 for being too generic.
 
 | Asset | File |
 | --- | --- |
-| App icon (adaptive foreground) | `app/src/main/res/mipmap-anydpi-v26/ic_launcher_foreground.xml` |
-| Logo SVG | `branding/logo/elevon-logo.svg` |
-| Monogram | `branding/logo/elevon-glyph.svg` |
-| Social preview | `branding/social/github-social.png` (1280×640) |
-| Favicon | `website/assets/favicon.svg` + `.ico` |
+| App icon (adaptive foreground) | `app/src/main/res/mipmap-anydpi-v26/ic_launcher_foreground.xml` (E-wing path) |
+| Logo SVG | `branding/logo/elevon-logo.svg` (E-wing + wordmark) |
+| Monogram | `branding/logo/elevon-glyph.svg` (E-wing on rounded square) |
+| Social preview | `branding/social/github-social.png` (1280×640, E-wing) |
+| Favicon | `website/assets/favicon.svg` + `.ico` (E-wing) |
+| Concepts | `branding/logo/new-logo-concept*.png` (AI explorations, V and E-wing) |
 
 ## Colour
 

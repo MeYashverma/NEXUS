@@ -15,7 +15,7 @@ OUT = ROOT / "website"
 
 REPO = "https://github.com/MeYashverma/NEXUS"
 SITE_ROOT = "https://meyashverma.github.io/NEXUS"
-VERSION = "0.1.1"
+VERSION = "0.2.0"
 
 NAV = [
     ("index.html", "Home"),
@@ -91,7 +91,7 @@ def build_page(path: str, title: str, description: str, body: str) -> None:
     )
     announce = ""
     if path == "index.html":
-        announce = f'<div class="announce">✦ v{VERSION} — HID & permission fixes shipped · <a href="{rel("changelog.html")}">See what\'s new</a> · <a href="{REPO}/releases/tag/v{VERSION}">Download APK</a></div>'
+        announce = f'<div class="announce">✦ v{VERSION} — E-wing logo, fullscreen gamepad & keyboard, numpad, gyro mouse, pointer curves · <a href="{rel("changelog.html")}">See what\'s new</a> · <a href="{REPO}/releases/tag/v{VERSION}">Download APK</a></div>'
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -114,7 +114,7 @@ def build_page(path: str, title: str, description: str, body: str) -> None:
 <header>
   <div class="wrap bar">
     <a class="brand" href="{rel('index.html')}" aria-label="Elevon home">
-      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="26" fill="#101114"/><path fill="#FF7A45" d="M20,92 L37,20 C38.2,15.5 41.5,12.5 46,11 L88,1.5 L76,20 L50,27 C47,27.8 44.8,29.5 44,32.5 L42,41.5 L60,33.5 L80,26.5 L68.5,47 L44.5,57 C41.5,58.2 39.5,60.2 38.5,63 L36.5,72 L74,72 L61.5,90 L26,90 C22.5,90 19.5,90.5 20,92 Z"/></svg>
       <span>Elevon</span>
     </a>
     <nav aria-label="Primary">{nav_html}</nav>
@@ -127,7 +127,7 @@ def build_page(path: str, title: str, description: str, body: str) -> None:
 <footer>
   <div class="wrap foot">
     <div class="foot-brand">
-      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="26" fill="#101114"/><path fill="#FF7A45" d="M20,92 L37,20 C38.2,15.5 41.5,12.5 46,11 L88,1.5 L76,20 L50,27 C47,27.8 44.8,29.5 44,32.5 L42,41.5 L60,33.5 L80,26.5 L68.5,47 L44.5,57 C41.5,58.2 39.5,60.2 38.5,63 L36.5,72 L74,72 L61.5,90 L26,90 C22.5,90 19.5,90.5 20,92 Z"/></svg>
       <div>
         <strong>Elevon</strong>
         <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>

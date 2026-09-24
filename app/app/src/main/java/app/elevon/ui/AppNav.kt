@@ -27,8 +27,10 @@ import app.elevon.ui.screens.ClipboardScreen
 import app.elevon.ui.screens.CompatScreen
 import app.elevon.ui.screens.DevicesScreen
 import app.elevon.ui.screens.GamepadScreen
+import app.elevon.ui.screens.GyroMouseScreen
 import app.elevon.ui.screens.KeyboardScreen
 import app.elevon.ui.screens.LabsScreen
+import app.elevon.ui.screens.NumpadScreen
 import app.elevon.ui.screens.OnboardingScreen
 import app.elevon.ui.screens.ProfilesScreen
 import app.elevon.ui.screens.RelayScreen
@@ -100,6 +102,8 @@ fun AppNav(navController: NavHostController, openRelayDirectly: Boolean) {
             composable("mode/keyboard") { KeyboardScreen(navController) }
             composable("mode/touchpad") { TouchpadScreen(navController) }
             composable("mode/gamepad") { GamepadScreen(navController) }
+            composable("mode/numpad") { NumpadScreen(navController) }
+            composable("mode/gyro") { GyroMouseScreen(navController) }
             composable("mode/macros") { deckScreen(navController, "macros") }
             composable("mode/custom") { deckScreen(navController, "custom") }
             composable("mode/media") { mediaScreen(navController) }

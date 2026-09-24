@@ -1,5 +1,8 @@
 package app.elevon.ui.screens
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,11 +19,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Fullscreen
+import androidx.compose.material.icons.outlined.FullscreenExit
+import androidx.compose.material.icons.outlined.ScreenRotation
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +37,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,8 +47,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
 import app.elevon.data.HostLayout
@@ -57,8 +71,10 @@ import kotlinx.coroutines.launch
 
 /**
  * Keyboard mode: Compact, Full, Gaming and Custom layouts over one HID
- * pairing. Sticky modifiers (tap) and locked modifiers (hold) match what
- * users expect from mobile remote keyboards.
+ * pairing. Now with full-screen landscape + rotate.
+ *
+ * Fullscreen: hides system bars, locks to landscape, keys fill entire screen,
+ * floating back/exit buttons. Great for gaming and long typing.
  */
 @Composable
 fun KeyboardScreen(nav: NavHostController) {
@@ -70,16 +86,50 @@ fun KeyboardScreen(nav: NavHostController) {
     val haptics by session.settings.haptics.collectAsState()
     val hapticFeedback = LocalHapticFeedback.current
     val profile by session.activeProfile.collectAsState()
+    val context = LocalContext.current
+    val activity = context as? Activity
+    val configuration = LocalConfiguration.current
+    val isSystemLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     val hostLayout = remember(hostLayoutPref, profile) {
         runCatching { HostLayout.valueOf(hostLayoutPref) }.getOrDefault(HostLayout.US)
     }
 
     var capsLock by remember { mutableStateOf(false) }
-    var sticky by remember { mutableStateOf(mapOf<String, Boolean>()) } // id -> locked
-    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var sticky by remember { mutableStateOf(mapOf<String, Boolean>()) }
+    var isFullscreen by remember { mutableStateOf(false) }
+    val scope = remember { androidx.compose.runtime.rememberCoroutineScope() }
+    val actualScope = androidx.compose.runtime.rememberCoroutineScope()
 
     val connected = connection.connectionState == HidConnectionState.CONNECTED
+    val useFullscreenLayout = isFullscreen || (isSystemLandscape && layoutPref == KeyboardLayoutId.FULL.name)
+
+    // Fullscreen immersive handling
+    DisposableEffect(isFullscreen) {
+        if (isFullscreen) {
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            activity?.window?.let { window ->
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+                WindowInsetsControllerCompat(window, window.decorView).apply {
+                    hide(WindowInsetsCompat.Type.systemBars())
+                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                }
+            }
+        } else {
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            activity?.window?.let { window ->
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+                WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+        onDispose {
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            activity?.window?.let { window ->
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+                WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+    }
 
     fun haptic(long: Boolean = false) {
         when (haptics) {
@@ -119,11 +169,9 @@ fun KeyboardScreen(nav: NavHostController) {
             else -> {
                 val mods = effectiveMods() and 0xFF
                 session.hid.sendRawKeyboard(mods, listOf(key.usage))
-                // Sticky (unlocked) modifiers clear after use, like mobile keyboards.
                 sticky = sticky.filterValues { it }
                 haptic()
-                // Send release after a short delay so host sees a proper press+release.
-                scope.launch {
+                actualScope.launch {
                     delay(12)
                     session.hid.sendRawKeyboard(0, emptyList())
                 }
@@ -141,88 +189,181 @@ fun KeyboardScreen(nav: NavHostController) {
         haptic(long = true)
     }
 
-    Column(Modifier.fillMaxSize()) {
-        TopAppBar(
-            title = { Text("Keyboard") },
-            navigationIcon = {
-                IconButton(onClick = { nav.popBackStack() }) {
-                    Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
-                }
-            },
-            actions = {
-                Text(
-                    text = hostLayout.label,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(end = 12.dp),
-                )
-            },
-        )
-
-        if (!connected) {
-            NotConnectedCard()
-        }
-
-        Column(
+    if (useFullscreenLayout) {
+        // ---- FULLSCREEN LANDSCAPE KEYBOARD ----
+        Box(
             Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 8.dp),
+                .background(MaterialTheme.colorScheme.surface)
         ) {
-            Row(
+            Column(
                 Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .padding(8.dp),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                KeyboardLayoutId.entries.forEach { layoutId ->
-                    FilterChip(
-                        selected = layoutPref == layoutId.name,
-                        onClick = { session.settings.keyboardLayout.set(layoutId.name) },
-                        label = { Text(layoutId.label) },
-                    )
+                // Floating top row
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(
+                        onClick = { if (isFullscreen) isFullscreen = false else nav.popBackStack() },
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f), CircleShape)
+                            .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
+                    ) {
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = hostLayout.label + " · " + layoutPref,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(8.dp))
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                        IconButton(
+                            onClick = { isFullscreen = !isFullscreen },
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f), CircleShape)
+                                .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
+                        ) {
+                            Icon(
+                                if (isFullscreen) Icons.Outlined.FullscreenExit else Icons.Outlined.Fullscreen,
+                                contentDescription = if (isFullscreen) "Exit fullscreen" else "Fullscreen"
+                            )
+                        }
+                    }
                 }
-            }
-            Spacer(Modifier.height(6.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+
+                // Keyboard fills remaining space
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    val currentLayout = runCatching { KeyboardLayoutId.valueOf(layoutPref) }.getOrDefault(KeyboardLayoutId.COMPACT)
+                    when (currentLayout) {
+                        KeyboardLayoutId.COMPACT -> {
+                            if (fnRow) FunctionStrip(::tapKey, capsLock)
+                            KeyRowsFullscreen(KeyLayouts.compact, ::tapKey, ::lockKey, capsLock, sticky)
+                        }
+                        KeyboardLayoutId.FULL -> KeyRowsFullscreen(KeyLayouts.full, ::tapKey, ::lockKey, capsLock, sticky)
+                        KeyboardLayoutId.GAMING -> {
+                            if (fnRow) FunctionStrip(::tapKey, capsLock)
+                            KeyRowsFullscreen(KeyLayouts.gaming, ::tapKey, ::lockKey, capsLock, sticky)
+                        }
+                        KeyboardLayoutId.CUSTOM -> CustomEditorFullscreen(::tapKey, ::lockKey, capsLock, sticky)
+                    }
+                }
+
+                val active = sticky.keys + if (capsLock) listOf("caps") else emptyList()
                 Text(
-                    "Function row",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = if (active.isEmpty()) "Tap modifier to stick, hold to lock · Fullscreen landscape" else "Held: " + active.joinToString(" · ") { it.replaceFirstChar(Char::uppercase) },
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp)
                 )
-                Switch(checked = fnRow, onCheckedChange = { session.settings.functionRow.set(it) })
             }
-            Spacer(Modifier.height(6.dp))
-
-            when (runCatching { KeyboardLayoutId.valueOf(layoutPref) }.getOrDefault(KeyboardLayoutId.COMPACT)) {
-                KeyboardLayoutId.COMPACT -> {
-                    if (fnRow) FunctionStrip(::tapKey, capsLock)
-                    KeyRows(KeyLayouts.compact, ::tapKey, ::lockKey, capsLock, sticky)
-                }
-                KeyboardLayoutId.FULL -> KeyRows(KeyLayouts.full, ::tapKey, ::lockKey, capsLock, sticky)
-                KeyboardLayoutId.GAMING -> {
-                    if (fnRow) FunctionStrip(::tapKey, capsLock)
-                    KeyRows(KeyLayouts.gaming, ::tapKey, ::lockKey, capsLock, sticky)
-                }
-                KeyboardLayoutId.CUSTOM -> CustomEditor(::tapKey, ::lockKey, capsLock, sticky)
-            }
-
-            val active = sticky.keys + if (capsLock) listOf("caps") else emptyList()
-            Text(
-                text = if (active.isEmpty()) {
-                    "Tap a modifier to make it sticky, hold it to lock."
-                } else {
-                    "Held: " + active.joinToString(" · ") { it.replaceFirstChar(Char::uppercase) }
+        }
+    } else {
+        // ---- PORTRAIT DEFAULT ----
+        Column(Modifier.fillMaxSize()) {
+            TopAppBar(
+                title = { Text("Keyboard") },
+                navigationIcon = {
+                    IconButton(onClick = { nav.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
+                    }
                 },
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(vertical = 10.dp),
+                actions = {
+                    Text(
+                        text = hostLayout.label,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(end = 8.dp),
+                    )
+                    IconButton(onClick = { isFullscreen = true }) {
+                        Icon(Icons.Outlined.Fullscreen, contentDescription = "Fullscreen landscape")
+                    }
+                    IconButton(onClick = {
+                        activity?.requestedOrientation = if (isSystemLandscape) ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                    }) {
+                        Icon(Icons.Outlined.ScreenRotation, contentDescription = "Rotate")
+                    }
+                },
             )
-            Spacer(Modifier.height(12.dp))
+
+            if (!connected) {
+                NotConnectedCard()
+            }
+
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp),
+            ) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    KeyboardLayoutId.entries.forEach { layoutId ->
+                        FilterChip(
+                            selected = layoutPref == layoutId.name,
+                            onClick = { session.settings.keyboardLayout.set(layoutId.name) },
+                            label = { Text(layoutId.label) },
+                        )
+                    }
+                }
+                Spacer(Modifier.height(6.dp))
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        "Function row",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Switch(checked = fnRow, onCheckedChange = { session.settings.functionRow.set(it) })
+                }
+                Spacer(Modifier.height(6.dp))
+
+                when (runCatching { KeyboardLayoutId.valueOf(layoutPref) }.getOrDefault(KeyboardLayoutId.COMPACT)) {
+                    KeyboardLayoutId.COMPACT -> {
+                        if (fnRow) FunctionStrip(::tapKey, capsLock)
+                        KeyRows(KeyLayouts.compact, ::tapKey, ::lockKey, capsLock, sticky)
+                    }
+                    KeyboardLayoutId.FULL -> KeyRows(KeyLayouts.full, ::tapKey, ::lockKey, capsLock, sticky)
+                    KeyboardLayoutId.GAMING -> {
+                        if (fnRow) FunctionStrip(::tapKey, capsLock)
+                        KeyRows(KeyLayouts.gaming, ::tapKey, ::lockKey, capsLock, sticky)
+                    }
+                    KeyboardLayoutId.CUSTOM -> CustomEditor(::tapKey, ::lockKey, capsLock, sticky)
+                }
+
+                val active = sticky.keys + if (capsLock) listOf("caps") else emptyList()
+                Text(
+                    text = if (active.isEmpty()) {
+                        "Tap a modifier to make it sticky, hold it to lock. Fullscreen button for landscape gaming."
+                    } else {
+                        "Held: " + active.joinToString(" · ") { it.replaceFirstChar(Char::uppercase) }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = 10.dp),
+                )
+                Spacer(Modifier.height(12.dp))
+            }
         }
     }
 }
@@ -295,11 +436,39 @@ private fun KeyRows(
     }
 }
 
-/**
- * One keycap. Tap = send. Hold a character = auto-repeat. Hold a modifier =
- * lock (double-press the lock again to release; the app also treats a lock
- * toggle as sticky-with-lock state).
- */
+@Composable
+private fun KeyRowsFullscreen(
+    rows: List<List<KeyDef>>,
+    tap: (KeyDef) -> Unit,
+    lock: (KeyDef) -> Unit,
+    caps: Boolean,
+    sticky: Map<String, Boolean>,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxSize()) {
+        rows.forEach { row ->
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                row.forEach { key ->
+                    KeyCapCell(
+                        key = key,
+                        pressed = false,
+                        locked = sticky[key.id] == true,
+                        sticky = sticky.containsKey(key.id),
+                        showShift = caps,
+                        onTap = tap,
+                        onLock = lock,
+                        modifier = Modifier.weight(key.width.coerceAtLeast(0.1f)),
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun KeyCapCell(
     key: KeyDef,
@@ -329,7 +498,6 @@ private fun KeyCapCell(
                         isPressed = true
                         val holdStart = System.currentTimeMillis()
 
-                        // Release watcher: the only event consumer while held.
                         var released = false
                         val watcher = launch {
                             awaitPointerEventScope {
@@ -343,7 +511,6 @@ private fun KeyCapCell(
                             }
                         }
 
-                        // Long-press window: 420ms decides tap vs hold.
                         while (!released && System.currentTimeMillis() - holdStart < 420) delay(16)
 
                         if (released) {
@@ -355,10 +522,9 @@ private fun KeyCapCell(
 
                         if (isModifier) {
                             onLock(key)
-                            watcher.join() // stay held until release
+                            watcher.join()
                         } else {
-                            // Auto-repeat until release (bounded for safety).
-                            delay(400) // initial repeat delay
+                            delay(400)
                             val start = System.currentTimeMillis()
                             while (!released && System.currentTimeMillis() - start < 6000) {
                                 onTap(key)
@@ -480,7 +646,21 @@ private fun CustomEditor(
     }
 }
 
-/** Serialises the custom layout as key ids: "q,w,e,r,t|a,s,d,f,g|…". */
+@Composable
+private fun CustomEditorFullscreen(
+    tap: (KeyDef) -> Unit,
+    lock: (KeyDef) -> Unit,
+    caps: Boolean,
+    sticky: Map<String, Boolean>,
+) {
+    val session = LocalSession.current
+    val saved by session.settings.customKeyboard.value.collectAsState()
+    var rows by remember(saved) {
+        mutableStateOf(CustomLayoutStore.decode(saved) ?: CustomLayoutStore.default())
+    }
+    KeyRowsFullscreen(rows, tap, lock, caps, sticky)
+}
+
 object CustomLayoutStore {
 
     val palette: List<KeyDef> = buildList {
@@ -531,7 +711,6 @@ object CustomLayoutStore {
         }
     }.getOrNull()
 
-    /** Advance one slot to the next palette key. */
     fun cycleSlot(rows: List<List<KeyDef>>, row: Int, col: Int): List<List<KeyDef>> {
         val current = rows.getOrNull(row)?.getOrNull(col)
         val index = palette.indexOfFirst { it.id == current?.id }

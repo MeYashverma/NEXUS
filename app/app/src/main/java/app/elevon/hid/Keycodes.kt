@@ -87,6 +87,23 @@ object Keycodes {
     const val KEY_DOWN = 0x51
     const val KEY_UP = 0x52
     const val KEY_NUMLOCK = 0x53
+    const val KEY_KP_SLASH = 0x54
+    const val KEY_KP_ASTERISK = 0x55
+    const val KEY_KP_MINUS = 0x56
+    const val KEY_KP_PLUS = 0x57
+    const val KEY_KP_ENTER = 0x58
+    const val KEY_KP_1 = 0x59
+    const val KEY_KP_2 = 0x5A
+    const val KEY_KP_3 = 0x5B
+    const val KEY_KP_4 = 0x5C
+    const val KEY_KP_5 = 0x5D
+    const val KEY_KP_6 = 0x5E
+    const val KEY_KP_7 = 0x5F
+    const val KEY_KP_8 = 0x60
+    const val KEY_KP_9 = 0x61
+    const val KEY_KP_0 = 0x62
+    const val KEY_KP_DOT = 0x63
+    const val KEY_KP_EQUAL = 0x67
 
     // Media / consumer page (16-bit usage codes)
     const val CONSUMER_PLAY_PAUSE = 0x00CD

@@ -17,6 +17,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Calculate
+import androidx.compose.material.icons.outlined.Sensors
+import androidx.compose.material.icons.outlined.Speed
+import androidx.compose.material.icons.outlined.Upload
+import androidx.compose.material.icons.outlined.Wifi
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,9 +43,13 @@ import app.elevon.ui.components.HonestyChip
 import app.elevon.ui.components.StateCard
 
 /**
- * NEXUS Labs → now Elevon Labs: a visible home for experimental features.
- * Planned experiments are listed honestly as "planned" — tapping them opens
- * an explanation, never a fake feature.
+ * Elevon Labs: experimental features, now with real implementations.
+ * - Relay (live)
+ * - Gyro Mouse (new, air mouse via gyroscope, fullscreen landscape)
+ * - Numpad (new, numeric keypad, fullscreen)
+ * - Pointer curves (new, acceleration curves for touchpad)
+ * - Deck export/import (new, file-based, no cloud)
+ * - Wi-Fi Relay (planned, with honest trade-off note)
  */
 @Composable
 fun LabsScreen(nav: NavHostController) {
@@ -61,13 +70,13 @@ fun LabsScreen(nav: NavHostController) {
             },
         )
         Text(
-            "Experiments. They may change, break, or disappear — and they never require installing anything on your computer.",
+            "Experiments that may change, break, or disappear — but never require host software for core. New: gyro mouse, numpad, pointer curves, deck export/import.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(16.dp))
 
-        // ---- Relay (live experiment) ----
+        // Relay (live experiment)
         Column(
             Modifier
                 .fillMaxWidth()
@@ -105,13 +114,51 @@ fun LabsScreen(nav: NavHostController) {
             }
         }
 
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(12.dp))
 
-        // ---- planned experiments (honest placeholders with real explanations) ----
+        // New Labs features — real
+        LabFeatureCard(
+            title = "Gyro Mouse",
+            subtitle = "Air mouse via gyroscope — tilt to move, tap to click. Fullscreen landscape for couch.",
+            icon = { Icon(Icons.Outlined.Sensors, contentDescription = null) },
+            honesty = Honesty.EXPERIMENTAL,
+            onOpen = { nav.navigate("mode/gyro") }
+        )
+        LabFeatureCard(
+            title = "Numpad",
+            subtitle = "Numeric keypad with calculations. Fullscreen landscape for spreadsheets and data entry.",
+            icon = { Icon(Icons.Outlined.Calculate, contentDescription = null) },
+            honesty = Honesty.CORE,
+            onOpen = { nav.navigate("mode/numpad") }
+        )
+        LabFeatureCard(
+            title = "Pointer acceleration curves",
+            subtitle = "Linear, ease-out, precise, gaming — choose how touchpad and gyro feel. In Settings → Controls.",
+            icon = { Icon(Icons.Outlined.Speed, contentDescription = null) },
+            honesty = Honesty.CORE,
+            onOpen = { nav.navigate("settings") }
+        )
+        LabFeatureCard(
+            title = "Deck export / import",
+            subtitle = "Export macro decks to JSON, share, import. File-based, no cloud. In Macro Pad → Export.",
+            icon = { Icon(Icons.Outlined.Upload, contentDescription = null) },
+            honesty = Honesty.CORE,
+            onOpen = { nav.navigate("mode/macros") }
+        )
+
+        Spacer(Modifier.height(12.dp))
+        Text("Planned — honest status", style = MaterialTheme.typography.titleMedium)
+        Spacer(Modifier.height(8.dp))
+
         PlannedCard("Wi-Fi Relay", onOpen = { plannedInfo = WIFI_RELAY_NOTE })
         PlannedCard("Deck cloud sync", onOpen = { plannedInfo = DECK_SYNC_NOTE })
-        PlannedCard("Pointer acceleration curves", onOpen = { plannedInfo = CURVE_NOTE })
+        PlannedCard("Laser pointer", onOpen = { plannedInfo = LASER_NOTE })
 
+        Spacer(Modifier.height(24.dp))
+        StateCard(
+            title = "Why Labs exists",
+            body = "Core must work with no host software. Labs is where we try things that need new permissions or new paradigms — and we label the trade-offs. Gyro Mouse needs gyroscope, Numpad is pure HID, Pointer curves are just math, Deck export is file-based. Wi-Fi Relay would need INTERNET permission — we refuse to add it silently."
+        )
         Spacer(Modifier.height(24.dp))
     }
 
@@ -129,13 +176,58 @@ fun LabsScreen(nav: NavHostController) {
 
 private const val WIFI_RELAY_NOTE =
     "The browser Relay only works where Web Bluetooth exists (Chrome/Edge on Windows, macOS and ChromeOS). " +
-        "A Wi-Fi variant would work from any browser, but a web page served by the phone is not a secure context, so it cannot use Web Crypto, and it would require granting Elevon the INTERNET permission — which we refuse to do for now. Re-evaluating."
+        "A Wi-Fi variant would work from any browser, but a web page served by the phone is not a secure context, so it cannot use Web Crypto, and it would require granting Elevon the INTERNET permission — which we refuse to do for now. We have a prototype that uses local HTTP + NSD, but it needs INTERNET. Re-evaluating with clear opt-in."
 
 private const val DECK_SYNC_NOTE =
-    "Sharing decks between phones needs storage somewhere. Any sync would be opt-in and end-to-end encrypted, or file-export based. Not started."
+    "Sharing decks between phones needs storage somewhere. Current solution is file export/import (JSON) — you can share via any messenger, no cloud. Encrypted cloud sync would be opt-in and E2E. Not started."
+
+private const val LASER_NOTE =
+    "Laser pointer for presentations: uses gyro + presentation mode to show a dot on slides. Needs camera permission? No — just gyro + arrow keys. Prototype works but needs calibration. Planned for next Labs drop."
 
 private const val CURVE_NOTE =
-    "Fine-grained mouse curve tuning (like driver software, but without the driver). Exploring what's expressive enough in plain HID reports."
+    "Fine-grained mouse curve tuning (like driver software, but without the driver). Now shipped: Settings → Pointer curve with Linear, Ease-out, Precise, Gaming."
+
+@Composable
+private fun LabFeatureCard(
+    title: String,
+    subtitle: String,
+    icon: @Composable () -> Unit,
+    honesty: Honesty,
+    onOpen: () -> Unit
+) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(bottom = 10.dp)
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(18.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(18.dp))
+            .clickable(onClick = onOpen)
+            .padding(16.dp),
+    ) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                icon()
+                Text(title, style = MaterialTheme.typography.titleMedium)
+            }
+            HonestyChip(honesty)
+        }
+        Spacer(Modifier.height(4.dp))
+        Text(
+            subtitle,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(6.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Open", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelLarge)
+            Icon(Icons.AutoMirrored.Outlined.ArrowForward, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(start = 4.dp).padding(top = 2.dp),)
+        }
+    }
+}
 
 @Composable
 private fun PlannedCard(title: String, onOpen: () -> Unit) {

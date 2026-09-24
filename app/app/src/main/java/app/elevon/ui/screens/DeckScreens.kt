@@ -1,5 +1,6 @@
 package app.elevon.ui.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,6 +23,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -40,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -59,6 +63,8 @@ import app.elevon.input.describe
 import app.elevon.ui.components.Honesty
 import app.elevon.ui.components.HonestyChip
 import app.elevon.ui.components.StateCard
+import org.json.JSONArray
+import org.json.JSONObject
 
 /**
  * Macro Pad and Custom surfaces share this deck engine: pages of 12 big
@@ -92,7 +98,10 @@ object DeckScreens {
         LaunchedEffect(pages.size) { if (pageIndex >= pages.size) pageIndex = 0 }
 
         var editingSlot by remember { mutableStateOf<Pair<String, Int>?>(null) } // (pageId, slot)
-        var renamingPage by remember { mutableStateOf<String?>(null) }
+        var showExport by remember { mutableStateOf(false) }
+        var showImport by remember { mutableStateOf(false) }
+        var importText by remember { mutableStateOf("") }
+        val context = LocalContext.current
 
         val page = pages.getOrNull(pageIndex)
 
@@ -104,8 +113,78 @@ object DeckScreens {
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
                     }
                 },
-                actions = { HonestyChip(Honesty.CORE, Modifier.padding(end = 12.dp)) },
+                actions = {
+                    IconButton(onClick = { showExport = true }) {
+                        Icon(Icons.Outlined.Upload, contentDescription = "Export decks")
+                    }
+                    IconButton(onClick = { showImport = true }) {
+                        Icon(Icons.Outlined.Download, contentDescription = "Import decks")
+                    }
+                    HonestyChip(Honesty.CORE, Modifier.padding(end = 8.dp))
+                },
             )
+
+            // Export / Import dialogs
+            if (showExport) {
+                val exportJson = remember(pages) {
+                    val arr = JSONArray()
+                    pages.forEach { p -> arr.put(JSONObject(p.toJson())) }
+                    JSONObject().put("decks", arr).put("version", 1).toString(2)
+                }
+                AlertDialog(
+                    onDismissRequest = { showExport = false },
+                    title = { Text("Export decks") },
+                    text = {
+                        Column {
+                            Text("All ${pages.size} pages as JSON. Share via any app — no cloud. Copy or share.", style = MaterialTheme.typography.bodySmall)
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedTextField(value = exportJson, onValueChange = {}, readOnly = true, modifier = Modifier.fillMaxWidth().height(200.dp))
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type = "application/json"
+                                putExtra(Intent.EXTRA_TEXT, exportJson)
+                                putExtra(Intent.EXTRA_SUBJECT, "Elevon decks export")
+                            }
+                            context.startActivity(Intent.createChooser(intent, "Share decks"))
+                        }) { Text("Share") }
+                    },
+                    dismissButton = { TextButton(onClick = { showExport = false }) { Text("Close") } }
+                )
+            }
+            if (showImport) {
+                AlertDialog(
+                    onDismissRequest = { showImport = false },
+                    title = { Text("Import decks") },
+                    text = {
+                        Column {
+                            Text("Paste JSON exported from Elevon. File-based, no cloud. Existing decks kept, imported added.", style = MaterialTheme.typography.bodySmall)
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedTextField(value = importText, onValueChange = { importText = it }, label = { Text("Paste JSON here") }, modifier = Modifier.fillMaxWidth().height(200.dp))
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            runCatching {
+                                val obj = JSONObject(importText)
+                                val arr = obj.optJSONArray("decks") ?: JSONArray(importText)
+                                for (i in 0 until arr.length()) {
+                                    val pageObj = arr.getJSONObject(i)
+                                    val imported = MacroPage.fromJson(pageObj.toString())
+                                    if (imported != null) {
+                                        session.repos.upsertDeck(imported.copy(id = "u_${System.currentTimeMillis()}_$i"))
+                                    }
+                                }
+                            }
+                            showImport = false
+                            importText = ""
+                        }) { Text("Import") }
+                    },
+                    dismissButton = { TextButton(onClick = { showImport = false }) { Text("Cancel") } }
+                )
+            }
 
             if (connection.connectionState != HidConnectionState.CONNECTED) {
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {

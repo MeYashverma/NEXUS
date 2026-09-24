@@ -16,6 +16,20 @@ enum class HostLayout(val label: String, val note: String) {
     FR("French (AZERTY)", "A and Q swap; accented characters are not typed over HID."),
 }
 
+enum class AccelerationCurve(val label: String, val description: String) {
+    LINEAR("Linear", "Direct 1:1 movement — predictable, like a wired mouse."),
+    EASE_OUT("Ease-out", "Fast start, gentle stop — feels snappy but controllable."),
+    EASE_IN_OUT("Ease in-out", "Smooth acceleration — natural for touchpad."),
+    PRECISE("Precise", "Low speed for pixel-perfect work, high speed when you swipe fast."),
+    GAMING("Gaming", "Flat with boost — consistent for FPS, no surprise acceleration."),
+}
+
+enum class GyroMode(val label: String) {
+    OFF("Off"),
+    MOUSE("Air mouse"),
+    POINTER("Pointer + scroll"),
+}
+
 /** One observable preference: [value] is a StateFlow, [set] writes through. */
 class StringPref(initial: String, private val onUpdate: (String) -> Unit) {
     private val flow = MutableStateFlow(initial)
@@ -75,10 +89,14 @@ class SettingsRepository(context: Context) {
     val dragLock = boolFlow(K_DRAG_LOCK, true)
 
     val keepScreenOn = boolFlow(K_KEEP_ON, true)
+    val pointerCurve = stringFlow(K_POINTER_CURVE, AccelerationCurve.LINEAR.name)
+    val gyroMode = stringFlow(K_GYRO_MODE, GyroMode.OFF.name)
+    val gyroSensitivity = floatFlow(K_GYRO_SENS, 1.0f)
 
     // ---- keyboard (host side) ----------------------------------------------
     val hostLayout = stringFlow(K_HOST_LAYOUT, HostLayout.US.name)
     val customKeyboard = stringFlow("custom_keyboard", "")
+    val numpadLayout = stringFlow("numpad_layout", "default")
 
     // ---- privacy / clipboard ------------------------------------------------
     val clipboardRetention = boolFlow(K_CLIP_RETAIN, true)
@@ -136,6 +154,9 @@ class SettingsRepository(context: Context) {
         const val K_TAP_CLICK = "tap_to_click"
         const val K_DRAG_LOCK = "drag_lock"
         const val K_KEEP_ON = "keep_screen_on"
+        const val K_POINTER_CURVE = "pointer_curve"
+        const val K_GYRO_MODE = "gyro_mode"
+        const val K_GYRO_SENS = "gyro_sens"
         const val K_HOST_LAYOUT = "host_layout"
         const val K_CUSTOM_KB = "custom_keyboard"
         const val K_CLIP_RETAIN = "clipboard_retention"

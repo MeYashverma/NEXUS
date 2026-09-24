@@ -1,10 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120">
-  <!-- Elevon logo lockup: glyph + wordmark. Mark: #FF7A45. Wordmark: currentColor. -->
+  <!-- Elevon v2 lockup: new E-wing glyph + wordmark -->
   <g transform="translate(6,6)">
     <rect width="108" height="108" rx="26" fill="#101114"/>
-    <path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/>
-    <path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/>
+    <path fill="#FF7A45" d="M20,92 L37,20 C38.2,15.5 41.5,12.5 46,11 L88,1.5 L76,20 L50,27 C47,27.8 44.8,29.5 44,32.5 L42,41.5 L60,33.5 L80,26.5 L68.5,47 L44.5,57 C41.5,58.2 39.5,60.2 38.5,63 L36.5,72 L74,72 L61.5,90 L26,90 C22.5,90 19.5,90.5 20,92 Z"/>
   </g>
-  <text x="136" y="72" font-family="'Space Grotesk','Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="52" font-weight="700" letter-spacing="1" fill="currentColor">Elevon</text>
-  <text x="138" y="98" font-family="'Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="15" fill="#A9AEB6">Your phone. Your controls.</text>
+  <text x="136" y="72" font-family="'Space Grotesk','Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="52" font-weight="800" letter-spacing="-1" fill="#101114">Elevon</text>
+  <text x="138" y="98" font-family="'Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="14" font-weight="600" letter-spacing="0.5" fill="#6B6B76">Your phone. Your controls.</text>
 </svg>

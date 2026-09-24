@@ -103,17 +103,17 @@ INDEX = f"""
   </div>
 </section>
 <section class="wrap block">
-  <h2>Seven controls. Zero software on your computer.</h2>
-  <p>Every mode is a real HID report — not a remote desktop hack. Pair once from your computer's Bluetooth settings and switch instantly.</p>
+  <h2>Nine controls. Zero software on your computer.</h2>
+  <p>Every mode is a real HID report — not a remote desktop hack. Pair once from your computer's Bluetooth settings and switch instantly. New: numpad + gyro mouse with fullscreen landscape.</p>
   <div class="grid four">
-    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row. Fixed 8-byte reports for Windows 11.</p></div>
-    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds. Button release now always sent.</p></div>
-    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles. Generic HID — honest about XInput.</p></div>
-    <div class="card"><div class="icon">▦</div><h3>Macro Pad</h3><p>Pages of big one-tap buttons: shortcuts, media keys, text snippets. No desktop server needed.</p></div>
-    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch. Now 4-byte consumer reports.</p></div>
-    <div class="card"><div class="icon">◐</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
-    <div class="card"><div class="icon">✦</div><h3>Custom</h3><p>Build your own control surface: streaming deck, editing deck, anything.</p></div>
-    <div class="card"><div class="icon">↔</div><h3>Profiles</h3><p>Work laptop, gaming PC, living room. Each remembers its mode, layout and deck.</p></div>
+    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and custom — with fullscreen landscape, rotate, and larger keys. Fixed 8-byte reports.</p></div>
+    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap, two-finger scroll, drag lock. New: acceleration curves (linear, precise, gaming) + fullscreen.</p></div>
+    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, profiles. New: fullscreen landscape immersive — ideal for gaming.</p></div>
+    <div class="card"><div class="icon">🔢</div><h3>Numpad</h3><p>Numeric keypad for spreadsheets — 0-9, /, *, -, +, Enter. Fullscreen landscape, KP HID codes.</p></div>
+    <div class="card"><div class="icon">🛰</div><h3>Gyro Mouse</h3><p>Air mouse via gyroscope — tilt to move, hold to click. Labs experimental, fullscreen.</p></div>
+    <div class="card"><div class="icon">▦</div><h3>Macro Pad</h3><p>Pages of big one-tap buttons. New: export/import JSON, file-based, no cloud.</p></div>
+    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch. 4-byte consumer reports.</p></div>
+    <div class="card"><div class="icon">✦</div><h3>Custom</h3><p>Build your own surface + export/import decks.</p></div>
   </div>
 </section>
 <section class="wrap block">
@@ -683,6 +683,42 @@ CHANGELOG = hero(
     actions=cta("All releases", f"{REPO}/releases", True) + cta(f"Download v{VERSION}", f"{REPO}/releases/download/v{VERSION}/elevon-app-release.apk"),
 ) + f"""
 <section class="wrap block">
+  <div class="card" style="border-color: var(--accent);">
+    <h3>v0.2.0 — Premium E-wing, fullscreen, Labs expansion <span class="chip core">Minor</span></h3>
+    <p><em>Released: September 2026</em></p>
+    <div class="actions" style="margin:12px 0"><a class="btn primary" href="{REPO}/releases/download/v{VERSION}/elevon-app-release.apk">Release APK</a><a class="btn outline" href="{REPO}/releases/download/v{VERSION}/elevon-app-debug.apk">Debug APK</a><a class="btn ghost" href="{REPO}/releases/tag/v{VERSION}">Release notes + SHA256</a></div>
+    <h4>Added — Logo</h4>
+    <ul>
+      <li><strong>Premium E-wing logo</strong>: new slanted geometric E that reads as swept wing + letter E. Single path, sharp angular ends, instrument-grade. Replaces lame chevron-wing. Updated: adaptive launcher foreground, monochrome themed icon, favicon, website header/footer, branding SVGs, design.md.</li>
+    </ul>
+    <h4>Added — Fullscreen landscape</h4>
+    <ul>
+      <li><strong>Gamepad fullscreen landscape</strong>: tap fullscreen icon → locks to landscape, hides system bars (immersive), pad surface fills entire screen, floating back/edit/exit. Ideal for gaming. Also auto-uses fullscreen when system is landscape.</li>
+      <li><strong>Keyboard fullscreen + rotate</strong>: fullscreen button locks to landscape, hides bars, keys fill screen with larger touch targets (weight 1f). Rotate button toggles portrait/landscape. Works for Full, Compact, Gaming, Custom layouts. Caps + sticky modifiers visible.</li>
+      <li><strong>Touchpad fullscreen</strong>: same immersive landscape, with curve label visible.</li>
+      <li><strong>Numpad fullscreen</strong>: numeric keypad with fullscreen landscape for spreadsheets — 0-9, /, *, -, +, ., Enter, Esc, Tab, ⌫. Sends KP_* HID codes (0x54-0x63).</li>
+      <li><strong>Gyro Mouse fullscreen</strong>: air mouse fullscreen landscape for couch.</li>
+    </ul>
+    <h4>Added — Labs features</h4>
+    <ul>
+      <li><strong>Numpad mode</strong>: new ControlMode.NUMPAD, dedicated NumpadScreen.kt with KP keycodes (0x54-0x63, 0x67), fullscreen, rotate. Core, not experimental.</li>
+      <li><strong>Gyro Mouse (Labs)</strong>: new ControlMode.GYRO, GyroMouseScreen.kt using SensorManager TYPE_GYROSCOPE, converts yaw/pitch to mouse deltas with sensitivity 0.2-3x, tap to enable, hold to click, left/right/scroll buttons. Experimental, fullscreen landscape.</li>
+      <li><strong>Pointer acceleration curves</strong>: new enum AccelerationCurve (LINEAR, EASE_OUT, EASE_IN_OUT, PRECISE, GAMING) with descriptions. Setting in Settings → Controls and Touchpad tuning. Applied in TouchpadScreen via applyCurve() converting deltas with sqrt/smoothstep logic.</li>
+      <li><strong>Deck export/import</strong>: in Macro Pad / Custom surface TopAppBar, export button shares JSON via ACTION_SEND (all pages), import button pastes JSON and upserts decks with new IDs. File-based, no cloud, honest.</li>
+      <li><strong>LabsScreen expansion</strong>: now shows real cards for Gyro, Numpad, Pointer curves, Deck export/import (Core) plus planned Wi-Fi Relay, Deck sync, Laser pointer with honest notes.</li>
+    </ul>
+    <h4>Added — Settings</h4>
+    <ul>
+      <li>SettingsRepository: pointerCurve (StringPref), gyroMode (StringPref), gyroSensitivity (FloatPref), numpadLayout.</li>
+      <li>SettingsScreen: Controls section shows curve chips with description, Gyro Mouse section with mode chips and sensitivity slider.</li>
+    </ul>
+    <h4>Fixed</h4>
+    <ul>
+      <li>Keycodes: added KP_* constants (0x54-0x63, 0x67) for numpad.</li>
+      <li>AppNav: added routes mode/numpad and mode/gyro, HomeScreen now shows 9 modes with Calculate and Sensors icons.</li>
+      <li>Website: updated header/footer SVGs to new E-wing, rebuilt.</li>
+    </ul>
+  </div>
   <div class="card">
     <h3>v0.1.1 — HID and permission fixes <span class="chip core">Patch</span></h3>
     <p><em>Released: September 2026</em></p>

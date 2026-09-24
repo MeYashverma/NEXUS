@@ -8,15 +8,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONArray
 import org.json.JSONObject
 
-/** The seven primary control modes. */
+/** Primary control modes — now 9 with numpad + gyro. */
 enum class ControlMode(val label: String, val description: String) {
     KEYBOARD("Keyboard", "Full, compact and gaming layouts"),
     TOUCHPAD("Touchpad", "Move, click, scroll, drag"),
-    GAMEPAD("Gamepad", "Sticks, buttons, triggers, profiles"),
+    GAMEPAD("Gamepad", "Sticks, buttons, triggers, profiles — fullscreen landscape"),
     MACROS("Macro Pad", "Pages of one-tap actions"),
     MEDIA("Media", "Play, volume, seek"),
     PRESENTATION("Presentation", "Slides, blank screen, timer"),
     CUSTOM("Custom", "Build your own control surface"),
+    NUMPAD("Numpad", "Numeric keypad + calculations — fullscreen"),
+    GYRO("Gyro Mouse", "Air mouse via gyroscope — Labs, experimental"),
 }
 
 /** A computer the user has connected to before. */
