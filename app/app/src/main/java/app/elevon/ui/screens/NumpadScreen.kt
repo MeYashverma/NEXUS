@@ -5,22 +5,24 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material.icons.outlined.Fullscreen
 import androidx.compose.material.icons.outlined.FullscreenExit
 import androidx.compose.material.icons.outlined.ScreenRotation
@@ -105,56 +107,6 @@ fun NumpadScreen(nav: NavHostController) {
         }
     }
 
-    fun tapWithMod(mod: Int, usage: Int) {
-        if (!connected) return
-        session.hid.sendRawKeyboard(mod, listOf(usage))
-        scope.launch {
-            delay(12)
-            session.hid.sendRawKeyboard(0, emptyList())
-        }
-    }
-
-    @Composable
-    fun NumpadGrid(fullscreen: Boolean) {
-        val keyHeight = if (fullscreen) Modifier.weight(1f) else Modifier.height(64.dp)
-        Column(
-            Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            // Row: 7 8 9 /
-            Row(Modifier.fillMaxWidth().then(if (fullscreen) Modifier.weight(1f) else Modifier), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumpadKey("7", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_7) }
-                NumpadKey("8", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_8) }
-                NumpadKey("9", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_9) }
-                NumpadKey("/", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_KP_SLASH) }
-            }
-            Row(Modifier.fillMaxWidth().then(if (fullscreen) Modifier.weight(1f) else Modifier), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumpadKey("4", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_4) }
-                NumpadKey("5", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_5) }
-                NumpadKey("6", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_6) }
-                NumpadKey("*", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_KP_ASTERISK) }
-            }
-            Row(Modifier.fillMaxWidth().then(if (fullscreen) Modifier.weight(1f) else Modifier), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumpadKey("1", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_1) }
-                NumpadKey("2", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_2) }
-                NumpadKey("3", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_3) }
-                NumpadKey("-", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_KP_MINUS) }
-            }
-            Row(Modifier.fillMaxWidth().then(if (fullscreen) Modifier.weight(1f) else Modifier), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumpadKey("0", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_0) }
-                NumpadKey(".", Modifier.weight(1f).then(keyHeight), fullscreen) { tap(Keycodes.KEY_KP_DOT) }
-                NumpadKey("=", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_KP_EQUAL) }
-                NumpadKey("+", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_KP_PLUS) }
-            }
-            Row(Modifier.fillMaxWidth().then(if (fullscreen) Modifier.weight(1f) else Modifier), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumpadKey("Esc", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_ESC) }
-                NumpadKey("Tab", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_TAB) }
-                NumpadKey("⌫", Modifier.weight(1f).then(keyHeight), fullscreen, isOp = true) { tap(Keycodes.KEY_BACKSPACE) }
-                NumpadKey("Enter", Modifier.weight(1f).then(keyHeight), fullscreen, isPrimary = true) { tap(Keycodes.KEY_KP_ENTER) }
-            }
-        }
-    }
-
     if (useFullscreen) {
         Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
             Column(Modifier.fillMaxSize().statusBarsPadding().padding(12.dp)) {
@@ -178,7 +130,7 @@ fun NumpadScreen(nav: NavHostController) {
                     StateCard(title = "No computer connected", body = "Connect from Home to send numpad keys. Fullscreen landscape for spreadsheets.")
                     Spacer(Modifier.height(12.dp))
                 }
-                Box(Modifier.weight(1f)) { NumpadGrid(fullscreen = true) }
+                Box(Modifier.weight(1f)) { NumpadGridFullscreen(::tap) }
             }
         }
     } else {
@@ -200,7 +152,7 @@ fun NumpadScreen(nav: NavHostController) {
                 }
             }
             Column(Modifier.fillMaxSize().padding(12.dp)) {
-                NumpadGrid(fullscreen = false)
+                NumpadGridPortrait(::tap)
                 Spacer(Modifier.height(12.dp))
                 Text("Tip: Tap fullscreen for landscape spreadsheet work. NumLock is handled by host.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -209,25 +161,120 @@ fun NumpadScreen(nav: NavHostController) {
 }
 
 @Composable
-private fun NumpadKey(label: String, modifier: Modifier, fullscreen: Boolean, isOp: Boolean = false, isPrimary: Boolean = false, onTap: () -> Unit) {
+private fun NumpadGridPortrait(onTap: (Int) -> Unit) {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        NumpadRowPortrait {
+            NumpadKeyPort("7", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_7) }
+            NumpadKeyPort("8", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_8) }
+            NumpadKeyPort("9", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_9) }
+            NumpadKeyPort("/", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_SLASH) }
+        }
+        NumpadRowPortrait {
+            NumpadKeyPort("4", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_4) }
+            NumpadKeyPort("5", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_5) }
+            NumpadKeyPort("6", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_6) }
+            NumpadKeyPort("*", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_ASTERISK) }
+        }
+        NumpadRowPortrait {
+            NumpadKeyPort("1", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_1) }
+            NumpadKeyPort("2", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_2) }
+            NumpadKeyPort("3", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_3) }
+            NumpadKeyPort("-", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_MINUS) }
+        }
+        NumpadRowPortrait {
+            NumpadKeyPort("0", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_0) }
+            NumpadKeyPort(".", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_DOT) }
+            NumpadKeyPort("=", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_EQUAL) }
+            NumpadKeyPort("+", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_PLUS) }
+        }
+        NumpadRowPortrait {
+            NumpadKeyPort("Esc", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_ESC) }
+            NumpadKeyPort("Tab", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_TAB) }
+            NumpadKeyPort("⌫", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_BACKSPACE) }
+            NumpadKeyPort("Enter", Modifier.weight(1f), isPrimary = true) { onTap(Keycodes.KEY_KP_ENTER) }
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.NumpadGridFullscreen(onTap: (Int) -> Unit) {
+    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NumpadKeyFull("7", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_7) }
+            NumpadKeyFull("8", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_8) }
+            NumpadKeyFull("9", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_9) }
+            NumpadKeyFull("/", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_SLASH) }
+        }
+        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NumpadKeyFull("4", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_4) }
+            NumpadKeyFull("5", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_5) }
+            NumpadKeyFull("6", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_6) }
+            NumpadKeyFull("*", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_ASTERISK) }
+        }
+        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NumpadKeyFull("1", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_1) }
+            NumpadKeyFull("2", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_2) }
+            NumpadKeyFull("3", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_3) }
+            NumpadKeyFull("-", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_MINUS) }
+        }
+        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NumpadKeyFull("0", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_0) }
+            NumpadKeyFull(".", Modifier.weight(1f)) { onTap(Keycodes.KEY_KP_DOT) }
+            NumpadKeyFull("=", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_EQUAL) }
+            NumpadKeyFull("+", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_KP_PLUS) }
+        }
+        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NumpadKeyFull("Esc", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_ESC) }
+            NumpadKeyFull("Tab", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_TAB) }
+            NumpadKeyFull("⌫", Modifier.weight(1f), isOp = true) { onTap(Keycodes.KEY_BACKSPACE) }
+            NumpadKeyFull("Enter", Modifier.weight(1f), isPrimary = true) { onTap(Keycodes.KEY_KP_ENTER) }
+        }
+    }
+}
+
+@Composable
+private fun NumpadRowPortrait(content: @Composable RowScope.() -> Unit) {
+    Row(Modifier.fillMaxWidth().height(64.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), content = content)
+}
+
+@Composable
+private fun RowScope.NumpadKeyPort(label: String, modifier: Modifier, isOp: Boolean = false, isPrimary: Boolean = false, onTap: () -> Unit) {
     Box(
         modifier = modifier
-            .border(1.dp, if (isPrimary) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(if (fullscreen) 16.dp else 14.dp))
+            .fillMaxHeight()
+            .border(1.dp, if (isPrimary) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .background(
                 when {
                     isPrimary -> MaterialTheme.colorScheme.primary
                     isOp -> MaterialTheme.colorScheme.surfaceContainerHigh
                     else -> MaterialTheme.colorScheme.surfaceContainer
                 },
-                RoundedCornerShape(if (fullscreen) 16.dp else 14.dp)
+                RoundedCornerShape(14.dp)
             )
             .clickable(onClick = onTap),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = label,
-            style = if (fullscreen) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
-            color = if (isPrimary) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-        )
+        Text(text = label, style = MaterialTheme.typography.titleMedium, color = if (isPrimary) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface)
+    }
+}
+
+@Composable
+private fun RowScope.NumpadKeyFull(label: String, modifier: Modifier, isOp: Boolean = false, isPrimary: Boolean = false, onTap: () -> Unit) {
+    Box(
+        modifier = modifier
+            .fillMaxHeight()
+            .border(1.dp, if (isPrimary) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp))
+            .background(
+                when {
+                    isPrimary -> MaterialTheme.colorScheme.primary
+                    isOp -> MaterialTheme.colorScheme.surfaceContainerHigh
+                    else -> MaterialTheme.colorScheme.surfaceContainer
+                },
+                RoundedCornerShape(16.dp)
+            )
+            .clickable(onClick = onTap),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = label, style = MaterialTheme.typography.titleLarge, color = if (isPrimary) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface)
     }
 }

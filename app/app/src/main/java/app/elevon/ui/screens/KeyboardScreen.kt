@@ -98,8 +98,7 @@ fun KeyboardScreen(nav: NavHostController) {
     var capsLock by remember { mutableStateOf(false) }
     var sticky by remember { mutableStateOf(mapOf<String, Boolean>()) }
     var isFullscreen by remember { mutableStateOf(false) }
-    val scope = remember { androidx.compose.runtime.rememberCoroutineScope() }
-    val actualScope = androidx.compose.runtime.rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     val connected = connection.connectionState == HidConnectionState.CONNECTED
     val useFullscreenLayout = isFullscreen || (isSystemLandscape && layoutPref == KeyboardLayoutId.FULL.name)
@@ -171,7 +170,7 @@ fun KeyboardScreen(nav: NavHostController) {
                 session.hid.sendRawKeyboard(mods, listOf(key.usage))
                 sticky = sticky.filterValues { it }
                 haptic()
-                actualScope.launch {
+                scope.launch {
                     delay(12)
                     session.hid.sendRawKeyboard(0, emptyList())
                 }

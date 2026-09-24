@@ -700,7 +700,7 @@ private fun DpadControl(
                                     onDirs(emptySet())
                                     break
                                 }
-                                val p = pressed.first().position
+                                val p = pressed.first()
                                 val center = event.changes.first().position
                                 val dx = p.position.x - center.x
                                 val dy = p.position.y - center.y
