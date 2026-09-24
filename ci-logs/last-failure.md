@@ -1,118 +1,14 @@
 # Kotlin compile errors
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:165:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:166:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:167:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:168:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:169:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:170:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:171:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:172:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:15 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:36 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:176:36 Cannot infer type for value parameter 'entry'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:177:21 Unresolved reference 'ModeCard'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:182:77 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:183:64 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:37 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:52 Unresolved reference 'hasBluetoothConnectPermission'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:376:9 Unresolved reference 'not' for operator '!'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:17 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:17 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:18 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:386:17 Unresolved reference 'style'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:386:61 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:387:17 Unresolved reference 'color'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:387:67 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:388:13 Syntax error: Expecting an element.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:17 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:17 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:18 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:392:17 Unresolved reference 'style'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:392:60 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:393:17 Unresolved reference 'color'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:393:67 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:394:13 Syntax error: Expecting an element.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:398:49 Unresolved reference 'requiredBluetoothPermissions'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:26 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:26 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:27 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:58 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:58 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:59 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:26 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:26 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:27 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:415:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:423:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:437:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:437:29 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:447:24 Unresolved reference 'icon'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:448:31 Unresolved reference 'honesty'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:451:24 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:453:23 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:463:1 Modifier 'private' is not applicable to 'local class'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:465:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:467:2 Syntax error: Expecting '}'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:165:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:166:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:167:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:168:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:169:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:170:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:171:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:172:13 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:15 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:174:36 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:176:36 Cannot infer type for value parameter 'entry'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:177:21 Unresolved reference 'ModeCard'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:182:77 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:183:64 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:37 Cannot infer type for type parameter 'T'. Specify it explicitly.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:365:52 Unresolved reference 'hasBluetoothConnectPermission'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:376:9 Unresolved reference 'not' for operator '!'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:17 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:17 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:385:18 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:386:17 Unresolved reference 'style'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:386:61 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:387:17 Unresolved reference 'color'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:387:67 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:388:13 Syntax error: Expecting an element.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:17 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:17 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:391:18 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:392:17 Unresolved reference 'style'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:392:60 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:393:17 Unresolved reference 'color'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:393:67 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:394:13 Syntax error: Expecting an element.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:398:49 Unresolved reference 'requiredBluetoothPermissions'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:26 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:26 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:400:27 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:58 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:58 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:404:59 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:26 Syntax error: Expecting an expression.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:26 Syntax error: Expecting ')'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:409:27 Syntax error: Unexpected tokens (use ';' to separate expressions on the same line).
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:415:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:423:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:437:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:437:29 Unresolved reference 'ModeEntry'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:447:24 Unresolved reference 'icon'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:448:31 Unresolved reference 'honesty'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:451:24 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:453:23 Unresolved reference 'mode'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:463:1 Modifier 'private' is not applicable to 'local class'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:465:1 Modifier 'private' is not applicable to 'local function'.
-e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/HomeScreen.kt:467:2 Syntax error: Expecting '}'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/GamepadScreen.kt:705:44 Unresolved reference 'position'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/GamepadScreen.kt:706:44 Unresolved reference 'position'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:101:53 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/NumpadScreen.kt:119:50 Unresolved reference 'weight'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/NumpadScreen.kt:224:14 Unresolved reference 'clickable'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/GamepadScreen.kt:705:44 Unresolved reference 'position'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/GamepadScreen.kt:706:44 Unresolved reference 'position'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/KeyboardScreen.kt:101:53 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/NumpadScreen.kt:119:50 Unresolved reference 'weight'.
+e: file:///home/runner/work/NEXUS/NEXUS/app/app/src/main/java/app/elevon/ui/screens/NumpadScreen.kt:224:14 Unresolved reference 'clickable'.
 
 # Failure reason
 > Task :app:compileDebugKotlin FAILED
@@ -229,7 +125,7 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 26s
+BUILD FAILED in 24s
 31 actionable tasks: 10 executed, 4 from cache, 17 up-to-date
 ## app/build-test.log
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
@@ -330,5 +226,5 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 38s
-19 actionable tasks: 9 executed, 10 from cache
+BUILD FAILED in 47s
+19 actionable tasks: 14 executed, 5 from cache
