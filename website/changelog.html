@@ -12,9 +12,11 @@
 <meta name="theme-color" content="#101114">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
 <header>
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="Elevon home">
@@ -28,16 +30,17 @@
 <main id="main">
 
 <section class="wrap hero">
-  <div class="kicker">Changelog</div>
+  <div class="kicker-row"><div class="kicker">Changelog</div><span class="badge"><span class="dot-mini"></span> v0.1.1 live</span></div>
   <h1>Releases</h1>
   <p class="lede">Versioning: semver. Every release ships with signed APKs, SHA-256 checksums and notes.</p>
-  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUSreleases">All releases</a></div>
+  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases">All releases <span aria-hidden="true">→</span></a><a class="btn outline" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-release.apk">Download v0.1.1</a></div>
   
 </section>
 <section class="wrap block">
   <div class="card">
     <h3>v0.1.1 — HID and permission fixes <span class="chip core">Patch</span></h3>
     <p><em>Released: September 2026</em></p>
+    <div class="actions" style="margin:12px 0"><a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-release.apk">Release APK</a><a class="btn outline" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-debug.apk">Debug APK</a><a class="btn ghost" href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">Release notes + SHA256</a></div>
     <h4>Fixed</h4>
     <ul>
       <li><strong>Keyboard payload size</strong>: was 7 bytes in onGetReport + sendRawKeyboard but descriptor requires 8 (mods + reserved + 6 keys). Fixed to 8 — typing, clipboard bridge, macro pad, gamepad keyboard mode now work on Windows 11.</li>
@@ -50,6 +53,7 @@
     <ul>
       <li>Light-theme screenshots (Paper theme #FAFAF8) with prefers-color-scheme switching via &lt;picture&gt; — dark remains default Graphite.</li>
       <li>GitHub Pages deployment via Actions (website/ folder, .nojekyll).</li>
+      <li>Premium redesign: glass header, gradient hero, floating cards, glow, fancy buttons.</li>
     </ul>
   </div>
   <div class="card">

@@ -89,6 +89,9 @@ def build_page(path: str, title: str, description: str, body: str) -> None:
         )
         for gtitle, items in FOOTER_GROUPS
     )
+    announce = ""
+    if path == "index.html":
+        announce = f'<div class="announce">✦ v{VERSION} — HID & permission fixes shipped · <a href="{rel("changelog.html")}">See what\'s new</a> · <a href="{REPO}/releases/tag/v{VERSION}">Download APK</a></div>'
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -103,9 +106,11 @@ def build_page(path: str, title: str, description: str, body: str) -> None:
 <meta name="theme-color" content="#101114">
 <link rel="icon" type="image/svg+xml" href="{prefix}assets/favicon.svg">
 <link rel="stylesheet" href="{prefix}styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+{announce}
 <header>
   <div class="wrap bar">
     <a class="brand" href="{rel('index.html')}" aria-label="Elevon home">

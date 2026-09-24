@@ -25,7 +25,7 @@ def hero(
     )
     return f"""
 <section class="wrap hero">
-  <div class="kicker">{kicker}</div>
+  <div class="kicker-row"><div class="kicker">{kicker}</div><span class="badge"><span class="dot-mini"></span> v{VERSION} live</span></div>
   <h1>{title}</h1>
   <p class="lede">{lede}</p>
   <div class="actions">{actions}</div>
@@ -34,13 +34,16 @@ def hero(
 
 
 def cta(label: str, href: str, primary: bool = False) -> str:
-    return f'<a class="btn {"primary" if primary else "outline"}" href="{href}">{label}</a>'
+    # primary gets arrow, outline stays simple
+    arrow = ' <span aria-hidden="true">→</span>' if primary else ''
+    return f'<a class="btn {"primary" if primary else "outline"}" href="{href}">{label}{arrow}</a>'
+
+
+def cta_ghost(label: str, href: str) -> str:
+    return f'<a class="btn ghost" href="{href}">{label}</a>'
 
 
 def shot(name: str, alt: str) -> str:
-    # name like "shot-hero" -> dark assets/shot-hero.png, light assets/shot-hero-light.png
-    # Returns a <picture> that serves light variant when user prefers light color scheme.
-    # Both dark and light exist for all 8 core screenshots; fallback to dark if light missing.
     return (
         f'<div class="shot"><picture>'
         f'<source srcset="assets/{name}-light.png" media="(prefers-color-scheme: light)">'
@@ -49,38 +52,66 @@ def shot(name: str, alt: str) -> str:
     )
 
 
+def download_box() -> str:
+    return f"""
+    <div class="download-box">
+      <div class="db-label">Direct download v{VERSION}</div>
+      <div class="db-links">
+        <a class="btn primary" href="{REPO}/releases/download/v{VERSION}/elevon-app-release.apk">Release APK</a>
+        <a class="btn outline" href="{REPO}/releases/download/v{VERSION}/elevon-app-debug.apk">Debug APK</a>
+        <a class="btn ghost" href="{REPO}/releases/tag/v{VERSION}">SHA256 + notes</a>
+      </div>
+    </div>
+    """
+
+
 # ------------------------------------------------------------------ index ---
 
-INDEX = hero(
-    kicker="Your phone. Your controls.",
-    title="One pairing.<br>Every control.",
-    lede=(
-        "Elevon turns your Android phone into a real wireless keyboard, touchpad, gamepad, "
-        "macro deck and remote for your computer — a standard Bluetooth device, like a proper peripheral. "
-        "Your computer needs <strong>nothing installed</strong>."
-    ),
-    actions=cta("Get the app", f"{REPO}releases", True)
-    + cta("See how it works", "how-it-works.html")
-    + cta("Try Relay", "relay/index.html"),
-    trust=[
-        "No desktop companion app",
-        "No account",
-        "No internet permission",
-        "Open source (Apache-2.0)",
-    ],
-) + f"""
-<section class="wrap block tight">
-  <div class="shot"><picture><source srcset="assets/shot-hero-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></picture></div>
+INDEX = f"""
+<section class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker-row">
+        <div class="kicker">Your phone. Your controls.</div>
+        <span class="badge"><span class="dot-mini"></span> v{VERSION} · HID fixes shipped</span>
+      </div>
+      <h1>One pairing.<br><span class="grad">Every control.</span></h1>
+      <p class="lede">Elevon turns your Android phone into a real wireless keyboard, touchpad, gamepad, macro deck and remote — a standard Bluetooth device, like a proper peripheral. Your computer needs <strong>nothing installed</strong>.</p>
+      <div class="actions">
+        {cta("Download free", f"{REPO}/releases/tag/v{VERSION}", True)}
+        {cta("See how it works", "how-it-works.html")}
+        {cta("Try Relay", "relay/index.html")}
+      </div>
+      {download_box()}
+      <div class="trust"><span>No desktop app</span><span>No account</span><span>No internet permission</span><span>Apache-2.0</span></div>
+      <div class="stat-row">
+        <div class="stat"><b>7</b><span>control modes</span></div>
+        <div class="stat"><b>1</b><span>pairing for all</span></div>
+        <div class="stat"><b>0</b><span>host software</span></div>
+        <div class="stat"><b>∞</b><span>open source</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="glow"></div>
+      <div class="phone-frame">
+        <picture><source srcset="assets/shot-hero-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></picture>
+      </div>
+      <div class="floating-card pos1"><div class="fc-icon">⌨</div><div>Keyboard · 8-byte HID fixed</div></div>
+      <div class="floating-card pos2"><div class="fc-icon">🎮</div><div>Gamepad · no XInput fake</div></div>
+      <div class="floating-card pos3"><div class="fc-icon">✓</div><div>v{VERSION} · Android 16 ready</div></div>
+    </div>
+  </div>
 </section>
 <section class="wrap block">
   <h2>Seven controls. Zero software on your computer.</h2>
+  <p>Every mode is a real HID report — not a remote desktop hack. Pair once from your computer's Bluetooth settings and switch instantly.</p>
   <div class="grid four">
-    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row.</p></div>
-    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds.</p></div>
-    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles.</p></div>
+    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row. Fixed 8-byte reports for Windows 11.</p></div>
+    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds. Button release now always sent.</p></div>
+    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles. Generic HID — honest about XInput.</p></div>
     <div class="card"><div class="icon">▦</div><h3>Macro Pad</h3><p>Pages of big one-tap buttons: shortcuts, media keys, text snippets. No desktop server needed.</p></div>
-    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch.</p></div>
-    <div class="card"><div class="icon">.present</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
+    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch. Now 4-byte consumer reports.</p></div>
+    <div class="card"><div class="icon">◐</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
     <div class="card"><div class="icon">✦</div><h3>Custom</h3><p>Build your own control surface: streaming deck, editing deck, anything.</p></div>
     <div class="card"><div class="icon">↔</div><h3>Profiles</h3><p>Work laptop, gaming PC, living room. Each remembers its mode, layout and deck.</p></div>
   </div>
@@ -111,7 +142,7 @@ INDEX = hero(
   <p>Elevon's Android app has <strong>no INTERNET permission</strong>. Your operating system physically
   prevents it from sending anything anywhere. No account. No analytics. No telemetry. Devices, profiles,
   layouts and clipboard history live on your phone and nowhere else.</p>
-  <div class="actions">{cta("Read the privacy page", "privacy.html")}</div>
+  <div class="actions">{cta("Read the privacy page", "privacy.html")} {cta("Download v"+VERSION, f"{REPO}/releases/tag/v{VERSION}", True)}</div>
 </section>
 """
 
@@ -121,7 +152,7 @@ FEATURES = hero(
     kicker="Features",
     title="Everything a pocket input device should be",
     lede="One pairing, seven control modes, deep customization — and honest labels everywhere about what works where.",
-    actions=cta("Get started", "getting-started.html", True),
+    actions=cta("Get started", "getting-started.html", True) + cta("Download", f"{REPO}/releases/tag/v{VERSION}"),
 ) + """
 <section class="wrap block">
   <div class="feature">
@@ -262,7 +293,7 @@ GETTING_STARTED = hero(
     kicker="Getting started",
     title="Pairing takes a minute. Then it's yours.",
     lede="No installers, no accounts, no restarts. If you've ever paired a Bluetooth keyboard, you already know how to do this.",
-    actions=cta("Download from Releases", f"{REPO}releases", True),
+    actions=cta("Download from Releases", f"{REPO}/releases", True) + cta(f"Direct APK v{VERSION}", f"{REPO}/releases/download/v{VERSION}/elevon-app-release.apk"),
 ) + """
 <section class="wrap block">
   <div class="grid two">
@@ -270,6 +301,7 @@ GETTING_STARTED = hero(
       <h3>1 · Install Elevon on your phone</h3>
       <p>Grab the latest APK from GitHub Releases (signed, with SHA-256 checksums published). Android 9 or
       newer. Or build it yourself from source — it's a standard Android Studio project.</p>
+      <div class="actions" style="margin-top:14px"><a class="btn primary" href="{repo}/releases/download/v{ver}/elevon-app-release.apk">Get release APK</a><a class="btn outline" href="{repo}/releases/tag/v{ver}">All releases</a></div>
     </div>
     <div class="card">
       <h3>2 · Open Elevon, allow Bluetooth</h3>
@@ -293,14 +325,14 @@ GETTING_STARTED = hero(
 <section class="wrap block">
   <h2>Downloading the APK safely</h2>
   <p>Releases are built publicly by CI. Each release page lists the APK's SHA-256 checksum; verify it with
-  <code>sha256sum elevon-0.1.0.apk</code> before installing. Android will warn about unknown sources —
+  <code>sha256sum elevon-app-release.apk</code> before installing. Android will warn about unknown sources —
   that's normal for APKs outside the Play Store. Elevon is also trivially auditable: the entire app is a
   few thousand lines of Kotlin using only public APIs.</p>
   <div class="note warn"><strong>Heads-up:</strong> some Android versions flag any sideloaded app with
   Bluetooth permissions. That's the permission, not a detection. Check the signature and checksums, and
   read the code if you want certainty.</div>
 </section>
-"""
+""".format(repo=REPO, ver=VERSION)
 
 # ------------------------------------------------------------- controller ---
 
@@ -648,12 +680,13 @@ CHANGELOG = hero(
     kicker="Changelog",
     title="Releases",
     lede="Versioning: semver. Every release ships with signed APKs, SHA-256 checksums and notes.",
-    actions=cta("All releases", f"{REPO}releases", True),
+    actions=cta("All releases", f"{REPO}/releases", True) + cta(f"Download v{VERSION}", f"{REPO}/releases/download/v{VERSION}/elevon-app-release.apk"),
 ) + f"""
 <section class="wrap block">
   <div class="card">
     <h3>v0.1.1 — HID and permission fixes <span class="chip core">Patch</span></h3>
     <p><em>Released: September 2026</em></p>
+    <div class="actions" style="margin:12px 0"><a class="btn primary" href="{REPO}/releases/download/v{VERSION}/elevon-app-release.apk">Release APK</a><a class="btn outline" href="{REPO}/releases/download/v{VERSION}/elevon-app-debug.apk">Debug APK</a><a class="btn ghost" href="{REPO}/releases/tag/v{VERSION}">Release notes + SHA256</a></div>
     <h4>Fixed</h4>
     <ul>
       <li><strong>Keyboard payload size</strong>: was 7 bytes in onGetReport + sendRawKeyboard but descriptor requires 8 (mods + reserved + 6 keys). Fixed to 8 — typing, clipboard bridge, macro pad, gamepad keyboard mode now work on Windows 11.</li>
@@ -666,6 +699,7 @@ CHANGELOG = hero(
     <ul>
       <li>Light-theme screenshots (Paper theme #FAFAF8) with prefers-color-scheme switching via &lt;picture&gt; — dark remains default Graphite.</li>
       <li>GitHub Pages deployment via Actions (website/ folder, .nojekyll).</li>
+      <li>Premium redesign: glass header, gradient hero, floating cards, glow, fancy buttons.</li>
     </ul>
   </div>
   <div class="card">
@@ -712,6 +746,7 @@ ROADMAP = hero(
         <li>Macro decks and custom surfaces without host software</li>
         <li>Elevon Labs + Relay (browser, encrypted)</li>
         <li>Honest compatibility detection and labeling</li>
+        <li>v{VERSION} HID fixes + permission gate + premium site</li>
       </ul>
     </div>
     <div class="card">

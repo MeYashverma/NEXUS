@@ -12,9 +12,11 @@
 <meta name="theme-color" content="#101114">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="announce">✦ v0.1.1 — HID & permission fixes shipped · <a href="changelog.html">See what's new</a> · <a href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">Download APK</a></div>
 <header>
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="Elevon home">
@@ -28,24 +30,58 @@
 <main id="main">
 
 <section class="wrap hero">
-  <div class="kicker">Your phone. Your controls.</div>
-  <h1>One pairing.<br>Every control.</h1>
-  <p class="lede">Elevon turns your Android phone into a real wireless keyboard, touchpad, gamepad, macro deck and remote for your computer — a standard Bluetooth device, like a proper peripheral. Your computer needs <strong>nothing installed</strong>.</p>
-  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUSreleases">Get the app</a><a class="btn outline" href="how-it-works.html">See how it works</a><a class="btn outline" href="relay/index.html">Try Relay</a></div>
-  <div class="trust"><span>No desktop companion app</span><span>No account</span><span>No internet permission</span><span>Open source (Apache-2.0)</span></div>
-</section>
-<section class="wrap block tight">
-  <div class="shot"><picture><source srcset="assets/shot-hero-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></picture></div>
+  <div class="hero-grid">
+    <div>
+      <div class="kicker-row">
+        <div class="kicker">Your phone. Your controls.</div>
+        <span class="badge"><span class="dot-mini"></span> v0.1.1 · HID fixes shipped</span>
+      </div>
+      <h1>One pairing.<br><span class="grad">Every control.</span></h1>
+      <p class="lede">Elevon turns your Android phone into a real wireless keyboard, touchpad, gamepad, macro deck and remote — a standard Bluetooth device, like a proper peripheral. Your computer needs <strong>nothing installed</strong>.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">Download free <span aria-hidden="true">→</span></a>
+        <a class="btn outline" href="how-it-works.html">See how it works</a>
+        <a class="btn outline" href="relay/index.html">Try Relay</a>
+      </div>
+      
+    <div class="download-box">
+      <div class="db-label">Direct download v0.1.1</div>
+      <div class="db-links">
+        <a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-release.apk">Release APK</a>
+        <a class="btn outline" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-debug.apk">Debug APK</a>
+        <a class="btn ghost" href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">SHA256 + notes</a>
+      </div>
+    </div>
+    
+      <div class="trust"><span>No desktop app</span><span>No account</span><span>No internet permission</span><span>Apache-2.0</span></div>
+      <div class="stat-row">
+        <div class="stat"><b>7</b><span>control modes</span></div>
+        <div class="stat"><b>1</b><span>pairing for all</span></div>
+        <div class="stat"><b>0</b><span>host software</span></div>
+        <div class="stat"><b>∞</b><span>open source</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="glow"></div>
+      <div class="phone-frame">
+        <picture><source srcset="assets/shot-hero-light.png" media="(prefers-color-scheme: light)"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></picture>
+      </div>
+      <div class="floating-card pos1"><div class="fc-icon">⌨</div><div>Keyboard · 8-byte HID fixed</div></div>
+      <div class="floating-card pos2"><div class="fc-icon">🎮</div><div>Gamepad · no XInput fake</div></div>
+      <div class="floating-card pos3"><div class="fc-icon">✓</div><div>v0.1.1 · Android 16 ready</div></div>
+    </div>
+  </div>
 </section>
 <section class="wrap block">
   <h2>Seven controls. Zero software on your computer.</h2>
+  <p>Every mode is a real HID report — not a remote desktop hack. Pair once from your computer's Bluetooth settings and switch instantly.</p>
   <div class="grid four">
-    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row.</p></div>
-    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds.</p></div>
-    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles.</p></div>
+    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row. Fixed 8-byte reports for Windows 11.</p></div>
+    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds. Button release now always sent.</p></div>
+    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles. Generic HID — honest about XInput.</p></div>
     <div class="card"><div class="icon">▦</div><h3>Macro Pad</h3><p>Pages of big one-tap buttons: shortcuts, media keys, text snippets. No desktop server needed.</p></div>
-    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch.</p></div>
-    <div class="card"><div class="icon">.present</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
+    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch. Now 4-byte consumer reports.</p></div>
+    <div class="card"><div class="icon">◐</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
     <div class="card"><div class="icon">✦</div><h3>Custom</h3><p>Build your own control surface: streaming deck, editing deck, anything.</p></div>
     <div class="card"><div class="icon">↔</div><h3>Profiles</h3><p>Work laptop, gaming PC, living room. Each remembers its mode, layout and deck.</p></div>
   </div>
@@ -76,7 +112,7 @@
   <p>Elevon's Android app has <strong>no INTERNET permission</strong>. Your operating system physically
   prevents it from sending anything anywhere. No account. No analytics. No telemetry. Devices, profiles,
   layouts and clipboard history live on your phone and nowhere else.</p>
-  <div class="actions"><a class="btn outline" href="privacy.html">Read the privacy page</a></div>
+  <div class="actions"><a class="btn outline" href="privacy.html">Read the privacy page</a> <a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">Download v0.1.1 <span aria-hidden="true">→</span></a></div>
 </section>
 
 </main>

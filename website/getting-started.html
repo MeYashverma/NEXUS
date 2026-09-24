@@ -12,9 +12,11 @@
 <meta name="theme-color" content="#101114">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
 <header>
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="Elevon home">
@@ -28,10 +30,10 @@
 <main id="main">
 
 <section class="wrap hero">
-  <div class="kicker">Getting started</div>
+  <div class="kicker-row"><div class="kicker">Getting started</div><span class="badge"><span class="dot-mini"></span> v0.1.1 live</span></div>
   <h1>Pairing takes a minute. Then it's yours.</h1>
   <p class="lede">No installers, no accounts, no restarts. If you've ever paired a Bluetooth keyboard, you already know how to do this.</p>
-  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUSreleases">Download from Releases</a></div>
+  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases">Download from Releases <span aria-hidden="true">→</span></a><a class="btn outline" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-release.apk">Direct APK v0.1.1</a></div>
   
 </section>
 <section class="wrap block">
@@ -40,6 +42,7 @@
       <h3>1 · Install Elevon on your phone</h3>
       <p>Grab the latest APK from GitHub Releases (signed, with SHA-256 checksums published). Android 9 or
       newer. Or build it yourself from source — it's a standard Android Studio project.</p>
+      <div class="actions" style="margin-top:14px"><a class="btn primary" href="https://github.com/MeYashverma/NEXUS/releases/download/v0.1.1/elevon-app-release.apk">Get release APK</a><a class="btn outline" href="https://github.com/MeYashverma/NEXUS/releases/tag/v0.1.1">All releases</a></div>
     </div>
     <div class="card">
       <h3>2 · Open Elevon, allow Bluetooth</h3>
@@ -63,7 +66,7 @@
 <section class="wrap block">
   <h2>Downloading the APK safely</h2>
   <p>Releases are built publicly by CI. Each release page lists the APK's SHA-256 checksum; verify it with
-  <code>sha256sum elevon-0.1.0.apk</code> before installing. Android will warn about unknown sources —
+  <code>sha256sum elevon-app-release.apk</code> before installing. Android will warn about unknown sources —
   that's normal for APKs outside the Play Store. Elevon is also trivially auditable: the entire app is a
   few thousand lines of Kotlin using only public APIs.</p>
   <div class="note warn"><strong>Heads-up:</strong> some Android versions flag any sideloaded app with
