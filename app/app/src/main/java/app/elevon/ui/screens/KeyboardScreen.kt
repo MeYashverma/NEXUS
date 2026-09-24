@@ -51,6 +51,7 @@ import app.elevon.input.KeyKind
 import app.elevon.input.KeyLayouts
 import app.elevon.input.KeyboardLayoutId
 import app.elevon.ui.components.StateCard
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

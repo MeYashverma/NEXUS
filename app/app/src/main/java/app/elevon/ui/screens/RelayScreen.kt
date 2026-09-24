@@ -179,9 +179,9 @@ fun RelayScreen(nav: NavHostController) {
                                 "Relay needs the Nearby devices permission to advertise itself to your laptop."
                             app.elevon.relay.RelayManager.ERROR_NO_ADVERTISER,
                             app.elevon.relay.RelayManager.ERROR_ADVERTISE_FAILED ->
-                                "This phone can't advertise over Bluetooth LE right now. Some phones restrict it; try toggling Bluetooth or restarting the phone.",
+                                "This phone can't advertise over Bluetooth LE right now. Some phones restrict it; try toggling Bluetooth or restarting the phone."
                             app.elevon.relay.RelayManager.ERROR_HANDSHAKE ->
-                                "The secure handshake failed. Stop, start again and re-compare the code.",
+                                "The secure handshake failed. Stop, start again and re-compare the code."
                             else -> "Something didn't work. Stop and start again."
                         },
                         style = MaterialTheme.typography.bodyMedium,
