@@ -2,6 +2,7 @@ package app.elevon
 
 import app.elevon.data.Profile
 import app.elevon.input.Chord
+import app.elevon.input.describe
 import app.elevon.input.GamepadProfile
 import app.elevon.input.GamepadProfiles
 import app.elevon.input.MacroAction
