@@ -61,33 +61,41 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       # Sandbox note: Actions log downloads are blocked from this environment,
-      # so on failure we commit the tail of the log back to the branch instead.
+      # so on failure we commit the tail of the log back to the branch via the
+      # Contents API (no git push needed).
       - name: Dump failure log to branch
         if: failure() && startsWith(github.ref, 'refs/heads/arena/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_MSG: ${{ github.event.head_commit.message }}
         run: |
-          if [[ "${{ github.event.head_commit.message }}" == ci\(logs\)* ]]; then
-            echo "Log dump commit; not recursing."
-            exit 0
-          fi
+          case "$HEAD_MSG" in
+            "ci(logs)"*) echo "Log dump commit; not recursing."; exit 0;;
+          esac
           mkdir -p ci-logs
           {
             echo "# Kotlin compile errors"
-            grep -hE "^e: " app/*.log | head -200 || true
+            grep -hE "^e: " app/*.log 2>/dev/null | head -200
             echo
             echo "# Failure reason"
-            grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" app/*.log | head -40 || true
+            grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" app/*.log 2>/dev/null | head -40
             echo
             echo "# Log tails"
             for f in app/*.log; do
+              [ -e "$f" ] || continue
               echo "## $f"
-              tail -60 "$f"
+              tail -100 "$f"
             done
           } > ci-logs/last-failure.md
-          git config user.name "elevon-ci"
-          git config user.email "actions@github.com"
-          git add ci-logs/last-failure.md
-          git commit -m "ci(logs): record build failure" --no-verify
-          git push origin HEAD:${{ github.ref_name }}
+          B64=$(base64 -w0 ci-logs/last-failure.md)
+          if gh api "repos/${{ github.repository }}/contents/ci-logs/last-failure.md" \
+              -X PUT -f message="ci(logs): record build failure" \
+              -f content="$B64" -f branch="${{ github.ref_name }}" > /dev/null 2>&1; then
+            echo "Failure log committed to branch ci-logs/last-failure.md"
+          else
+            echo "Contents-API commit failed"
+          fi
+          exit 0
 
       - name: Record checksums
         if: always()
