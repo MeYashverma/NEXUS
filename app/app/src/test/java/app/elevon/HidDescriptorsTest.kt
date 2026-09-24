@@ -69,7 +69,7 @@ class HidDescriptorsTest {
     fun `payload sizes match documented report layouts`() {
         assertEquals(8, HidDescriptors.keyboardPayloadSize) // modifiers + reserved + six key slots
         assertEquals(5, HidDescriptors.mousePayloadSize)
-        assertEquals(2, HidDescriptors.consumerPayloadSize)
+        assertEquals(4, HidDescriptors.consumerPayloadSize) // usage (2) + padding (2)
         assertEquals(1, HidDescriptors.systemPayloadSize)
         assertEquals(9, HidDescriptors.gamepadPayloadSize)
         assertTrue(HidDescriptors.composite().size > HidDescriptors.basic().size)
