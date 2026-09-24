@@ -49,12 +49,12 @@ Daemon will be stopped at the end of the build
 > Task :app:checkDebugDuplicateClasses
 > Task :app:mergeDebugNativeLibs
 > Task :app:mergeLibDexDebug
-> Task :app:mergeDebugJavaResource
 
 > Task :app:stripDebugDebugSymbols
 Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
 
 > Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
 > Task :app:validateSigningDebug
 > Task :app:writeDebugAppMetadata
 > Task :app:writeDebugSigningConfigVersions
@@ -62,9 +62,9 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :app:packageDebug
 > Task :app:createDebugApkListingFileRedirect
 > Task :app:assembleDebug
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1790267918835.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1790267929280.json
 
-BUILD SUCCESSFUL in 1m
+BUILD SUCCESSFUL in 1m 18s
 39 actionable tasks: 19 executed, 20 up-to-date
 ## app/build-test.log
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
@@ -165,5 +165,5 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 1m 39s
+BUILD FAILED in 1m 48s
 24 actionable tasks: 23 executed, 1 from cache
