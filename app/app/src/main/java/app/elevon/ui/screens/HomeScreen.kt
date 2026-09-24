@@ -1,7 +1,12 @@
 package app.elevon.ui.screens
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -53,6 +58,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import app.elevon.LocalSession
 import app.elevon.data.ControlMode
@@ -104,6 +110,11 @@ fun HomeScreen(nav: NavHostController) {
         }
 
         Spacer(Modifier.height(20.dp))
+
+        // ---- permission gate (Android 12+ needs runtime Nearby devices) ----
+        BluetoothPermissionGate()
+
+        Spacer(Modifier.height(12.dp))
 
         // ---- connection card ----
         ConnectionCard(
@@ -345,6 +356,81 @@ private fun ConnectSheet(nav: NavHostController) {
             Text("Pair a new computer")
         }
     }
+}
+
+@Composable
+private fun BluetoothPermissionGate() {
+    val context = LocalContext.current
+    val session = LocalSession.current
+    var hasPermission by remember { mutableStateOf(hasBluetoothConnectPermission(context)) }
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { results ->
+        hasPermission = results.values.all { it }
+        if (hasPermission) {
+            session.hid.start()
+        }
+    }
+
+    if (!hasPermission) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .border(1.dp, MaterialTheme.colorScheme.error, RoundedCornerShape(20.dp))
+                .background(MaterialTheme.colorScheme.errorContainer, RoundedCornerShape(20.dp))
+                .padding(16.dp),
+        ) {
+            Text(
+                \"Nearby devices permission needed\",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                \"Elevon needs Nearby devices permission to act as a Bluetooth keyboard, mouse and gamepad. Without it, pairing and all controls fail on Android 12+ — especially Android 16 (API 36) where enforcement is strict. Grant it once and Elevon will work.\",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+            )
+            Spacer(Modifier.height(12.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Button(
+                    onClick = { launcher.launch(requiredBluetoothPermissions()) },
+                    shape = RoundedCornerShape(12.dp),
+                ) { Text(\"Grant permission\") }
+                OutlinedButton(
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = android.net.Uri.parse(\"package:${context.packageName}\")
+                        }
+                        context.startActivity(intent)
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                ) { Text(\"Open settings\") }
+            }
+        }
+    }
+}
+
+private fun hasBluetoothConnectPermission(context: android.content.Context): Boolean {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+    return ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.BLUETOOTH_CONNECT,
+    ) == PackageManager.PERMISSION_GRANTED
+}
+
+private fun requiredBluetoothPermissions(): Array<String> {
+    val list = mutableListOf<String>()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        list.add(Manifest.permission.BLUETOOTH_CONNECT)
+        list.add(Manifest.permission.BLUETOOTH_SCAN)
+        list.add(Manifest.permission.BLUETOOTH_ADVERTISE)
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        list.add(Manifest.permission.POST_NOTIFICATIONS)
+    }
+    return list.toTypedArray()
 }
 
 @Composable

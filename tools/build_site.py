@@ -15,7 +15,7 @@ OUT = ROOT / "website"
 
 REPO = "https://github.com/MeYashverma/NEXUS"
 SITE_ROOT = "https://meyashverma.github.io/NEXUS"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 NAV = [
     ("index.html", "Home"),

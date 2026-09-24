@@ -13,9 +13,9 @@ package app.elevon.hid
  * Report payloads passed to [android.bluetooth.BluetoothHidDevice.sendReport]
  * do NOT include the report ID (the stack prepends it):
  *
- *  ID 1 keyboard : mods(1) reserved(1) keys(6)              -> 7 bytes
+ *  ID 1 keyboard : mods(1) reserved(1) keys(6)              -> 8 bytes
  *  ID 2 mouse    : buttons(1) X(1) Y(1) wheel(1) acPan(1)   -> 5 bytes
- *  ID 3 consumer : usage low(1) usage high(1)               -> 2 bytes
+ *  ID 3 consumer : usage low(1) usage high(1) + padding(2)  -> 4 bytes
  *  ID 4 system   : code(1)                                  -> 1 byte
  *  ID 5 gamepad  : buttons(2) X Y Z Rz(4) Rx Ry(2) hat(1)   -> 9 bytes
  */
@@ -29,7 +29,7 @@ object HidDescriptors {
 
     val keyboardPayloadSize = 8
     val mousePayloadSize = 5
-    val consumerPayloadSize = 2
+    val consumerPayloadSize = 4
     val systemPayloadSize = 1
     val gamepadPayloadSize = 9
 

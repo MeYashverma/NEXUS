@@ -34,9 +34,8 @@ class MouseReport {
 
     fun panHorizontal(notches: Int) { pan = clamp(pan + notches) }
 
-    /** Serialises and resets accumulated deltas. Returns null when idle. */
-    fun payload(): ByteArray? {
-        if (buttons == 0 && accX == 0 && accY == 0 && wheel == 0 && pan == 0) return null
+    /** Serialises and resets accumulated deltas. Always returns a report so button releases are sent. */
+    fun payload(): ByteArray {
         val out = ByteArray(HidDescriptors.mousePayloadSize)
         out[0] = buttons.toByte()
         out[1] = accX.toByte()
@@ -45,6 +44,12 @@ class MouseReport {
         out[4] = pan.toByte()
         accX = 0; accY = 0; wheel = 0; pan = 0
         return out
+    }
+
+    /** Returns null when truly idle (no buttons, no deltas) — used to avoid spamming empty reports in loops. */
+    fun payloadOrNullIfIdle(): ByteArray? {
+        if (buttons == 0 && accX == 0 && accY == 0 && wheel == 0 && pan == 0) return null
+        return payload()
     }
 
     private fun clamp(v: Int) = v.coerceIn(MIN_DELTA, MAX_DELTA)

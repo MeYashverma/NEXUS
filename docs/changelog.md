@@ -3,6 +3,36 @@
 Versioning: [semver](https://semver.org/). Each release ships signed APKs with SHA-256
 checksums on the [Releases page](https://github.com/MeYashverma/NEXUS/releases).
 
+## 0.1.1 — HID and permission fixes · September 2026
+
+Fixes for "all controls + connection" failure on Android 16 (API 36) + Windows 11.
+
+### Fixed
+
+- **HID report sizes**: keyboard payload was 7 bytes in two places (onGetReport + sendRawKeyboard)
+  but descriptor requires 8 bytes (mods + reserved + 6 keys). Fixed to 8 bytes with reserved byte.
+  This broke typing, clipboard bridge, macro pad, and gamepad keyboard mode — all sent malformed
+  reports that Windows ignored. Also fixed mouse button release not being sent (MouseReport.payload()
+  returned null on release, leaving buttons stuck).
+- **Consumer (media keys) report**: descriptor declares 4 bytes (usage + padding) but code sent 2.
+  Fixed to 4 bytes; media/prev/next/play/pause/volume now work on Windows.
+- **KeyboardScreen**: tap sent press without release, leaving keys stuck on host. Now sends
+  press, then release after 12ms via coroutine, matching ElevonSession.tapKey pattern.
+- **Android 12+ runtime permissions**: BLUETOOTH_CONNECT/SCAN/ADVERTISE + POST_NOTIFICATIONS were
+  declared but never requested at runtime. On Android 16 (targetSdk 36) this throws
+  SecurityException for getProfileProxy, bondedDevices, connect(). Added:
+  - MainActivity permission launcher requesting Nearby devices + notifications on create,
+    retrying HidController.start() after grant.
+  - HomeScreen permission gate showing error card with Grant + Open settings buttons when
+    BLUETOOTH_CONNECT not granted, explaining why all controls fail without it.
+  - HidController.start() now checks permission first and surfaces OFFLINE instead of crashing,
+    with SecurityException handling.
+
+### Added
+
+- Light-theme screenshots (Paper theme) with prefers-color-scheme switching via <picture>
+  (already in 0.1.1 website build).
+
 ## 0.1.0 — first public alpha · September 2026
 
 First public release. Research-backed rebuild of the working concept (formerly "NEXUS",

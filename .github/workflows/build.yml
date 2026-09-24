@@ -115,26 +115,39 @@ jobs:
             app/app/build/outputs/apk/debug/*.apk
             app/app/build/outputs/apk/release/*.apk
 
-      # Publishes Release v0.1.0 once the branch builds green. Idempotent:
-      # existing releases only get their assets refreshed.
-      - name: Publish Release v0.1.0
+      # Publishes Release v0.1.1 once the branch builds green. Idempotent:
+      # existing releases only get their assets refreshed. Reads version from
+      # app/app/build.gradle.kts (versionName) to avoid hardcoding.
+      - name: Publish Release
         if: success() && startsWith(github.ref, 'refs/heads/arena/')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -e
+          VERSION=$(grep -E 'versionName\s*=\s*"' app/app/build.gradle.kts | sed -E 's/.*\"([^\"]+)\".*/\1/' | head -1)
+          if [ -z "$VERSION" ]; then VERSION="0.1.1"; fi
+          echo "Detected version $VERSION"
           mkdir -p dist
           cp app/app/build/outputs/apk/debug/*.apk dist/ 2>/dev/null || true
           cp app/app/build/outputs/apk/release/*.apk dist/ 2>/dev/null || true
           (cd dist && for f in *.apk; do mv "$f" "elevon-$f" 2>/dev/null || true; done)
           (cd dist && sha256sum *.apk > SHA256SUMS.txt && cat SHA256SUMS.txt)
-          if gh release view v0.1.0 --repo "${{ github.repository }}" > /dev/null 2>&1; then
-            echo "Release v0.1.0 exists; refreshing assets"
-            gh release upload v0.1.0 --repo "${{ github.repository }}" dist/* --clobber
+          TAG="v$VERSION"
+          NOTES=".github/RELEASE_NOTES_${TAG}.md"
+          if [ ! -f "$NOTES" ]; then NOTES=".github/RELEASE_NOTES_v0.1.0.md"; fi
+          if gh release view "$TAG" --repo "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "Release $TAG exists; refreshing assets"
+            gh release upload "$TAG" --repo "${{ github.repository }}" dist/* --clobber
           else
-            gh release create v0.1.0 \
+            gh release create "$TAG" \
               --repo "${{ github.repository }}" \
               --target "$GITHUB_SHA" \
-              --title "Elevon v0.1.0 — Your phone. Your controls." \
-              --notes-file .github/RELEASE_NOTES_v0.1.0.md \
+              --title "Elevon $TAG — Your phone. Your controls." \
+              --notes-file "$NOTES" \
               dist/*
+          fi
+          # Also keep v0.1.0 assets fresh if this is a newer version build
+          if [ "$TAG" != "v0.1.0" ] && gh release view v0.1.0 --repo "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "Also refreshing v0.1.0 assets for compatibility"
+            gh release upload v0.1.0 --repo "${{ github.repository }}" dist/* --clobber || true
           fi
