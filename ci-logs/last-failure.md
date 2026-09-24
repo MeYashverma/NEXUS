@@ -229,7 +229,7 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 22s
+BUILD FAILED in 26s
 31 actionable tasks: 10 executed, 4 from cache, 17 up-to-date
 ## app/build-test.log
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
@@ -330,5 +330,5 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 30s
+BUILD FAILED in 38s
 19 actionable tasks: 9 executed, 10 from cache
