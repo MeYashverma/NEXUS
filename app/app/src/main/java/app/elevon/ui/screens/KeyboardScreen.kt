@@ -81,10 +81,10 @@ fun KeyboardScreen(nav: NavHostController) {
     fun haptic(long: Boolean = false) {
         when (haptics) {
             HapticsMode.OFF -> Unit
-            HapticsMode.SUBTLE -> hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+            HapticsMode.SUBTLE -> hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             HapticsMode.FULL ->
                 hapticFeedback.performHapticFeedback(
-                    if (long) HapticFeedbackType.LongPress else HapticFeedbackType.KeyboardTap,
+                    if (long) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove,
                 )
         }
     }

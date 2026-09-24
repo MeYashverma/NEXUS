@@ -58,7 +58,6 @@ object RelayCrypto {
         val x = raw.copyOfRange(1, 33)
         val y = raw.copyOfRange(33, 65)
         val point = ECPoint(java.math.BigInteger(1, x), java.math.BigInteger(1, y))
-        val params = java.security.spec.ECNamedCurveTable // not on Android; replaced below
         val spec = ECPublicKeySpec(point, curveParams())
         return KeyFactory.getInstance("EC").generatePublic(spec) as ECPublicKey
     }

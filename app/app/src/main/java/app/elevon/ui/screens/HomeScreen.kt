@@ -23,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Laptop
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Gamepad
 import androidx.compose.material.icons.outlined.HelpOutline
@@ -125,7 +126,7 @@ fun HomeScreen(nav: NavHostController) {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .androidx.compose.foundation.horizontalScroll(rememberScrollState()),
+                    .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 profiles.take(4).forEach { profile ->

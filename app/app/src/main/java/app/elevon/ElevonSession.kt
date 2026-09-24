@@ -41,7 +41,7 @@ data class MacroRun(
  * controller, repositories, gamepad engine and macro runner, and applies the
  * active profile to whatever the user opens.
  */
-class ElevonSession(context: Context) {
+class ElevonSession(private val context: Context) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     val hid: HidController = HidController(context)

@@ -131,7 +131,7 @@ fun ClipboardScreen(nav: NavHostController) {
                                 next.reversed().forEach { item ->
                                     // rememberClipboard prepends; rebuild silently.
                                 }
-                                session.rebuildClipboardHistory(next)
+                                session.settings.setClipboardHistory(next)
                             }) {
                                 Text("Remove")
                             }

@@ -161,13 +161,13 @@ fun TouchpadScreen(nav: NavHostController) {
                                         session.mouseButton(MouseReport.BUTTON_LEFT, true)
                                         session.mouseButton(MouseReport.BUTTON_LEFT, false)
                                         if (haptics != HapticsMode.OFF) {
-                                            hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+                                            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                         }
                                     } else if (twoFinger && accScroll < 22f && duration < 260) {
                                         session.mouseButton(MouseReport.BUTTON_RIGHT, true)
                                         session.mouseButton(MouseReport.BUTTON_RIGHT, false)
                                         if (haptics != HapticsMode.OFF) {
-                                            hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+                                            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                         }
                                     }
                                 }
@@ -309,7 +309,7 @@ private fun MousePadButton(
                     awaitFirstDown(requireUnconsumed = false).consume()
                     held = true
                     onHold(true)
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     while (true) {
                         val event = awaitPointerEvent(PointerEventPass.Main)
                         if (event.changes.all { !it.pressed }) break

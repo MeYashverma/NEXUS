@@ -242,7 +242,7 @@ object RemoteScreens {
                             AdvanceMode.PAGE -> session.tapKey(Keycodes.KEY_PAGEUP)
                             AdvanceMode.NP -> session.tapKey(Keycodes.KEY_A + ('p' - 'a'))
                         }
-                        if (hapticsActive()) hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+                        if (hapticsActive()) hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     }
                     BigButton(
                         label = "Next",
@@ -254,7 +254,7 @@ object RemoteScreens {
                             AdvanceMode.PAGE -> session.tapKey(Keycodes.KEY_PAGEDOWN)
                             AdvanceMode.NP -> session.tapKey(Keycodes.KEY_A + ('n' - 'a'))
                         }
-                        if (hapticsActive()) hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+                        if (hapticsActive()) hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     }
                 }
 

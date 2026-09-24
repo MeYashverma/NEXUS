@@ -117,12 +117,9 @@ class HidController(private val context: Context) {
             runCatching { hidProxy?.replyReport(device, type, id, payload) }
         }
 
-        override fun onOutputReport(device: BluetoothDevice, reportId: Byte, data: ByteArray) {
-            // Not part of the public Callback in API 28; LED state arrives via
-            // onInterruptData on some stacks. The keyboard tracks LEDs when the
-            // host pushes an output report through replyReport flows.
-            super.onInterruptData(device, reportId, data)
-            if (reportId.toInt() == 0x01) keyboard.onOutputReport(data)
+        override fun onInterruptData(device: BluetoothDevice?, reportId: Byte, data: ByteArray?) {
+            // Host-to-device output reports (e.g. keyboard LED state) arrive here.
+            if (reportId.toInt() == 0x01 && data != null) keyboard.onOutputReport(data)
         }
     }
 
@@ -130,7 +127,7 @@ class HidController(private val context: Context) {
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
             btExecutor.execute {
                 hidProxy = proxy as? BluetoothHidDevice
-                val sdp = BluetoothHidDeviceAppSdpSettings(
+                val sdp = BluetoothHidDevice.AppSdpSettings(
                     "Elevon",
                     "Elevon universal input device",
                     "Elevon",

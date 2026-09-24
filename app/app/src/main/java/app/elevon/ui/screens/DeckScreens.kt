@@ -238,7 +238,7 @@ object DeckScreens {
             MacroAction(id, label, sub, listOf(MacroStep.Chord(chord.mods, chord.usage)))
         return listOf(
             MacroAction("ptt", "Push to talk", "Hold button = hold V", listOf(MacroStep.Chord(0, app.elevon.hid.Keycodes.KEY_A + ('v' - 'a')))),
-            MacroAction("mute", "Mute mic", "Set your app hotkey", act("mute2", "Mute", "M", Chord(0, app.elevon.hid.Keycodes.KEY_A + ('m' - 'a')))),
+            MacroAction("mute", "Mute mic", "Set your app hotkey", listOf(MacroStep.Chord(0, app.elevon.hid.Keycodes.KEY_A + ('m' - 'a')))),
             act("screenshot", "Screenshot", s[ShortcutId.SCREENSHOT]!!.describe(), s[ShortcutId.SCREENSHOT]!!),
             act("switchapp", "Switch app", s[ShortcutId.SWITCH_APP]!!.describe(), s[ShortcutId.SWITCH_APP]!!),
             MacroAction("next", "Next track", "Media key", listOf(MacroStep.Media(Keycodes.CONSUMER_SCAN_NEXT))),
@@ -319,10 +319,12 @@ object DeckScreens {
         }
     }
 
-    /** Long-press support without androidx.compose.foundation.clickable duplication. */
+    /** Long-press support layered on top of the deck buttons' tap handling. */
     private fun Modifier.combinedClickableLike(onLongPress: () -> Unit): Modifier =
         this.then(
-            Modifier.pointerInputCompat(onLongPress),
+            Modifier.pointerInput(onLongPress) {
+                detectTapGestures(onLongPress = { onLongPress() })
+            },
         )
 }
 

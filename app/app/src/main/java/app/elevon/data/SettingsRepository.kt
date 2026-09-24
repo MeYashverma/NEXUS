@@ -16,6 +16,27 @@ enum class HostLayout(val label: String, val note: String) {
     FR("French (AZERTY)", "A and Q swap; accented characters are not typed over HID."),
 }
 
+/** One observable preference: [value] is a StateFlow, [set] writes through. */
+class StringPref(initial: String, private val onUpdate: (String) -> Unit) {
+    private val flow = MutableStateFlow(initial)
+    val value: StateFlow<String> = flow.asStateFlow()
+    fun set(v: String) { flow.value = v; onUpdate(v) }
+}
+
+/** One observable boolean preference. */
+class BoolPref(initial: Boolean, private val onUpdate: (Boolean) -> Unit) {
+    private val flow = MutableStateFlow(initial)
+    val value: StateFlow<Boolean> = flow.asStateFlow()
+    fun set(v: Boolean) { flow.value = v; onUpdate(v) }
+}
+
+/** One observable float preference. */
+class FloatPref(initial: Float, private val onUpdate: (Float) -> Unit) {
+    private val flow = MutableStateFlow(initial)
+    val value: StateFlow<Float> = flow.asStateFlow()
+    fun set(v: Float) { flow.value = v; onUpdate(v) }
+}
+
 /**
  * All user preferences, backed by SharedPreferences. Small, synchronous and
  * observable — deliberately simple for an app with no backend.
@@ -57,6 +78,7 @@ class SettingsRepository(context: Context) {
 
     // ---- keyboard (host side) ----------------------------------------------
     val hostLayout = stringFlow(K_HOST_LAYOUT, HostLayout.US.name)
+    val customKeyboard = stringFlow("custom_keyboard", "")
 
     // ---- privacy / clipboard ------------------------------------------------
     val clipboardRetention = boolFlow(K_CLIP_RETAIN, true)
@@ -65,7 +87,7 @@ class SettingsRepository(context: Context) {
     val clipboardHistory: StateFlow<List<String>> = _clipboardHistory.asStateFlow()
 
     fun rememberClipboard(text: String) {
-        if (!clipboardRetention.value || text.isBlank()) return
+        if (!clipboardRetention.value.value || text.isBlank()) return
         val next = (listOf(text) + _clipboardHistory.value).distinct().take(MAX_CLIPBOARD)
         _clipboardHistory.value = next
         put(K_CLIP_HISTORY, JSONArray(next).toString())
@@ -94,22 +116,14 @@ class SettingsRepository(context: Context) {
 
     // ---- helpers ------------------------------------------------------------
 
-    private fun stringFlow(key: String, def: String) = object {
-        private val flow = MutableStateFlow(prefs.getString(key, def) ?: def)
-        val value: StateFlow<String> get() = flow.asStateFlow()
-        fun set(v: String) { flow.value = v; put(key, v) }
-    }
+    private fun stringFlow(key: String, def: String) =
+        StringPref(prefs.getString(key, def) ?: def) { put(key, it) }
 
-    private fun boolFlow(key: String, def: Boolean) = object {
-        private val flow = MutableStateFlow(prefs.getBoolean(key, def))
-        val value: StateFlow<Boolean> get() = flow.asStateFlow()
-        fun set(v: Boolean) { flow.value = v; put(key, v) }
-    }
+    private fun boolFlow(key: String, def: Boolean) =
+        BoolPref(prefs.getBoolean(key, def)) { put(key, it) }
 
-    private fun floatFlow(key: String, def: Float) = object {
-        private val flow = MutableStateFlow(prefs.getFloat(key, def))
-        val value: StateFlow<Float> get() = flow.asStateFlow()
-        fun set(v: Float) { flow.value = v; put(key, v) }
+    private fun floatFlow(key: String, def: Float) =
+        FloatPref(prefs.getFloat(key, def)) { put(key, it) }
     }
 
     private companion object {

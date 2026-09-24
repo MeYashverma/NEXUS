@@ -34,19 +34,19 @@ object HidDescriptors {
     val gamepadPayloadSize = 9
 
     /** Keyboard + mouse only (compatibility descriptor, no consumer/system/gamepad). */
-    fun basic(): ByteArray = buildList {
+    fun basic(): ByteArray = buildList<Int> {
         keyboard()
         mouse()
-    }.toByteArray()
+    }.map { it.toByte() }.toByteArray()
 
     /** The full composite descriptor (default). */
-    fun composite(): ByteArray = buildList {
+    fun composite(): ByteArray = buildList<Int> {
         keyboard()
         mouse()
         consumer()
         system()
         gamepad()
-    }.toByteArray()
+    }.map { it.toByte() }.toByteArray()
 
     private fun MutableList<Int>.keyboard() {
         // Usage Page (Generic Desktop)

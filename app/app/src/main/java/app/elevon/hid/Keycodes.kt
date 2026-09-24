@@ -32,6 +32,14 @@ object Keycodes {
 
     // Digits (0x1E..0x27 = '1'..'9','0')
     const val KEY_1 = 0x1E
+    const val KEY_2 = 0x1F
+    const val KEY_3 = 0x20
+    const val KEY_4 = 0x21
+    const val KEY_5 = 0x22
+    const val KEY_6 = 0x23
+    const val KEY_7 = 0x24
+    const val KEY_8 = 0x25
+    const val KEY_9 = 0x26
     const val KEY_0 = 0x27
 
     const val KEY_ENTER = 0x28
@@ -53,6 +61,16 @@ object Keycodes {
     const val KEY_CAPSLOCK = 0x39
 
     const val KEY_F1 = 0x3A
+    const val KEY_F2 = 0x3B
+    const val KEY_F3 = 0x3C
+    const val KEY_F4 = 0x3D
+    const val KEY_F5 = 0x3E
+    const val KEY_F6 = 0x3F
+    const val KEY_F7 = 0x40
+    const val KEY_F8 = 0x41
+    const val KEY_F9 = 0x42
+    const val KEY_F10 = 0x43
+    const val KEY_F11 = 0x44
     const val KEY_F12 = 0x45
 
     const val KEY_PRINTSCREEN = 0x46

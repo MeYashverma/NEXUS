@@ -75,7 +75,7 @@ jobs:
           mkdir -p ci-logs
           {
             echo "# Kotlin compile errors"
-            grep -hE "^e: " app/*.log 2>/dev/null | head -200
+            grep -hE "^e: " app/*.log 2>/dev/null | head -500
             echo
             echo "# Failure reason"
             grep -hE "FAILURE: Build failed|What went wrong|> Task.*FAILED|Caused by:" app/*.log 2>/dev/null | head -40

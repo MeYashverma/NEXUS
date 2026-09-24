@@ -95,7 +95,7 @@ fun GamepadScreen(nav: NavHostController) {
     }
 
     fun haptic() {
-        if (haptics == HapticsMode.FULL) hapticFeedback.performHapticFeedback(HapticFeedbackType.KeyboardTap)
+        if (haptics == HapticsMode.FULL) hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
     }
 
     Column(Modifier.fillMaxSize()) {
@@ -387,7 +387,7 @@ private fun StickControl(
                             if (isDoubleTap) {
                                 // Stick click: momentary L3/R3 (buttons 6/7).
                                 val clickBit = if (stickIndex(element) == 0) 6 else 7
-                                app.elevon.LocalSessionProxy.gamepadClick(clickBit, true)
+                                onStickClick(true)
                             }
                             while (true) {
                                 val event = awaitPointerEvent()
@@ -555,7 +555,7 @@ private fun TriggerControl(
             .then(
                 if (editMode) {
                     Modifier.pointerInput(element.id) {
-                        androidx.compose.foundation.gestures.detectDragGestures(
+                        detectDragGestures(
                             onDragStart = { onClickEdit() },
                             onDrag = { change, amount ->
                                 change.consume()
@@ -627,7 +627,7 @@ private fun ButtonControl(
             .then(
                 if (editMode) {
                     Modifier.pointerInput(element.id) {
-                        androidx.compose.foundation.gestures.detectDragGestures(
+                        detectDragGestures(
                             onDragStart = { onClickEdit() },
                             onDrag = { change, amount ->
                                 change.consume()

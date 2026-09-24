@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothGattServer
 import android.bluetooth.BluetoothGattServerCallback
 import android.bluetooth.BluetoothGattService
@@ -126,7 +127,7 @@ class RelayManager(
                 offset: Int,
                 value: ByteArray?,
             ) {
-                if (characteristic?.uuid == CHAR_INPUT_UUID && value != null) {
+                if (characteristic?.uuid == UUID.fromString(CHAR_INPUT_UUID) && value != null) {
                     handleFrame(value)
                 }
                 if (responseNeeded) {
