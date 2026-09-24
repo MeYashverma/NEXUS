@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contributing · Elevon</title>
+<meta name="description" content="How to contribute to Elevon: code, docs, device testing, game profiles and ground rules.">
+<meta property="og:title" content="Contributing · Elevon">
+<meta property="og:description" content="How to contribute to Elevon: code, docs, device testing, game profiles and ground rules.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">Contributing</div>
+  <h1>Help build the missing input device</h1>
+  <p class="lede">Code, docs, game profiles, translations, bug reports with real devices — all welcome.</p>
+  <div class="actions"></div>
+  
+</section>
+<section class="wrap block">
+  <ol class="steps">
+    <li><strong>Find something to do</strong>Check <a href="https://github.com/MeYashverma/NEXUS/issues">issues</a> and the roadmap. Device-specific test reports are as valuable as code.</li>
+    <li><strong>Set up the project</strong>Clone the repo, open <code>app/</code> in Android Studio (or run <code>./gradlew assembleDebug</code> — CI proves it builds clean).</li>
+    <li><strong>Follow the product rules</strong>No host software for core features. No new permissions without a written justification. No fake features. Honest labels everywhere.</li>
+    <li><strong>Open a pull request</strong>Small PRs land faster. Unit tests cover HID reports, descriptor parsing, crypto and JSON models — extend them when you touch those areas.</li>
+  </ol>
+  <div class="grid two">
+    <div class="card"><h3>Especially wanted</h3>
+      <ul><li>Real-device testing on phones with/without the HID profile</li>
+      <li>Game-profile presets with verified mappings</li>
+      <li>Host-layout tables beyond US/UK/DE/FR</li>
+      <li>Accessibility review (TalkBack, switch access)</li></ul></div>
+    <div class="card"><h3>Ground rules</h3>
+      <ul><li>Apache-2.0, contributor-friendly</li>
+      <li><a href="https://github.com/MeYashverma/NEXUS/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a> applies everywhere</li>
+      <li>No telemetry, ever — patches that add analytics will be declined</li>
+      <li>Security issues: see SECURITY.md, please don't open public issues</li></ul></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>

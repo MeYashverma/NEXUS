@@ -210,29 +210,26 @@ class RelayManager(
 
     // ---- framing ------------------------------------------------------------
 
+    private var helloAccum: ByteArray = ByteArray(0)
+
     private fun handleFrame(frame: ByteArray) {
+        // A 66-byte hello may arrive as one write or as 20-byte chunks
+        // (browsers write conservatively). Accumulate until complete.
+        if (helloAccum.isNotEmpty()) {
+            helloAccum += frame
+            if (helloAccum.size >= 66) {
+                processHello(helloAccum)
+                helloAccum = ByteArray(0)
+            }
+            return
+        }
         when (frame[0].toInt() and 0xFF) {
             FRAME_HELLO -> {
-                if (frame.size < 1 + 65) return
-                val remote = frame.copyOfRange(1, 66)
-                val mine = (keyPair?.public as? ECPublicKey)?.let { RelayCrypto.encodePublicKey(it) }
-                    ?: return
-                remotePublicRaw = remote
-                sessionKey = runCatching {
-                    val remoteKey = RelayCrypto.decodePublicKey(remote)
-                    val shared = RelayCrypto.sharedSecret(keyPair!!.private, remoteKey)
-                    RelayCrypto.sessionKey(shared)
-                }.getOrNull()
-                scope.launch {
-                    bus.update { it.copy(code = comparisonCode()) }
-                    if (sessionKey != null) {
-                        bus.setState(RelayState.ACTIVE)
-                    } else {
-                        bus.update { it.copy(state = RelayState.ERROR, error = ERROR_HANDSHAKE) }
-                    }
+                if (frame.size >= 66) {
+                    processHello(frame)
+                } else {
+                    helloAccum = frame.copyOf()
                 }
-                // Reply with our own public key so the browser can finish ECDH.
-                sendToCentral(FRAME_HELLO, mine)
             }
 
             FRAME_DATA -> {
@@ -241,6 +238,28 @@ class RelayManager(
                 handlePlaintext(payload)
             }
         }
+    }
+
+    private fun processHello(frame: ByteArray) {
+        val remote = frame.copyOfRange(1, 66)
+        val mine = (keyPair?.public as? ECPublicKey)?.let { RelayCrypto.encodePublicKey(it) }
+            ?: return
+        remotePublicRaw = remote
+        sessionKey = runCatching {
+            val remoteKey = RelayCrypto.decodePublicKey(remote)
+            val shared = RelayCrypto.sharedSecret(keyPair!!.private, remoteKey)
+            RelayCrypto.sessionKey(shared)
+        }.getOrNull()
+        scope.launch {
+            bus.update { it.copy(code = comparisonCode()) }
+            if (sessionKey != null) {
+                bus.setState(RelayState.ACTIVE)
+            } else {
+                bus.update { it.copy(state = RelayState.ERROR, error = ERROR_HANDSHAKE) }
+            }
+        }
+        // Reply with our own public key so the browser can finish ECDH.
+        sendToCentral(FRAME_HELLO, mine)
     }
 
     private fun handlePlaintext(payload: ByteArray) {

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game controller · Elevon</title>
+<meta name="description" content="Elevon's gamepad: editable layouts, dead zones, profiles, and two honest output modes — gamepad or keyboard & mouse.">
+<meta property="og:title" content="Game controller · Elevon">
+<meta property="og:description" content="Elevon's gamepad: editable layouts, dead zones, profiles, and two honest output modes — gamepad or keyboard & mouse.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">Game controller</div>
+  <h1>A controller that's honest about what it is</h1>
+  <p class="lede">Elevon's gamepad is a genuine generic HID controller. Here's exactly what that means for your games — no overclaiming.</p>
+  <div class="actions"><a class="btn outline" href="compatibility.html">Compatibility details</a></div>
+  
+</section>
+<section class="wrap block">
+  <div class="feature">
+    <div>
+      <h2>Two output modes</h2>
+      <div class="tag-row"><span class="chip core">Core</span></div>
+      <p><strong>Gamepad mode</strong> sends real HID gamepad reports: 16 buttons, two sticks,
+      an eight-way hat, analog triggers. Steam, SDL-based games, emulators and controller-aware titles
+      pick it up like any no-name controller.</p>
+      <p><strong>Keyboard &amp; mouse mode</strong> maps the same on-screen controls to keys and mouse
+      movement. This is the honest answer for games with no controller support at all — Minecraft Java
+      included — and it works in <em>every</em> game, because every game supports keyboards.</p>
+    </div>
+    <div class="shot"><img src="assets/shot-gamepad.png" alt="Gamepad mode with editable control layout" loading="lazy"></div>
+  </div>
+</section>
+<section class="wrap block">
+  <h2>Profiles for the way you play</h2>
+  <p>Every profile stores its layout, dead zones, sensitivity and output mode. Editing is direct:
+  flip the edit toggle, drag controls where your thumbs want them, resize with a slider. Presets cover
+  common setups — and each preset says which output mode it uses and why:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Preset</th><th>Output</th><th>Why</th></tr>
+    <tr><td>Standard</td><td class="yes">Gamepad</td><td>Controller-aware games, Steam titles, emulators</td></tr>
+    <tr><td>GTA V / action</td><td class="yes">Gamepad</td><td>Native controller support; use Steam Input for XInput-only builds</td></tr>
+    <tr><td>Forza / racing</td><td class="yes">Gamepad</td><td>Lower dead zone, higher sensitivity for steering</td></tr>
+    <tr><td>Minecraft (keyboard)</td><td class="part">Keyboard &amp; mouse</td><td>Java Edition has no controller support — keys and mouse-look solve it for real</td></tr>
+  </table>
+  </div>
+</section>
+<section class="wrap block">
+  <h2>The limits, plainly</h2>
+  <div class="grid two">
+    <div class="card"><h3>Not an Xbox controller <span class="chip limited">Limited</span></h3><p>Android doesn't let apps choose the Bluetooth vendor/product ID, so XInput impersonation is impossible. XInput-only games need Steam Input or in-game remapping. This is a platform wall, not a roadmap item.</p></div>
+    <div class="card"><h3>Console support: no <span class="chip limited">Limited</span></h3><p>Game consoles authenticate controllers cryptographically. A phone cannot present itself as one. Elevon doesn't support consoles and doesn't promise to.</p></div>
+    <div class="card"><h3>macOS gamepads <span class="chip limited">Limited</span></h3><p>Apple's GameController framework filters to known controllers, so a generic HID pad is invisible to it. Steam, emulators, SDL games and browsers see it fine.</p></div>
+    <div class="card"><h3>Phone support varies <span class="chip limited">Limited</span></h3><p>The HID Device profile needs the phone maker to have enabled it. Most have. Elevon detects and tells you before you waste a minute.</p></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>

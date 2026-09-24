@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works · Elevon</title>
+<meta name="description" content="Why Elevon needs no desktop app: standard Bluetooth HID, one composite pairing, honest limits.">
+<meta property="og:title" content="How it works · Elevon">
+<meta property="og:description" content="Why Elevon needs no desktop app: standard Bluetooth HID, one composite pairing, honest limits.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">How it works</div>
+  <h1>A standard Bluetooth device — not a hack</h1>
+  <p class="lede">Elevon's core is boring in the best way: decades-old standards, used properly.</p>
+  <div class="actions"></div>
+  
+</section>
+<section class="wrap block">
+  <ol class="steps">
+    <li><strong>Your phone registers as an HID device</strong>Android 9+ ships the Bluetooth HID Device profile — the same standard a wireless keyboard uses. Elevon registers one composite descriptor: keyboard, mouse, media keys and gamepad together.</li>
+    <li><strong>Your computer pairs once</strong>From the computer's Bluetooth settings, the phone looks like a proper input device. The host caches the descriptor at pairing time, which is exactly why one composite descriptor matters: you never re-pair when you switch modes.</li>
+    <li><strong>Controls become reports</strong>Touching a keycap or stick turns into HID input reports on the interrupt channel — the same low-latency path a real mouse uses. Reports are throttled and warmed up after idle to beat Bluetooth power saving.</li>
+    <li><strong>Switch modes any time</strong>Keyboard to gamepad to deck: same pairing, same connection. The computer just sees its input device doing different things.</li>
+  </ol>
+</section>
+<section class="wrap block">
+  <h2>Why no desktop app is needed — or allowed</h2>
+  <p>Remote-control products (Unified Remote, Remote Mouse, Monect, KDE Connect) put a server on your
+  computer because it gives them power: screen capture, system-wide keys, app launching. It also gives
+  you setup friction, firewall prompts, background processes and security surface.</p>
+  <p>Elevon takes the opposite trade for its core: standard HID reports, which every OS already
+  understands. The rule is written into the project: <strong>the computer must not need any software for
+  the core experience.</strong> Features that can't meet it are labeled Experimental or Limited instead
+  of sneaking an installer in.</p>
+  <div class="note"><strong>The full boundary</strong> — what's Core, what's Experimental, and what's honestly
+  impossible without host software is catalogued in <a href="compatibility.html">Compatibility</a>.</div>
+</section>
+<section class="wrap block">
+  <h2>Security &amp; privacy model</h2>
+  <div class="grid three">
+    <div class="card"><h3>Pairing is the gate</h3><p>Only computers you've paired with can connect, enforced by standard Bluetooth bonding. Unpair and the door is closed.</p></div>
+    <div class="card"><h3>The app can't phone home</h3><p>No INTERNET permission. The OS blocks any network access — not a policy, a capability.</p></div>
+    <div class="card"><h3>Relay is end-to-end encrypted</h3><p>The experimental laptop→phone direction uses ECDH P-256 and AES-GCM with a 5-digit comparison code, inside your browser.</p></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>

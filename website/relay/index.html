@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elevon Relay · Type from your laptop on your phone</title>
+<meta name="description" content="Elevon Relay: use your laptop keyboard to type on your Android phone, from the browser. Nothing installed, end-to-end encrypted. Experimental.">
+<meta property="og:title" content="Elevon Relay">
+<meta property="og:description" content="Use the keyboard already in front of you to type on your phone. Browser-based, encrypted, nothing to install.">
+<meta property="og:image" content="../assets/social-card.png">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="../index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="../index.html" class="navlink">Home</a>
+      <a href="../features.html" class="navlink">Features</a>
+      <a href="index.html" class="navlink active">Relay</a>
+      <a href="../getting-started.html" class="navlink">Get started</a>
+      <a href="../faq.html" class="navlink">FAQ</a>
+      <a href="../about.html" class="navlink">About</a>
+    </nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+<section class="wrap hero">
+  <div class="kicker">Elevon Labs <span class="chip experimental">Experimental</span></div>
+  <h1>Use the keyboard already in front of you<br>to type on your phone.</h1>
+  <p class="lede">Relay connects this page to the Elevon app over Bluetooth — end-to-end encrypted,
+  nothing installed on your laptop. Long messages, URLs, searches, passwords-free text: type them
+  comfortably, land them on the phone.</p>
+</section>
+
+<section class="wrap block tight">
+  <div class="relay-app">
+    <div class="pill-row">
+      <span class="pill bad" id="pill-browser">Web Bluetooth ✗</span>
+      <span class="pill bad" id="pill-gatt">Not paired</span>
+      <span class="pill bad" id="pill-crypto">Handshake pending</span>
+    </div>
+
+    <div class="relay-status">
+      <span class="dot" id="status-dot"></span>
+      <strong id="status-text">Ready when you are.</strong>
+    </div>
+    <p style="margin:0">Phone: <strong id="device-name">—</strong></p>
+
+    <div id="connect-panel">
+      <div class="actions" style="margin-top:16px">
+        <button class="btn primary" id="connect-btn">Connect my phone</button>
+      </div>
+      <p style="margin-top:12px; font-size:0.92rem">First: open Elevon on your phone → <strong>Labs → Relay → Start Relay</strong>, and keep the screen on. Then click connect and pick your phone in the browser's picker.</p>
+    </div>
+
+    <div id="session-panel" class="relay-hidden">
+      <div class="relay-banner" id="relay-banner">
+        <span id="relay-banner-text">RELAY ACTIVE</span>
+        <button class="stop" id="stop-btn">STOP RELAY</button>
+      </div>
+      <p>Pairing code — compare with the one on your phone:</p>
+      <div class="relay-code" id="pair-code">·····</div>
+
+      <label for="type-box"><strong>Type here — it lands on your phone.</strong><br>
+      <span style="color:var(--muted); font-size:0.9rem">Only this box is captured. Switching away from this tab pauses Relay automatically.</span></label>
+      <textarea class="relay-area" id="type-box" placeholder="Type, paste, or dictate here…" autocomplete="off" autocapitalize="sentences" spellcheck="false"></textarea>
+
+      <label for="paste-box" style="display:block; margin-top:14px"><strong>…or paste a block of text to send</strong></label>
+      <div style="display:flex; gap:10px; margin-top:6px">
+        <textarea class="relay-area" id="paste-box" style="min-height:70px" placeholder="Paste text, then Send"></textarea>
+        <button class="btn outline" id="send-box-btn" style="align-self:flex-end">Send</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap block" id="browser-help" style="display:none">
+  <div class="note stop"><strong>This browser doesn't support Web Bluetooth.</strong> Relay needs Chrome or Edge on Windows, macOS or ChromeOS. Chrome on Linux needs
+  <code>chrome://flags/#enable-experimental-web-platform-features</code> enabled. Firefox and Safari have declined to implement Web Bluetooth.</div>
+</section>
+
+<section class="wrap block">
+  <h2>What Relay is</h2>
+  <ol class="steps">
+    <li><strong>Start Relay on the phone</strong>Elevon → Labs → Relay → Start. The phone advertises over Bluetooth LE.</li>
+    <li><strong>Connect from this page</strong>The browser's device picker shows your phone. Pairing is standard Bluetooth; nothing is installed.</li>
+    <li><strong>Compare the 5-digit code</strong>Both screens show the same code, derived from the key exchange. If they match, nobody is in the middle.</li>
+    <li><strong>Type</strong>Keys from the type box are encrypted (ECDH P-256 + AES-GCM) and inserted on the phone — wherever you enabled the Elevon Relay keyboard, or into Relay's buffer for copying.</li>
+  </ol>
+  <h2>What Relay is not</h2>
+  <div class="grid two">
+    <div class="card"><h3>Not system-wide</h3><p>This page can only capture keys typed into it, while it is focused. No web page can intercept your whole keyboard — that's the platform's security model, and Elevon won't pretend otherwise. Switching tabs pauses Relay.</p></div>
+    <div class="card"><h3>Not for secrets</h3><p>Text travels encrypted device-to-device, but treat Relay like any shared clipboard: avoid typing passwords or payment details on a connection you haven't code-verified.</p></div>
+  </div>
+</section>
+
+<section class="wrap block tight">
+  <h2>Privacy</h2>
+  <p>This page is a static file. It has no server, sends nothing anywhere, and keeps no logs.
+  Typed text goes from this tab to your phone over Bluetooth, encrypted end-to-end; pressing
+  <strong>STOP RELAY</strong> (or closing the tab) disconnects and clears the phone's buffer.
+  The Elevon app itself has no internet permission. Details on the <a href="../privacy.html">privacy page</a>.</p>
+</section>
+
+<section class="wrap block tight">
+  <h2>Troubleshooting</h2>
+  <details><summary>The picker doesn't show my phone</summary>
+  <p>Start Relay on the phone first and keep its screen on. Make sure Bluetooth is on for both devices,
+  and that the phone isn't connected to something else as an input device. On Linux, enable the Chrome
+  experimental web platform flag.</p></details>
+  <details><summary>Keys don't arrive</summary>
+  <p>Relay inserts text only where the phone is looking for it: enable the <strong>Elevon Relay</strong>
+  keyboard on the phone (Settings → System → Keyboards) and switch to it, or watch Relay's buffer on the
+  Relay screen and copy from there. The phone screen shows RELAY ACTIVE while connected.</p></details>
+  <details><summary>The codes don't match</summary>
+  <p>Stop immediately and reconnect. A code mismatch means the encrypted channel isn't with the device you
+  think it is.</p></details>
+  <details><summary>It paused by itself</summary>
+  <p>Relay pauses when you switch tabs or minimise the window — that's deliberate, so your typing can't be
+  captured invisibly. Click back into the page and it resumes; use STOP RELAY to end it fully.</p></details>
+</section>
+
+<section class="wrap block tight">
+  <h2>Browser compatibility</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Browser</th><th>Relay</th><th>Note</th></tr>
+    <tr><td>Chrome / Edge (Windows 10+, macOS)</td><td class="yes">Works</td><td>Recommended</td></tr>
+    <tr><td>Chrome / Edge (ChromeOS)</td><td class="yes">Works</td><td>Recommended</td></tr>
+    <tr><td>Chrome / Edge (Linux)</td><td class="part">Flag needed</td><td><code>enable-experimental-web-platform-features</code>; BlueZ 5.43+</td></tr>
+    <tr><td>Opera desktop</td><td class="part">Unreliable</td><td>Known Web Bluetooth breakage on desktop</td></tr>
+    <tr><td>Firefox</td><td class="no">No</td><td>Web Bluetooth not implemented</td></tr>
+    <tr><td>Safari</td><td class="no">No</td><td>Web Bluetooth not implemented</td></tr>
+  </table></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class="footcol"><h4>Product</h4>
+      <a href="../index.html">Home</a><a href="../features.html">Features</a><a href="../how-it-works.html">How it works</a><a href="../getting-started.html">Getting started</a><a href="index.html">Relay</a></div>
+    <div class="footcol"><h4>Controls</h4>
+      <a href="../keyboard.html">Keyboard</a><a href="../controller.html">Game controller</a><a href="../customization.html">Customization</a><a href="../labs.html">Labs</a></div>
+    <div class="footcol"><h4>Support</h4>
+      <a href="../compatibility.html">Compatibility</a><a href="../faq.html">FAQ</a><a href="../troubleshooting.html">Troubleshooting</a><a href="../changelog.html">Changelog</a><a href="../roadmap.html">Roadmap</a></div>
+    <div class="footcol"><h4>Project</h4>
+      <a href="../privacy.html">Privacy</a><a href="../contributing.html">Contributing</a><a href="../about.html">About</a>
+      <a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

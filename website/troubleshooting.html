@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting · Elevon</title>
+<meta name="description" content="Fixes for pairing, laggy inputs, wrong characters, disconnects and Relay issues — in plain language.">
+<meta property="og:title" content="Troubleshooting · Elevon">
+<meta property="og:description" content="Fixes for pairing, laggy inputs, wrong characters, disconnects and Relay issues — in plain language.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">Troubleshooting</div>
+  <h1>When something doesn't work</h1>
+  <p class="lede">Plain steps, ordered by how often they fix the problem.</p>
+  <div class="actions"></div>
+  
+</section>
+<section class="wrap block">
+  <h2>Connection</h2>
+  <details open><summary>The computer doesn't see the phone, or pairing fails</summary>
+  <p>1 · Open Elevon on the phone and leave it in the foreground. 2 · On the computer, remove/forget any
+  old entry for this phone (both sides must be clean — half-removed pairings are the #1 cause).
+  3 · Add a new device from the computer's Bluetooth settings and accept the prompt on the phone.
+  4 · If the phone appears but says "not supported", your phone maker has disabled the HID profile —
+  Elevon will have told you at first run.</p></details>
+  <details><summary>Connected, but inputs do nothing</summary>
+  <p>Check Elevon shows <strong>Connected</strong> (green dot) on Home. Then: some computers connect the
+  phone's <em>audio</em> profiles too and get confused — remove the phone from the computer's sound
+  settings, keep it in output devices. Finally, toggle airplane mode off/on on the phone and reconnect.</p></details>
+  <details><summary>It keeps disconnecting</summary>
+  <p>Bluetooth power saving on the phone can drop idle links. Keep Elevon's screen on while using it
+  (automatic in control modes). Distance and 2.4 GHz Wi-Fi interference matter — try a metre away.</p></details>
+  <details><summary>The first input after a pause is late</summary>
+  <p>That's Bluetooth sniff mode (low-power idle). Elevon warms the link when you touch a control, so
+  this should be barely noticeable; if it is, send any tap first.</p></details>
+</section>
+<section class="wrap block tight">
+  <h2>Input feel</h2>
+  <details><summary>Cursor too fast / too slow</summary>
+  <p>Touchpad → tuning icon (sliders) → pointer speed. It multiplies movement per pixel of finger travel.</p></details>
+  <details><summary>Scrolling goes the wrong way</summary>
+  <p>Touchpad → tuning → natural scrolling. Off mimics a Windows touchpad; on mimics a phone.</p></details>
+  <details><summary>Keys type wrong characters</summary>
+  <p>Set Settings → Keyboard → host layout to match the computer's configured layout. US/UK map fully;
+  German/French map the base keys with AltGr/dead-key accents documented as limited.</p></details>
+  <details><summary>Gamepad buttons are mapped oddly in a game</summary>
+  <p>Generic HID pads can land with a different button order per game engine. Remap in-game once, or use
+  Steam Input, which normalises everything. If a D-pad direction is simply missing, that's a bug —
+  <a href="https://github.com/MeYashverma/NEXUS/issues">file it</a>.</p></details>
+</section>
+<section class="wrap block tight">
+  <h2>Relay</h2>
+  <details><summary>The laptop can't find the phone</summary>
+  <p>Use Chrome or Edge (Relay needs Web Bluetooth). Start Relay on the phone first, keep its screen on,
+  then open elevon.app/relay and click Connect. On Linux, Chrome needs
+  <code>chrome://flags/#enable-experimental-web-platform-features</code> enabled. Firefox and Safari
+  don't support Web Bluetooth at all.</p></details>
+  <details><summary>Typed keys don't arrive on the phone</summary>
+  <p>Relay types into the focused field only. Make sure the Relay page is the focused tab, the phone shows
+  RELAY ACTIVE, and — if you want text in other apps — the Elevon Relay keyboard is enabled and selected.
+  Switching apps on the laptop pauses Relay deliberately.</p></details>
+  <details><summary>The codes don't match</summary>
+  <p>Stop immediately and start again — a mismatch means something is between you and your phone.
+  Never accept a code you didn't verify.</p></details>
+</section>
+<section class="wrap block tight">
+  <h2>Still stuck?</h2>
+  <p><a href="https://github.com/MeYashverma/NEXUS/issues">Open an issue</a> with: phone model + Android
+  version, computer OS, Elevon version, and what you saw. Screenshots of the connection state help a lot.</p>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>
