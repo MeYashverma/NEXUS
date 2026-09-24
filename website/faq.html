@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ · Elevon</title>
+<meta name="description" content="Does the computer need an app? Does it work on Windows, macOS, Linux? What is Relay? Straight answers.">
+<meta property="og:title" content="FAQ · Elevon">
+<meta property="og:description" content="Does the computer need an app? Does it work on Windows, macOS, Linux? What is Relay? Straight answers.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink active">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">FAQ</div>
+  <h1>Questions, answered straight</h1>
+  <p class="lede">Including the ones other apps dodge.</p>
+  <div class="actions"></div>
+  
+</section>
+<section class="wrap block">
+  <details open><summary>Does my computer need a companion application?</summary>
+  <p>No. The core experience — keyboard, touchpad, gamepad, macro decks, media and presentation remotes —
+  works over standard Bluetooth HID with nothing installed on the computer. This is a product principle,
+  not a marketing line. The only browser-based extra (Relay) also installs nothing.</p></details>
+  <details><summary>Can I use the phone as a keyboard?</summary>
+  <p>Yes — that's the first mode. Full layouts with modifiers, function keys, navigation and auto-repeat,
+  plus host-layout support for non-US computers.</p></details>
+  <details><summary>Can I use it as a mouse?</summary>
+  <p>Yes. The touchpad does cursor movement, tap-to-click, two-finger scroll (vertical and horizontal),
+  right-click and press-and-hold drag, with explicit buttons too.</p></details>
+  <details><summary>Can I use it as a game controller?</summary>
+  <p>Yes, as a genuine generic HID gamepad — 16 buttons, two sticks, eight-way hat, analog triggers.
+  Steam, emulators and controller-aware games work. XInput-only games need Steam Input because Android
+  can't impersonate an Xbox pad. <a href="controller.html">Details →</a></p></details>
+  <details><summary>Can I use it without internet?</summary>
+  <p>Yes — entirely. Bluetooth only. The app has no INTERNET permission at all, so it cannot use the
+  network even if it wanted to.</p></details>
+  <details><summary>Can I use it with multiple computers?</summary>
+  <p>Yes. Pair each computer once; they appear in Devices with friendly names, status, last-used time and
+  an optional preferred profile that applies on connect.</p></details>
+  <details><summary>Can I create game profiles?</summary>
+  <p>Yes — layout, dead zones, sensitivity and output mode per game, with presets for common setups.
+  Edit by dragging controls directly on the gamepad screen.</p></details>
+  <details><summary>Does it work on Windows?</summary>
+  <p>Windows 10 and 11: keyboard, mouse, touchpad, media keys and decks all work. Gamepad works in
+  DirectInput/Raw Input titles and via Steam Input; XInput-only games are the documented exception.</p></details>
+  <details><summary>Does it work on macOS?</summary>
+  <p>Yes for keyboard, mouse, touchpad, media keys and decks. Shortcuts adapt automatically (Cmd instead
+  of Ctrl). Gamepad works in generic-HID apps; Apple's GameController framework ignores generic pads.</p></details>
+  <details><summary>Does it work on Linux?</summary>
+  <p>Yes, including gamepads — Linux exposes generic HID devices to evdev/joydev and Steam/SDL pick them
+  up happily. SteamOS too.</p></details>
+  <details><summary>What is Elevon Relay?</summary>
+  <p>An experimental Labs feature that reverses the direction: your laptop's physical keyboard types into
+  your phone, through a browser page, over end-to-end-encrypted Bluetooth. Nothing is installed on the
+  laptop. <a href="relay/index.html">Details →</a></p></details>
+  <details><summary>Can Relay control the entire computer keyboard?</summary>
+  <p>No — and note the direction: Relay sends keys <em>to the phone</em>. A web page only receives keys
+  typed while its tab is focused; capturing a system-wide keyboard from a browser is impossible by
+  design. Elevon states this rather than implying otherwise.</p></details>
+  <details><summary>Why is Relay experimental?</summary>
+  <p>It depends on Web Bluetooth (Chrome/Edge on Windows, macOS, ChromeOS), on a pairing flow that's
+  still being polished, and on browser behaviors that can change. It works well for its target jobs —
+  long messages, URLs, searches — but it's clearly labeled while it matures.</p></details>
+  <details><summary>What happens if my phone doesn't support a capability?</summary>
+  <p>Elevon tells you upfront, in plain language, and disables the affected parts instead of showing
+  buttons that do nothing. The most common gap is phone makers shipping Bluetooth HID disabled.</p></details>
+  <details><summary>Is my data uploaded anywhere?</summary>
+  <p>No. The app has no INTERNET permission — the OS prevents any network use. Devices, profiles,
+  layouts and clipboard history stay on the phone. Relay sessions are device-to-device and encrypted.</p></details>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>

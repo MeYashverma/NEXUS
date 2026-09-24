@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Elevon</title>
+<meta name="description" content="No INTERNET permission, no accounts, no analytics. Exactly what Elevon stores, sends and deletes.">
+<meta property="og:title" content="Privacy · Elevon">
+<meta property="og:description" content="No INTERNET permission, no accounts, no analytics. Exactly what Elevon stores, sends and deletes.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">Privacy</div>
+  <h1>What Elevon knows: nothing it doesn't need on your phone</h1>
+  <p class="lede">No account. No analytics. No INTERNET permission — your OS blocks the network entirely.</p>
+  <div class="actions"></div>
+  
+</section>
+<section class="wrap block">
+  <div class="grid two">
+    <div class="card"><h3>What stays on the phone</h3>
+      <p>Paired computers and their names · profiles · gamepad layouts · macro decks · keyboard layouts ·
+      clipboard history (if enabled) · Relay session state. All in the app's private storage. Uninstall
+      and it's gone.</p></div>
+    <div class="card"><h3>What crosses the air</h3>
+      <p>Bluetooth HID input reports (keystrokes, mouse deltas, gamepad state) to computers you paired with,
+      protected by standard Bluetooth bonding. That's the product. Nothing else, to anyone, ever.</p></div>
+    <div class="card"><h3>Clipboard</h3>
+      <p>Text you send (typed to the computer or received via Relay) can be remembered locally — the last
+      20 items, shown in the Clipboard page. Retention can be switched off entirely, and one button wipes
+      the history. Elevon never reads your clipboard in the background; nothing runs unless you're using it.</p></div>
+    <div class="card"><h3>Relay specifically</h3>
+      <p>Typed text is end-to-end encrypted (ECDH P-256 + AES-GCM) between your browser and the phone; the
+      5-digit code exists so you can verify there's no man in the middle. The Relay page is static — it has
+      no server, no logging, no analytics. When you press STOP, the buffer is cleared.</p></div>
+    <div class="card"><h3>Diagnostics</h3>
+      <p>None. No crash reporting, no usage stats, no flags. Bug reports are manual and contain only what
+      you choose to paste into a GitHub issue.</p></div>
+    <div class="card"><h3>Deleting your data</h3>
+      <p>Devices → forget. Clipboard → delete all history. Everything else: uninstall the app. Because
+      there's no server, there's nothing to request removal of.</p></div>
+  </div>
+  <div class="note"><strong>Why we can promise this:</strong> the permission list in the Android manifest is
+  short and auditable — Bluetooth roles, foreground service, notifications, vibration. There is no
+  INTERNET permission, so data exfiltration isn't a policy question; it's impossible. Read the manifest
+  yourself in the repo.</div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>

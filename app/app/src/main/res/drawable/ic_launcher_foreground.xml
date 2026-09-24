@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The chevron-wing mark. Foreground of the adaptive launcher icon and the
+     basis of the brand logo (see branding/logo/elevon-logo.svg). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Wing -->
+    <path
+        android:fillColor="#FF7A45"
+        android:pathData="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z" />
+    <!-- Stabiliser slot (cut out in background colour) -->
+    <path
+        android:fillColor="#101114"
+        android:pathData="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z" />
+</vector>

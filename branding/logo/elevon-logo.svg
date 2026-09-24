@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120">
+  <!-- Elevon logo lockup: glyph + wordmark. Mark: #FF7A45. Wordmark: currentColor. -->
+  <g transform="translate(6,6)">
+    <rect width="108" height="108" rx="26" fill="#101114"/>
+    <path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/>
+    <path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/>
+  </g>
+  <text x="136" y="72" font-family="'Space Grotesk','Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="52" font-weight="700" letter-spacing="1" fill="currentColor">Elevon</text>
+  <text x="138" y="98" font-family="'Inter',-apple-system,'Segoe UI',Roboto,sans-serif" font-size="15" fill="#A9AEB6">Your phone. Your controls.</text>
+</svg>

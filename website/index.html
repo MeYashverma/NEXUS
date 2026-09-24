@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your phone. Your controls. · Elevon</title>
+<meta name="description" content="Elevon turns your Android phone into a wireless keyboard, touchpad, gamepad, macro deck and remote for any computer — with nothing to install on the computer.">
+<meta property="og:title" content="Your phone. Your controls. · Elevon">
+<meta property="og:description" content="Elevon turns your Android phone into a wireless keyboard, touchpad, gamepad, macro deck and remote for any computer — with nothing to install on the computer.">
+<meta property="og:image" content="https://meyashverma.github.io/NEXUS/assets/social-card.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Elevon home">
+      <svg width="26" height="26" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/><path fill="#101114" d="M46,51.5 L63,51.5 A2.5,2.5 0 0 1 65.5,54 A2.5,2.5 0 0 1 63,56.5 L46,56.5 A2.5,2.5 0 0 1 43.5,54 A2.5,2.5 0 0 1 46,51.5 Z"/></svg>
+      <span>Elevon</span>
+    </a>
+    <nav aria-label="Primary"><a href="index.html" class="navlink active">Home</a><a href="features.html" class="navlink">Features</a><a href="relay/index.html" class="navlink">Relay</a><a href="getting-started.html" class="navlink">Get started</a><a href="faq.html" class="navlink">FAQ</a><a href="about.html" class="navlink">About</a></nav>
+    <a class="cta-ghost" href="https://github.com/MeYashverma/NEXUS" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <div class="kicker">Your phone. Your controls.</div>
+  <h1>One pairing.<br>Every control.</h1>
+  <p class="lede">Elevon turns your Android phone into a real wireless keyboard, touchpad, gamepad, macro deck and remote for your computer — a standard Bluetooth device, like a proper peripheral. Your computer needs <strong>nothing installed</strong>.</p>
+  <div class="actions"><a class="btn primary" href="https://github.com/MeYashverma/NEXUSreleases">Get the app</a><a class="btn outline" href="how-it-works.html">See how it works</a><a class="btn outline" href="relay/index.html">Try Relay</a></div>
+  <div class="trust"><span>No desktop companion app</span><span>No account</span><span>No internet permission</span><span>Open source (Apache-2.0)</span></div>
+</section>
+<section class="wrap block tight">
+  <div class="shot"><img src="assets/shot-hero.png" alt="Elevon home screen showing a connected computer and the seven control modes" loading="lazy"></div>
+</section>
+<section class="wrap block">
+  <h2>Seven controls. Zero software on your computer.</h2>
+  <div class="grid four">
+    <div class="card"><div class="icon">⌨</div><h3>Keyboard</h3><p>Compact, full, gaming and your own custom layout — with real modifier keys and function row.</p></div>
+    <div class="card"><div class="icon">☝</div><h3>Touchpad</h3><p>Move, tap to click, two-finger scroll, press-and-hold drag. Tuned pointer and scroll speeds.</p></div>
+    <div class="card"><div class="icon">🎮</div><h3>Gamepad</h3><p>Sticks, D-pad, triggers, bumpers. Editable layouts, dead zones, per-game profiles.</p></div>
+    <div class="card"><div class="icon">▦</div><h3>Macro Pad</h3><p>Pages of big one-tap buttons: shortcuts, media keys, text snippets. No desktop server needed.</p></div>
+    <div class="card"><div class="icon">▶</div><h3>Media</h3><p>Play, volume, mute, seek — large controls for the couch.</p></div>
+    <div class="card"><div class="icon">.present</div><h3>Presentation</h3><p>Slides, blank screen, timer. Reads like a proper clicker, not a hack.</p></div>
+    <div class="card"><div class="icon">✦</div><h3>Custom</h3><p>Build your own control surface: streaming deck, editing deck, anything.</p></div>
+    <div class="card"><div class="icon">↔</div><h3>Profiles</h3><p>Work laptop, gaming PC, living room. Each remembers its mode, layout and deck.</p></div>
+  </div>
+</section>
+<section class="wrap block">
+  <h2>How is this possible without host software?</h2>
+  <p>Elevon registers itself with Android's Bluetooth HID Device profile — the same standard every wireless
+  keyboard and mouse has used for decades. Your computer sees a normal keyboard, mouse and gamepad.
+  Nothing to install, nothing running in the tray, no drivers, no firewall prompts.</p>
+  <div class="grid three">
+    <div class="card"><h3>Pair once</h3><p>Add the phone from your computer's Bluetooth settings, exactly like a wireless keyboard.</p><span class="chip core">Core</span></div>
+    <div class="card"><h3>Switch modes instantly</h3><p>One pairing covers every mode — the same connection becomes a gamepad or a deck the moment you tap it.</p><span class="chip core">Core</span></div>
+    <div class="card"><h3>Explore Labs</h3><p>Relay types from your laptop keyboard onto your phone, from the browser. Clearly experimental.</p><span class="chip experimental">Experimental</span></div>
+  </div>
+</section>
+<section class="wrap block">
+  <h2>What Elevon refuses to pretend</h2>
+  <p>Every remote app oversells something. Here, the limits are on the box:</p>
+  <div class="grid two">
+    <div class="card"><h3>XInput games <span class="chip limited">Limited</span></h3><p>The gamepad is a genuine generic HID controller — but Android never lets it impersonate an Xbox pad, so XInput-only games need Steam Input. Controller-aware games and Steam just work.</p></div>
+    <div class="card"><h3>Some phones <span class="chip limited">Limited</span></h3><p>A few manufacturers ship Bluetooth HID switched off. Elevon checks honestly at first run and tells you — it never shows a button that does nothing.</p></div>
+    <div class="card"><h3>Relay is tab-scoped <span class="chip experimental">Experimental</span></h3><p>A web page can only see keys typed while it is focused. System-wide keyboard capture is impossible from a browser — Relay says so instead of faking it.</p></div>
+    <div class="card"><h3>No clipboard spying <span class="chip core">Core</span></h3><p>Clipboard sharing works by typing, and through Relay's paste box. Watching a computer's clipboard would need host software — so Elevon doesn't do it.</p></div>
+  </div>
+</section>
+<section class="wrap block">
+  <h2>Private by construction</h2>
+  <p>Elevon's Android app has <strong>no INTERNET permission</strong>. Your operating system physically
+  prevents it from sending anything anywhere. No account. No analytics. No telemetry. Devices, profiles,
+  layouts and clipboard history live on your phone and nowhere else.</p>
+  <div class="actions"><a class="btn outline" href="privacy.html">Read the privacy page</a></div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <svg width="22" height="22" viewBox="0 0 108 108" aria-hidden="true"><path fill="#FF7A45" d="M35,38.5 C35,33.9 40,30.9 44,33 L70.5,46.4 C75,48.7 75,55.3 70.5,57.6 L44,71 C40,73.1 35,70.1 35,65.5 Z"/></svg>
+      <div>
+        <strong>Elevon</strong>
+        <p>Your phone. Your controls.<br>Open source under Apache-2.0.<br>No accounts, no tracking, no internet permission.</p>
+      </div>
+    </div>
+    <div class='footcol'><h4>Product</h4><a href="index.html">Home</a><a href="features.html">Features</a><a href="how-it-works.html">How it works</a><a href="getting-started.html">Getting started</a><a href="relay/index.html">Elevon Relay</a></div><div class='footcol'><h4>Controls</h4><a href="keyboard.html">Keyboard</a><a href="controller.html">Game controller</a><a href="customization.html">Customization</a><a href="labs.html">Labs</a></div><div class='footcol'><h4>Support</h4><a href="compatibility.html">Compatibility</a><a href="faq.html">FAQ</a><a href="troubleshooting.html">Troubleshooting</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap</a></div><div class='footcol'><h4>Project</h4><a href="privacy.html">Privacy</a><a href="contributing.html">Contributing</a><a href="about.html">About</a><a href="https://github.com/MeYashverma/NEXUS/releases">Releases</a><a href="https://github.com/MeYashverma/NEXUS">GitHub</a></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 Elevon contributors · v0.1.0</span>
+    <span>An elevon is a control surface that does the job of two.</span>
+  </div>
+</footer>
+</body>
+</html>
